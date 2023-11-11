@@ -1,0 +1,29 @@
+@()(implicit request: RequestHeader, flash: Flash)
+
+@main("Login Page for Task 5") {
+<h2>Login Page for Sam Cohen Task 5</h2>
+
+<form method="post" action="@routes.MessageList1.validateLoginPost">
+    @helper.CSRF.formField
+    <h3>Please Log in Below to see your messages</h3>
+    username: <input type="text" name="username" id="username-login">
+    <br>
+    <br>
+    password: <input type="password" name="password" id="password-login">
+    <br>
+    <br>
+    <input type="submit">
+</form>
+<form method="post" action="@routes.MessageList1.createUser">
+    @helper.CSRF.formField
+    <h3>New User? Create a login</h3>
+    <h5>After you hit submit, be sure to log in with your new credentials</h2>
+        username: <input type="text" name="username" id="username-create">
+        <br>
+        <br>
+        password: <input type="password" name="password" id="password-create">
+        <br>
+        <br>
+        <input type="submit">
+</form>
+}
