@@ -4,6 +4,7 @@
 
 # Home page
 GET        /                             controllers.Application.landing
+GET        /login                        controllers.Application.login
 
 
 # Prefix must match `play.assets.urlPrefix`

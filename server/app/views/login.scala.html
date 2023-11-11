@@ -1,11 +1,22 @@
 @()(implicit request: RequestHeader, flash: Flash)
 
-@main("Login Page for Task 5") {
-<h2>Login Page for Sam Cohen Task 5</h2>
+@main("Login in to TigerFit") {
 
-<form method="post" action="@routes.MessageList1.validateLoginPost">
+<h2>Login to TigerFit</h2>
+<style>
+    form {
+      width: 300px; /* Adjust the width of your form */
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #fff;
+      justify-content: center;
+      align-content: center;
+    }
+  </style>
+
+<form method="post" action="@routes.Application.login">
     @helper.CSRF.formField
-    <h3>Please Log in Below to see your messages</h3>
     username: <input type="text" name="username" id="username-login">
     <br>
     <br>
@@ -14,16 +25,5 @@
     <br>
     <input type="submit">
 </form>
-<form method="post" action="@routes.MessageList1.createUser">
-    @helper.CSRF.formField
-    <h3>New User? Create a login</h3>
-    <h5>After you hit submit, be sure to log in with your new credentials</h2>
-        username: <input type="text" name="username" id="username-create">
-        <br>
-        <br>
-        password: <input type="password" name="password" id="password-create">
-        <br>
-        <br>
-        <input type="submit">
-</form>
+
 }
