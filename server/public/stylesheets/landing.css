@@ -1,0 +1,11 @@
+/* styles.css */
+
+body { font-family: Arial, sans-serif; }
+.container { max-width: 1200px; margin: auto; padding: 20px; }
+.header { text-align: center; margin-bottom: 40px; }
+.section { background: #f0f0f0; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+.section h2 { margin-top: 0; }
+.team-list, .purpose { margin: 0; padding: 0; }
+.team-list li { list-style: none; }
+.team-list li::before { content: '● '; color: #000; }
+.purpose p { margin: 0; }
