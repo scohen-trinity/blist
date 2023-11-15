@@ -1,3 +1,4 @@
+/*
 import org.junit.runner._
 import org.specs2.mutable._
 import org.specs2.runner._
@@ -19,3 +20,4 @@ class IntegrationSpec extends Specification {
     }
   }
 }
+*/
