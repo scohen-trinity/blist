@@ -1,29 +1,38 @@
 @()(implicit request: RequestHeader, flash: Flash)
 
 @main("Login in to TigerFit") {
+  <head>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
 
-<h2>Login to TigerFit</h2>
-<style>
-    form {
-      width: 300px; /* Adjust the width of your form */
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background-color: #fff;
-      justify-content: center;
-      align-content: center;
-    }
-  </style>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+    <!-- React -->
+    <script src="https://unpkg.com/react@@16/umd/react.development.js"></script>  
+    <script src="https://unpkg.com/react-dom@@16/umd/react-dom.development.js"></script>
 
-<form method="post" action="@routes.Application.login">
-    @helper.CSRF.formField
-    username: <input type="text" name="username" id="username-login">
-    <br>
-    <br>
-    password: <input type="password" name="password" id="password-login">
-    <br>
-    <br>
-    <input type="submit">
-</form>
-
+  </head>
+  <body>
+    <h2 class="text-center"><b>Login</b></h2>  
+      <div class="container">
+        <form method="post" action="@routes.Application.login">
+          @helper.CSRF.formField
+          <div class="mb-3">
+            <label class="form-label">Username</label>
+            <br>
+            <input type="text" class="form-control" name="username" id="username-login">
+            <br>
+            <label class="form-label">Password</label>
+            <br>
+            <input type="password" class="form-control" name="password" id="password-login">
+            <br>
+            <input type="submit" value="Submit" class="btn btn-primary" id="submission-button">
+          </div>
+        </form>
+      </div>
+  </body>
+  
 }
