@@ -1,6 +1,7 @@
 @()(implicit request: RequestHeader, flash: Flash)
 
 @main("Login to TigerFit") {
+  <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
   <input type="hidden" id="csrfToken" value="@helper.CSRF.getToken.value">
   
   <div id="login_page"></div>
