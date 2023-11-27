@@ -13,7 +13,7 @@ class Application @Inject()(cc: ControllerComponents) extends AbstractController
   }
 
   def login = Action { implicit request =>
-    Ok(views.html.login())
+    Ok(views.html.loginReact())
   }
 
 }

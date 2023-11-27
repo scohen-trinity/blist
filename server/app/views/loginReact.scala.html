@@ -1,0 +1,8 @@
+@()(implicit request: RequestHeader, flash: Flash)
+
+@main("Login to TigerFit") {
+  <input type="hidden" id="csrfToken" value="@helper.CSRF.getToken.value">
+  
+  <div id="login_page"></div>
+  <script src="@routes.Assets.versioned("javascript/reactLogin.js")"></script>
+}
