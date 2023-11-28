@@ -2,6 +2,9 @@ console.log("Running react successfully")
 
 const ce = React.createElement
 
+const loginRoute = document.getElementById("loginRoute").value;
+const landingRoute = document.getElementById("landingRoute").value;
+
 class MainLoginComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -30,13 +33,23 @@ class NavBarComponent extends React.Component {
     render() {
         return ce('div', {className: "navbar"},
            ce('button', {className: "hamburger-navbar"}, null),
-           ce('h1', {className: "navbar-header"}, 'TIGER FIT'),
-           ce('div', {className: "navbar-login-div"}, 
+           ce('h1', {className: "navbar-header", onClick: e => this.goToLanding(e)}, 'TIGER FIT'),
+           ce('div', {className: "navbar-login-div", onClick: e => this.goToLogin(e)}, 
             ce('h2', {className: "navbar-header"}, 'LOGIN'),
             ce('img', { src: "https://cdn4.iconfinder.com/data/icons/man-user-human-person-business-profile-avatar/100/20-1User_13-512.png", className: "login-navbar"}, null) 
            ),
            
         )
+    }
+
+    goToLogin(e) {
+        console.log("Go to log in page")
+        window.location.href = loginRoute;
+    }
+
+    goToLanding(e) {
+        console.log("Go to landing page")
+        window.location.href = landingRoute;
     }
 }
 
