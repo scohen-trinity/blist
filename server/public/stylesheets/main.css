@@ -13,28 +13,34 @@
     margin: 12px;
     border: none;
     font-size: 15px;
-    background-color: #2f74c0;
+    background-color: #9ae8f6;
     transition: 0.2s all;
-    box-shadow: 0 0 10px black;
     right: 0px;
     border-radius: 20px;
+    font-family: 'Lato', sans-serif;
+    width: 100px;
+    height: 25px;
 }
 
 .submission-button:hover {
-    background-color: #388ae2;
+    background-color: #86ebfd;
 }
 
 .navbar {
     background-color: #0097b2;
     color: #fff;
-    padding: 35px;
+    padding: 20px;
     width: 100%;
     top: 0;
     left: 0;
+    font-family: 'Lato', sans-serif;
+    text-align: center;
+    font-size: 30px;
 }
 
 .login-header {
     align-items: center;
+    font-family: 'Lato', sans-serif;
 }
 
 .form-container {

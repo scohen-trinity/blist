@@ -29,7 +29,7 @@ class NavBarComponent extends React.Component {
 
     render() {
         return ce('div', {className: "navbar"},
-           'this is the navbar' 
+           'TIGER FIT' 
         )
     }
 }
@@ -46,13 +46,17 @@ class BasicLoginComponent extends React.Component {
 
     render() {
         return ce('div', {className: "form-container"}, 
-            ce('h2', {className: "login-header"}, 'Login:'),
+            ce('h2', {className: "login-header"}, 'Login'),
             ce('br'),
             'Username ',
+            ce('br'),
+            ce('br'),
             ce('input', {type: "text", id: "loginName", className: "form-control", value: this.state.loginName, onChange: e => this.onChangeHandler(e)}),
             ce('br'),
             ce('br'),
-            'Password: ',
+            'Password ',
+            ce('br'),
+            ce('br'),
             ce('input', {type: "password", id: "loginPass", value: this.state.loginPass, onChange: e => this.onChangeHandler(e)}),
             ce('br'),
             ce('br'),
