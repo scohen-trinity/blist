@@ -29,7 +29,13 @@ class NavBarComponent extends React.Component {
 
     render() {
         return ce('div', {className: "navbar"},
-           'TIGER FIT' 
+           ce('button', {className: "hamburger-navbar"}, null),
+           ce('h1', {className: "navbar-header"}, 'TIGER FIT'),
+           ce('div', {className: "navbar-login-div"}, 
+            ce('h2', {className: "navbar-header"}, 'LOGIN'),
+            ce('img', { src: "https://cdn4.iconfinder.com/data/icons/man-user-human-person-business-profile-avatar/100/20-1User_13-512.png", className: "login-navbar"}, null) 
+           ),
+           
         )
     }
 }
@@ -47,16 +53,10 @@ class BasicLoginComponent extends React.Component {
     render() {
         return ce('div', {className: "form-container"}, 
             ce('h2', {className: "login-header"}, 'Login'),
-            ce('br'),
-            'Username ',
-            ce('br'),
-            ce('br'),
+            ce('h4', { className: 'basic-font'}, 'Username '),
             ce('input', {type: "text", id: "loginName", className: "form-control", value: this.state.loginName, onChange: e => this.onChangeHandler(e)}),
             ce('br'),
-            ce('br'),
-            'Password ',
-            ce('br'),
-            ce('br'),
+            ce('h4', { className: 'basic-font'}, 'Password '),
             ce('input', {type: "password", id: "loginPass", value: this.state.loginPass, onChange: e => this.onChangeHandler(e)}),
             ce('br'),
             ce('br'),

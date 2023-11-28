@@ -29,17 +29,40 @@
 .navbar {
     background-color: #0097b2;
     color: #fff;
-    padding: 20px;
+    padding: 5px;
     width: 100%;
     top: 0;
     left: 0;
     font-family: 'Lato', sans-serif;
     text-align: center;
-    font-size: 30px;
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar-header {
+    font-size: 20px;
+}
+
+.navbar-login-div {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.hamburger-navbar {
+
+}
+
+.login-navbar {
+    height: 50px;
 }
 
 .login-header {
     align-items: center;
+    font-family: 'Lato', sans-serif;
+}
+
+.basic-font {
     font-family: 'Lato', sans-serif;
 }
 
