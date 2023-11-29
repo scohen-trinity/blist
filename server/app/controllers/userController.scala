@@ -12,7 +12,6 @@ class userController @Inject()(cc: ControllerComponents) extends AbstractControl
     // def testMethods = Action {
 
     // }
-
     def validate = Action { implicit request =>
         request.body.asJson.map { ud => 
             ud.as[UserData] match {
