@@ -6,6 +6,7 @@
   <input type="hidden" id="csrfToken" value="@helper.CSRF.getToken.value">
   <input type="hidden" id="loginRoute" value="@routes.Application.login">
   <input type="hidden" id="landingRoute" value="@routes.Application.landing">
+  <input type="hidden" id="validateRoute" value="@routes.userController.validate">
   
   <div id="login_page"></div>
   <script src="@routes.Assets.versioned("javascript/reactLogin.js")"></script>

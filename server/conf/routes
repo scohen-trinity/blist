@@ -6,6 +6,10 @@
 GET        /                             controllers.Application.landing
 GET        /login                        controllers.Application.login
 
+# userController Routes
+
+POST       /validate                     controllers.userController.validate
+
 
 # Prefix must match `play.assets.urlPrefix`
 GET        /assets/*file                 controllers.Assets.at(file)

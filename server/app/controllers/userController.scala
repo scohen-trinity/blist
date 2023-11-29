@@ -1,9 +1,10 @@
 package controllers
 
-import models.memoryModelFit
+import models._
 import javax.inject._
 import play.api.mvc._
 import play.api.i18n._
+import play.api.libs.json._
 import java.lang.ProcessBuilder.Redirect
 
 @Singleton
@@ -11,6 +12,23 @@ class userController @Inject()(cc: ControllerComponents) extends AbstractControl
     // def testMethods = Action {
 
     // }
+
+    def validate = Action { implicit request =>
+        request.body.asJson.map { ud => 
+            ud.as[UserData] match {
+                case userData: UserData =>
+                    if(memoryModelFit.validateUser(userData.username, userData.password)) {
+                        Ok(Json.toJson(true))
+                    } else {
+                        Ok(Json.toJson(false))
+                    }
+                case _ => 
+                    BadRequest("Invalid JSON format")
+            }
+        }.getOrElse {
+            BadRequest("Expecting JSON data")
+        }    
+    }
 
 
 }

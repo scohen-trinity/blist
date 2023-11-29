@@ -2,22 +2,28 @@ console.log("Running react successfully")
 
 const ce = React.createElement
 
+const csrfToken = document.getElementById("csrfToken").value;
 const loginRoute = document.getElementById("loginRoute").value;
 const landingRoute = document.getElementById("landingRoute").value;
+const validateRoute = document.getElementById("validateRoute").value;
 
 class MainLoginComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            hamburgerClicked: false,
+            loggedIn: false,
         }
     }
 
     render() {
-        if(this.state.hamburgerClicked) {
-            return ce('h2', null, "Not clicked")
+        if(this.state.loggedIn) {
+            window.location.href = landingRoute;
+            return null;
         } else {
-            return ce(BasicLoginComponent, null)
+            return ce('div', null, 
+                ce(NavBarComponent, null, null),
+                ce(BasicLoginComponent, {doLogin: () => this.setState({ loggedIn: true })})
+            )
         }
     }
 }
@@ -26,7 +32,7 @@ class NavBarComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            clicked: false,
+            
         };
     }
 
@@ -77,11 +83,33 @@ class BasicLoginComponent extends React.Component {
             ce('span', {id: "login-message"}, this.state.loginMessage),
         )
     }
+
+    onChangeHandler(e) {
+        this.setState({ [e.target['id']]: e.target.value })
+    }
+
+    login(e) {
+        const username = this.state.loginName;
+        const password = this.state.loginPass;
+
+        fetch(validateRoute, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Csrf-Token': csrfToken },
+            body: JSON.stringify({ username, password })
+        }).then(res => res.json()).then(data => {
+            if(data) {
+                console.log("Logged in");
+                this.setState({ loginName: "", loginPass: ""});
+                this.props.doLogin();
+            } else {
+                this.setState({ loginMessage: "Login Failed" });
+            }
+        })
+    }
 }
 
 ReactDOM.render(
     ce('div', null,
-        ce(NavBarComponent, null, null),
         ce(MainLoginComponent, null, null)
     ),
     document.getElementById('login_page')
