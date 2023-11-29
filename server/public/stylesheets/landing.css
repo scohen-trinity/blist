@@ -1,11 +1,32 @@
-/* styles.css */
-
 body { font-family: Arial, sans-serif; }
-.container { max-width: 1200px; margin: auto; padding: 20px; }
 .header { text-align: center; margin-bottom: 40px; }
-.section { background: #f0f0f0; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
-.section h2 { margin-top: 0; }
-.team-list, .purpose { margin: 0; padding: 0; }
-.team-list li { list-style: none; }
-.team-list li::before { content: '● '; color: #000; }
-.purpose p { margin: 0; }
+.equal-height {
+    display: flex;
+}
+.equal-height > [class^="col-"] {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+.section { 
+    background: #D1D2D2; 
+    padding: 20px; 
+    border-radius: 8px; 
+    margin-bottom: 20px; 
+    flex: 1; /* Makes the sections flex containers */
+    display: flex;
+    flex-direction: column;
+}
+.team-list li::before { 
+    content: '● '; 
+    color: #000; 
+    margin-right: 5px;
+}
+.team-list, .purpose p { 
+    margin: 0; 
+    padding: 20; 
+}
+.team-list li { 
+    list-style: none; 
+    padding-left: 0; 
+}
