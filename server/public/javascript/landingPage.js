@@ -1,17 +1,50 @@
 
 const ce = React.createElement;
 
-class hamburger extends React.Component {
-    render() {
-        return ce('div', {className: "hamburger-navbar"}, 
-                ce('div', {className: "burger burger1"},
-                
-            )
-        )
+class Hamburger extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { isOpen: false };
+        this.toggleMenu = this.toggleMenu.bind(this);
     }
-    
 
+    toggleMenu() {
+        this.setState(prevState => ({
+            isOpen: !prevState.isOpen
+        }));
+    }
+
+    render() {
+        const navbarProps = {
+            className: 'hamburger-navbar',
+            onClick: this.toggleMenu 
+        };
+
+        const hamburgerProps = {
+            className: `hamburger ${this.state.isOpen ? 'open' : ''}`
+        };
+
+        const burgerProps = index => ({
+            key: index,
+            className: `burger burger${index} ${this.state.isOpen ? 'open' : ''}`
+        });
+
+        return ce('div', navbarProps,
+            ce('div', hamburgerProps,
+                ce('div', burgerProps(1)), // First line of hamburger
+                ce('div', burgerProps(2)), // Second line of hamburger
+                ce('div', burgerProps(3))  // Third line of hamburger
+            ),
+            this.state.isOpen ? ce('div', { className: 'menu' },
+                ce('a', { href: '#home' }, 'Home'),
+                ce('a', { href: '#about' }, 'About'),
+                ce('a', { href: '#services' }, 'Services'),
+                ce('a', { href: '#contact' }, 'Contact')
+            ) : null
+        );
+    }
 }
+
 
 class NavBarComponent extends React.Component {
     constructor(props) {
@@ -23,7 +56,7 @@ class NavBarComponent extends React.Component {
 
     render() {
         return ce('div', {className: "navbar"},
-           ce('button', {className: "hamburger-navbar"}, null),
+           ce(Hamburger, {className: "hamburger-navbar"}, null),
            ce('h1', {className: "navbar-header", onClick: e => this.goToLanding(e)}, 'TIGER FIT'),
            ce('div', {className: "navbar-login-div", onClick: e => this.goToLogin(e)}, 
             ce('h2', {className: "navbar-header"}, 'LOGIN'),
@@ -94,6 +127,6 @@ class Version4MainComponent extends React.Component {
 }
 
 ReactDOM.render(
-    ce(hamburger, null, null),
+    ce(Version4MainComponent, null, null),
     document.getElementById('react-root')
 );
