@@ -9,7 +9,7 @@ import play.api.mvc._
 class Application @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
   def landing = Action {
-    Ok(views.html.landing(SharedMessages.itWorks))
+    Ok(views.html.landing())
   }
 
   def login = Action { implicit request =>

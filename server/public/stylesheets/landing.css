@@ -1,0 +1,161 @@
+/* Base Font Style */
+.basic-font, .navbar, .login-form, .submission-button, .navbar-header, .login-header, form {
+    font-family: 'Lato', sans-serif;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #0097b2;
+    color: #fff;
+    padding: 5px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    text-align: center;
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar-header {
+    font-size: 20px;
+}
+
+/* Login Form Styles */
+.login-form {
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+/* Submission Button Styles */
+.submission-button {
+    margin: 12px;
+    border: none;
+    font-size: 15px;
+    background-color: #9ae8f6;
+    transition: 0.2s all;
+    right: 0px;
+    border-radius: 20px;
+    width: 100px;
+    height: 25px;
+}
+
+.submission-button:hover {
+    background-color: #86ebfd;
+}
+
+/* Flexbox Adjustments */
+.equal-height {
+    display: flex;
+}
+
+.equal-height > [class^="col-"] {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+/* Section Styles - Merged from Old CSS */
+.section {
+    background: #D1D2D2; 
+    padding: 20px; 
+    border-radius: 8px; 
+    margin-bottom: 20px;
+    margin-top: 150px; /* Add this line to move the section down */
+    flex: 1; /* Makes the sections flex containers */
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* List Styles - From Old CSS */
+.team-list li::before { 
+    content: '● '; 
+    color: #000; 
+    margin-right: 5px;
+}
+
+.team-list, .purpose p { 
+    margin: 0; 
+    padding: 20; 
+}
+
+.team-list li { 
+    list-style: none; 
+    padding-left: 0; 
+}
+
+/* Form Container Styles */
+.form-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+/* Form Element Styles */
+form {
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.login-navbar {
+    height: 50px;
+}
+
+.login-header {
+    align-items: center;
+}
+
+/*  */
+
+.hamburger-navbar {
+    /* styles for the navbar container */
+}
+
+.hamburger {
+    /* styles for the hamburger icon container */
+}
+
+.burger {
+    width: 2rem;
+    height: 0.25rem;
+    background-color: black;
+    transition: all 1s linear;
+    transform-origin: 1px;
+    margin-top: 0.5rem; /* Adds space to the top of each line */
+    margin-bottom: 0.5rem; /* Adds space to the bottom of each line */
+}
+
+.burger.open:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.burger.open:nth-child(2) {
+    opacity: 0;
+}
+
+.burger.open:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
+.menu {
+    /* styles for your menu container */
+}
+
+.menu a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: black;
+    /* other anchor styles */
+}
