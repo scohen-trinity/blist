@@ -39,23 +39,4 @@ class userController @Inject()(cc: ControllerComponents) extends AbstractControl
             Future.successful(Ok(Json.toJson(false)))
         }    
     }
-
-    // def validate = Action { implicit request =>
-    //     request.body.asJson.map { ud => 
-    //         ud.as[UserData] match {
-    //             case userData: UserData =>
-    //                 memInstance.validateUser(userData.username, userData.password).flatMap{innerValue => 
-    //                     if(innerValue) {
-    //                         Future.successful(Ok(Json.toJson(true)))
-    //                     } else {
-    //                         Future.successful(Ok(Json.toJson(false)))
-    //                     }
-    //                 }
-    //             case _ => 
-    //                 BadRequest("Invalid JSON format")
-    //         }
-    //     }  
-    // }
-
-
 }
