@@ -8,7 +8,7 @@ import play.api.mvc._
 @Singleton
 class Application @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
-  def landing = Action {
+  def landing = Action { implicit request =>
     Ok(views.html.landing())
   }
 
