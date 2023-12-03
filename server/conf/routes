@@ -7,8 +7,10 @@ GET        /                             controllers.Application.landing
 GET        /login                        controllers.Application.login
 
 # userController Routes
-
 POST       /validate                     controllers.userController.validate
+
+# workoutController Routes
+ GET        /exercise                     controllers.exerciseController.exercise 
 
 
 # Prefix must match `play.assets.urlPrefix`
