@@ -5,11 +5,12 @@
 # Home page
 GET        /                             controllers.Application.landing
 GET        /login                        controllers.Application.login
+GET        /create                       controllers.Application.accountCreation
 
 # userController Routes
 
-POST       /validate                     controllers.userController.validate
-
+POST       /validate                     controllers.UserController.validate
+POST       /createAccount                controllers.UserController.create
 
 # Prefix must match `play.assets.urlPrefix`
 GET        /assets/*file                 controllers.Assets.at(file)
