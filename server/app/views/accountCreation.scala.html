@@ -1,6 +1,6 @@
 @()(implicit request: RequestHeader, flash: Flash)
 
-@main("Login to TigerFit") {
+@main("Create a TigerFit Account") {
   
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -12,8 +12,10 @@
   <input type="hidden" id="csrfToken" value="@helper.CSRF.getToken.value">
   <input type="hidden" id="loginRoute" value="@routes.Application.login">
   <input type="hidden" id="landingRoute" value="@routes.Application.landing">
-  <input type="hidden" id="validateRoute" value="@routes.userController.validate">
+  <input type="hidden" id="validateRoute" value="@routes.UserController.validate">
+  <input type="hidden" id="creationPageRoute" value="@routes.Application.accountCreation">
+  <input type="hidden" id="creationActionRoute" value="@routes.UserController.create">
   
-  <div id="login_page"></div>
-  <script src="@routes.Assets.versioned("javascript/reactLogin.js")"></script>
+  <div id="account_creation_page"></div>
+  <script src="@routes.Assets.versioned("javascript/accountCreationPage.js")"></script>
 }

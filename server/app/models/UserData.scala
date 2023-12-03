@@ -5,4 +5,5 @@ case class UserData(username: String, password: String)
 
 object UserData {
     implicit val userDataReads: Reads[UserData] = Json.reads[UserData]
+    implicit val userDataWrites: Writes[UserData] = Json.writes[UserData]
 }

@@ -1,3 +1,5 @@
+"use strict"
+
 console.log("Running react successfully")
 
 const ce = React.createElement
@@ -6,6 +8,8 @@ const csrfToken = document.getElementById("csrfToken").value;
 const loginRoute = document.getElementById("loginRoute").value;
 const landingRoute = document.getElementById("landingRoute").value;
 const validateRoute = document.getElementById("validateRoute").value;
+const creationPageRoute = document.getElementById("creationPageRoute").value;
+const creationActionRoute = document.getElementById("creationActionRoute").value;
 
 // Hamburger Component
 class Hamburger extends React.Component {
@@ -99,7 +103,7 @@ class MainLoginComponent extends React.Component {
             return ce('div', null, 
                 ce(NavBarComponent, null, null),
                 ce(BasicLoginComponent, {doLogin: () => this.setState({ loggedIn: true })})
-            )
+            );
         }
     }
 }
@@ -157,7 +161,9 @@ class BasicLoginComponent extends React.Component {
             ce('br'),
             ce('br'),
             ce('button', {className: "submission-button", onClick: e=> this.login(e)}, 'Login'),
-            ce('span', {id: "login-message"}, this.state.loginMessage),
+            ce('br'),
+            ce('br'),
+            ce('span', {className: 'basic-font', id: "login-message"}, this.state.loginMessage),
         )
     }
 
@@ -175,11 +181,11 @@ class BasicLoginComponent extends React.Component {
             body: JSON.stringify({ username, password })
         }).then(res => res.json()).then(data => {
             if(data) {
-                console.log("Logged in");
                 this.setState({ loginName: "", loginPass: ""});
                 this.props.doLogin();
             } else {
-                this.setState({ loginMessage: "Login Failed" });
+                this.setState({ loginMessage: "Login Failed." });
+                this.setState({ loginName: "", loginPass: ""});
             }
         })
     }
