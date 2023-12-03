@@ -1,13 +1,15 @@
 @()(implicit request: RequestHeader, flash: Flash)
 
-@main("Login to TigerFit") {
+@main("Create a TigerFit Account") {
   <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@@700&family=Neucha&display=swap" rel="stylesheet"> 
   <input type="hidden" id="csrfToken" value="@helper.CSRF.getToken.value">
   <input type="hidden" id="loginRoute" value="@routes.Application.login">
   <input type="hidden" id="landingRoute" value="@routes.Application.landing">
-  <input type="hidden" id="validateRoute" value="@routes.userController.validate">
+  <input type="hidden" id="validateRoute" value="@routes.UserController.validate">
+  <input type="hidden" id="creationPageRoute" value="@routes.Application.accountCreation">
+  <input type="hidden" id="creationActionRoute" value="@routes.UserController.create">
   
-  <div id="login_page"></div>
-  <script src="@routes.Assets.versioned("javascript/reactLogin.js")"></script>
+  <div id="account_creation_page"></div>
+  <script src="@routes.Assets.versioned("javascript/accountCreationPage.js")"></script>
 }
