@@ -11,6 +11,82 @@ const validateRoute = document.getElementById("validateRoute").value;
 const creationPageRoute = document.getElementById("creationPageRoute").value;
 const creationActionRoute = document.getElementById("creationActionRoute").value;
 
+// Hamburger Component
+class Hamburger extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { isOpen: false };
+        this.toggleMenu = this.toggleMenu.bind(this);
+        this.goToLogin = this.goToLogin.bind(this);
+        this.goToLanding = this.goToLanding.bind(this);
+    }
+
+    closeMenu() {
+        this.setState({ isOpen: false });
+    }
+
+    // Call this method after navigation actions
+    goToLanding(e) {
+        e.preventDefault();
+        this.closeMenu();
+        console.log("Go to landing page");
+        window.location.href = landingRoute;
+    }
+
+    goToLogin(e) {
+        e.preventDefault();
+        this.closeMenu();
+        console.log("Go to log in page");
+        window.location.href = loginRoute;
+    }
+
+    toggleMenu() {
+        this.setState(prevState => ({
+            isOpen: !prevState.isOpen
+        }));
+    }
+
+    render() {
+        const navbarProps = {
+            className: 'hamburger-navbar',
+            onClick: this.toggleMenu 
+        };
+
+        const hamburgerProps = {
+            className: `hamburger ${this.state.isOpen ? 'open' : ''}`
+        };
+
+        const burgerProps = index => ({
+            key: index,
+            className: `burger burger${index} ${this.state.isOpen ? 'open' : ''}`
+        });
+
+        return ce('div', navbarProps,
+        ce('div', hamburgerProps,
+            ce('div', burgerProps(1)), // First line of hamburger
+            ce('div', burgerProps(2)), // Second line of hamburger
+            ce('div', burgerProps(3))  // Third line of hamburger
+        ),
+        this.state.isOpen ? ce('div', { className: 'menu' },
+        ce('a', { 
+            onClick: e => this.goToLanding(e), 
+            style: { cursor: 'pointer' }, 
+            tabIndex: 0 
+        }, "Home"),
+        ce('a', { 
+            onClick: e => this.goToLogin(e), 
+            style: { cursor: 'pointer' }, 
+            tabIndex: 0 
+        }, "Login")
+        ) : null
+    );
+    
+    }
+
+}
+
+// Hamburger component above
+
 class MainLoginComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -32,6 +108,7 @@ class MainLoginComponent extends React.Component {
     }
 }
 
+
 class NavBarComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -42,7 +119,7 @@ class NavBarComponent extends React.Component {
 
     render() {
         return ce('div', {className: "navbar"},
-           ce('button', {className: "hamburger-navbar"}, null),
+           ce(Hamburger, {className: "hamburger-navbar"}, null),
            ce('h1', {className: "navbar-header", onClick: e => this.goToLanding(e)}, 'TIGER FIT'),
            ce('div', {className: "navbar-login-div", onClick: e => this.goToLogin(e)}, 
             ce('h2', {className: "navbar-header"}, 'LOGIN'),
@@ -115,8 +192,6 @@ class BasicLoginComponent extends React.Component {
 }
 
 ReactDOM.render(
-    ce('div', null,
-        ce(MainLoginComponent, null, null)
-    ),
+    ce(MainLoginComponent, null, null),
     document.getElementById('login_page')
 );
