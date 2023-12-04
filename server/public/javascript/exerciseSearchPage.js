@@ -10,7 +10,6 @@ const landingRoute        = document.getElementById("landingRoute").value;
 const validateRoute       = document.getElementById("validateRoute").value;
 const creationPageRoute   = document.getElementById("creationPageRoute").value;
 const creationActionRoute = document.getElementById("creationActionRoute").value;
-const searchExerciseRoute = document.getElementById("searchExerciseRoute").value;
 
 // Hamburger Component
 class Hamburger extends React.Component {
@@ -88,27 +87,39 @@ class Hamburger extends React.Component {
 
 // Hamburger component above
 
-class MainLoginComponent extends React.Component {
+class MainSearchComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loggedIn: false,
+            loggedIn: true,
         }
     }
 
     render() {
-        if(this.state.loggedIn) {
-            window.location.href = searchExerciseRoute;
+        if(!this.state.loggedIn) {
+            window.location.href = loginRoute;
             return null;
         } else {
             return ce('div', null, 
                 ce(NavBarComponent, null, null),
-                ce(BasicLoginComponent, {doLogin: () => this.setState({ loggedIn: true })})
+                ce(BasicSearchComponent, null, null)
             );
         }
     }
 }
 
+class BasicSearchComponent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        }
+    }
+
+    render() {
+        return ce('div', null, 'Exercise Search Page');
+    }
+}
 
 class NavBarComponent extends React.Component {
     constructor(props) {
@@ -141,58 +152,7 @@ class NavBarComponent extends React.Component {
     }
 }
 
-class BasicLoginComponent extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            loginName: "",
-            loginPass: "",
-            loginMessage: "",
-        };
-    }
-
-    render() {
-        return ce('div', {className: "form-container"}, 
-            ce('h2', {className: "login-header"}, 'Login'),
-            ce('h4', { className: 'basic-font'}, 'Username '),
-            ce('input', {type: "text", id: "loginName", className: "form-control", value: this.state.loginName, onChange: e => this.onChangeHandler(e)}),
-            ce('br'),
-            ce('h4', { className: 'basic-font'}, 'Password '),
-            ce('input', {type: "password", id: "loginPass", value: this.state.loginPass, onChange: e => this.onChangeHandler(e)}),
-            ce('br'),
-            ce('br'),
-            ce('button', {className: "submission-button", onClick: e=> this.login(e)}, 'Login'),
-            ce('br'),
-            ce('br'),
-            ce('span', {className: 'basic-font', id: "login-message"}, this.state.loginMessage),
-        )
-    }
-
-    onChangeHandler(e) {
-        this.setState({ [e.target['id']]: e.target.value })
-    }
-
-    login(e) {
-        const username = this.state.loginName;
-        const password = this.state.loginPass;
-
-        fetch(validateRoute, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Csrf-Token': csrfToken },
-            body: JSON.stringify({ username, password })
-        }).then(res => res.json()).then(data => {
-            if(data) {
-                this.setState({ loginName: "", loginPass: ""});
-                this.props.doLogin();
-            } else {
-                this.setState({ loginMessage: "Login Failed." });
-                this.setState({ loginName: "", loginPass: ""});
-            }
-        })
-    }
-}
-
 ReactDOM.render(
-    ce(MainLoginComponent, null, null),
-    document.getElementById('login_page')
+    ce(MainSearchComponent, null, null),
+    document.getElementById('exercise_search_page')
 );

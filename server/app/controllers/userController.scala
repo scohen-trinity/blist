@@ -3,6 +3,7 @@ package controllers
 import models._
 import javax.inject._
 import play.api.mvc._
+import play.api.mvc.Results._
 import play.api.i18n._
 import play.api.libs.json._
 import java.lang.ProcessBuilder.Redirect
@@ -23,7 +24,10 @@ class UserController @Inject()(cc: ControllerComponents) extends AbstractControl
                 case JsSuccess(ld, path) => {
                     memInstance.validateUser(ld.username, ld.password).flatMap{status => 
                         if(status) {
+                            println(ld.username)
+                            Redirect(routes.ExerciseController.searchExercise).withSession("username" -> ld.username)
                             Future.successful(Ok(Json.toJson(true)))
+                            // views.html.exerciseSearch(username)
                         } else {
                             Future.successful(Ok(Json.toJson(false)))
                         }
@@ -48,5 +52,9 @@ class UserController @Inject()(cc: ControllerComponents) extends AbstractControl
                 case e @ JsError(_) => Future.successful(Ok(Json.toJson(false)))
             }
         }.getOrElse(Future.successful(Ok(Json.toJson(false))))
+    }
+
+    def logout = Action {
+        Redirect(routes.Application.login).withNewSession
     }
 }
