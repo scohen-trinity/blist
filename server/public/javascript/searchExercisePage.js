@@ -10,6 +10,7 @@ const landingRoute        = document.getElementById("landingRoute").value;
 const validateRoute       = document.getElementById("validateRoute").value;
 const creationPageRoute   = document.getElementById("creationPageRoute").value;
 const creationActionRoute = document.getElementById("creationActionRoute").value;
+const searchExerciseRoute = document.getElementById("searchExerciseRoute").value;
 
 // Hamburger Component
 class Hamburger extends React.Component {
@@ -154,5 +155,5 @@ class NavBarComponent extends React.Component {
 
 ReactDOM.render(
     ce(MainSearchComponent, null, null),
-    document.getElementById('exercise_search_page')
+    document.getElementById('search_exercise_page')
 );

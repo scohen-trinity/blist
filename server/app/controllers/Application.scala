@@ -20,8 +20,7 @@ class Application @Inject()(cc: ControllerComponents) extends AbstractController
     Ok(views.html.accountCreation())
   }
 
-  // def searchExercise = Action { implicit request =>
-  //   Ok(views.html.exerciseSearch())  
-  // }
-
+  def exerciseSearch = Action { implicit request =>
+    Ok(views.html.searchExercise())  
+  }
 }

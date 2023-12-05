@@ -6,15 +6,12 @@
 GET        /                             controllers.Application.landing
 GET        /login                        controllers.Application.login
 GET        /create                       controllers.Application.accountCreation
+GET        /search                       controllers.Application.exerciseSearch
 
 # userController Routes
 
 POST       /validate                     controllers.UserController.validate
 POST       /createAccount                controllers.UserController.create
-
-# exerciseSearch Routes
-
-GET        /search                       controllers.ExerciseController.searchExercise
 
 # Prefix must match `play.assets.urlPrefix`
 GET        /assets/*file                 controllers.Assets.at(file)
