@@ -12,6 +12,7 @@ GET        /search                       controllers.Application.exerciseSearch
 
 POST       /validate                     controllers.UserController.validate
 POST       /createAccount                controllers.UserController.create
+GET        /getUserInfo                  controllers.UserController.getUserInfo
 
 # Prefix must match `play.assets.urlPrefix`
 GET        /assets/*file                 controllers.Assets.at(file)

@@ -21,6 +21,13 @@ class Application @Inject()(cc: ControllerComponents) extends AbstractController
   }
 
   def exerciseSearch = Action { implicit request =>
-    Ok(views.html.searchExercise())  
+    request.session.get("username") match {
+      case Some(username) => 
+        // println(username)
+        Ok(views.html.searchExercise())
+      case None =>
+        Redirect(routes.Application.login)
+    }
+      
   }
 }

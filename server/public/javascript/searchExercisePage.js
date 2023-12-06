@@ -11,6 +11,7 @@ const validateRoute       = document.getElementById("validateRoute").value;
 const creationPageRoute   = document.getElementById("creationPageRoute").value;
 const creationActionRoute = document.getElementById("creationActionRoute").value;
 const searchExerciseRoute = document.getElementById("searchExerciseRoute").value;
+const getUserInfo         = document.getElementById("getUserInfoRoute").value;
 
 // Hamburger Component
 class Hamburger extends React.Component {
@@ -113,12 +114,29 @@ class BasicSearchComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            username: ""
         }
     }
 
+    componentDidMount() {
+        this.getInfo();
+    }
+
     render() {
-        return ce('div', null, 'Exercise Search Page');
+        return ce('div', null, this.state.username);
+    }
+
+    getInfo() {
+        fetch(getUserInfo)
+            .then(response => response.json())
+            .then(userData => {
+                console.log(userData.username)
+                this.setState({ username: userData.username });
+                // document.getElementById('usernameDisplay').innerText = 'Logged in as: ' + userData.username;
+            })
+            .catch(error => {
+                console.error('Error', error);
+            })
     }
 }
 
