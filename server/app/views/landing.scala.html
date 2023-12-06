@@ -1,4 +1,4 @@
-@()
+@()(implicit request: RequestHeader, flash: Flash)
 
 @main("Tiger Fit") {
     
@@ -8,11 +8,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/landing.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
     
     
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@@700&family=Neucha&display=swap" rel="stylesheet"> 
-
+    <input type="hidden" id="csrfToken" value="@helper.CSRF.getToken.value">
+    <input type="hidden" id="loginRoute" value="@routes.Application.login">
+    <input type="hidden" id="landingRoute" value="@routes.Application.landing">
 
     <div id="react-root"></div>   
     <script src="@routes.Assets.versioned("javascript/landingPage.js")"></script>

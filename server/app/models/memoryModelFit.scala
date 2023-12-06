@@ -4,10 +4,10 @@ import collection.mutable._
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext
 
-class MemoryModelFit(implicit ec: ExecutionContext) extends ModelTrait {
+class MemoryModelFit(implicit ec: ExecutionContext) {
     private val userPass = Map[String, String]("samc" -> "drowssap", "setho" -> "password", "oliviab" -> "123", "samuelp"-> " ") 
     private val goals = Seq[String] ("Gain Muscle", "Lose Weight", "Stay Healthy")
-    private val userInfo = Map[String, Tuple4[Int, Int, String, Int]]("samc" -> Tuple4(180, 72, goals(0), 4))
+    private val userInfo = Map[String, Tuple4[Int, Int, Int, Int]]("samc" -> Tuple4(180, 72, 0, 4))
     private val exercises = Map[String, Tuple3[Seq[String], String, String]](
         "Squat" -> Tuple3(Seq("Quads", "Glutes", "Hamstring"), "https://www.youtube.com/watch?v=nFAscG0XUNY", "Squat down like you are sitting in a chair with a barbell on your shoulders."), 
         "Deadlift" -> Tuple3(Seq("Hamstring", "Back"), "https://www.youtube.com/watch?v=7Q_GnXm7LbI", "Pick up a weighted barbell off the ground. Keep back straight."),
@@ -43,7 +43,7 @@ class MemoryModelFit(implicit ec: ExecutionContext) extends ModelTrait {
             if(userPass.contains(username)){
                 if (userInfo.contains(username)) false
                 else{
-                    userInfo(username) = (weight, height, goals(goalIndex), days)
+                    userInfo(username) = (weight, height, goalIndex, days)
                     true
                 }
             }
@@ -79,7 +79,7 @@ class MemoryModelFit(implicit ec: ExecutionContext) extends ModelTrait {
 
     def updateGoal(username: String, newGoalIndex: Int): Future[Boolean] = {
         Future.successful {
-            userInfo(username) = (userInfo(username)._1, userInfo(username)._2, goals(newGoalIndex), userInfo(username)._4)
+            userInfo(username) = (userInfo(username)._1, userInfo(username)._2, newGoalIndex, userInfo(username)._4)
             true
         }
     }
@@ -91,9 +91,9 @@ class MemoryModelFit(implicit ec: ExecutionContext) extends ModelTrait {
         }
     }
 
-    def retrieveUserSettings(username: String): Future[Tuple4[Int, Int, String, Int]] = {
+    def retrieveUserSettings(username: String): Future[Tuple4[Int, Int, Int, Int]] = {
         Future.successful {
-            if (userInfo.contains(username) == false) Tuple4(-1,-1,"", -1)
+            if (userInfo.contains(username) == false) Tuple4(-1,-1,-1, -1)
             else{
                 userInfo(username)
             }

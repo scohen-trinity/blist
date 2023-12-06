@@ -5,13 +5,26 @@
 # Home page
 GET        /                             controllers.Application.landing
 GET        /login                        controllers.Application.login
+GET        /create                       controllers.Application.accountCreation
 
-# userController Routes
-POST       /validate                     controllers.userController.validate
 
 # workoutController Routes
- GET        /exercise                     controllers.exerciseController.exercise 
+GET        /exercise                     controllers.exerciseController.exercise 
 
+# userController Routes
+
+POST       /validate                     controllers.UserController.validate
+POST       /createAccount                controllers.UserController.create
+POST       /retrieveSettings             controllers.UserController.obtainSettings
+POST       /initializeSettings           controllers.UserController.setAllSettings
+POST       /updatePassword               controllers.UserController.changePassword
+POST       /updateWeight                 controllers.UserController.changeWeight
+POST       /updateHeight                 controllers.UserController.changeHeight
+POST       /updateGoal                   controllers.UserController.changeGoal
+POST       /updateDays                   controllers.UserController.changeDays
+
+# exerciseController Routes
+GET        /exercise                     controllers.exerciseController.exercise
 
 # Prefix must match `play.assets.urlPrefix`
 GET        /assets/*file                 controllers.Assets.at(file)

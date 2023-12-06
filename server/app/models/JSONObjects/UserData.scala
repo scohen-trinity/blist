@@ -6,4 +6,5 @@ case class Exercise(exerciseId: String, exerciseName: String, exerciseDescriptio
 
 object UserData {
     implicit val userDataReads: Reads[UserData] = Json.reads[UserData]
+    implicit val userDataWrites: Writes[UserData] = Json.writes[UserData]
 }

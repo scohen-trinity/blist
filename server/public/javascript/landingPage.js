@@ -1,11 +1,39 @@
+"use strict"
 
 const ce = React.createElement;
+
+// The code below is required for nav bar and hamburger menu
+
+const csrfToken = document.getElementById("csrfToken").value;
+const loginRoute = document.getElementById("loginRoute").value;
+const landingRoute = document.getElementById("landingRoute").value;
 
 class Hamburger extends React.Component {
     constructor(props) {
         super(props);
         this.state = { isOpen: false };
         this.toggleMenu = this.toggleMenu.bind(this);
+        this.goToLogin = this.goToLogin.bind(this);
+        this.goToLanding = this.goToLanding.bind(this);
+    }
+
+    closeMenu() {
+        this.setState({ isOpen: false });
+    }
+
+    // Call this method after navigation actions
+    goToLanding(e) {
+        e.preventDefault();
+        this.closeMenu();
+        console.log("Go to landing page");
+        window.location.href = landingRoute;
+    }
+
+    goToLogin(e) {
+        e.preventDefault();
+        this.closeMenu();
+        console.log("Go to log in page");
+        window.location.href = loginRoute;
     }
 
     toggleMenu() {
@@ -30,28 +58,35 @@ class Hamburger extends React.Component {
         });
 
         return ce('div', navbarProps,
-            ce('div', hamburgerProps,
-                ce('div', burgerProps(1)), // First line of hamburger
-                ce('div', burgerProps(2)), // Second line of hamburger
-                ce('div', burgerProps(3))  // Third line of hamburger
-            ),
-            this.state.isOpen ? ce('div', { className: 'menu' },
-                ce('a', { href: '#home' }, 'Home'),
-                ce('a', { href: '#about' }, 'About'),
-                ce('a', { href: '#services' }, 'Services'),
-                ce('a', { href: '#contact' }, 'Contact')
-            ) : null
-        );
+        ce('div', hamburgerProps,
+            ce('div', burgerProps(1)), // First line of hamburger
+            ce('div', burgerProps(2)), // Second line of hamburger
+            ce('div', burgerProps(3))  // Third line of hamburger
+        ),
+        this.state.isOpen ? ce('div', { className: 'menu' },
+        ce('a', { 
+            onClick: e => this.goToLanding(e), 
+            style: { cursor: 'pointer' }, 
+            tabIndex: 0 
+        }, "Home"),
+        ce('a', { 
+            onClick: e => this.goToLogin(e), 
+            style: { cursor: 'pointer' }, 
+            tabIndex: 0 
+        }, "Login")
+        ) : null
+    );
+    
     }
+
 }
 
 
 class NavBarComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            
-        };
+        this.goToLogin = this.goToLogin.bind(this);
+        this.goToLanding = this.goToLanding.bind(this);
     }
 
     render() {
@@ -76,6 +111,7 @@ class NavBarComponent extends React.Component {
         window.location.href = landingRoute;
     }
 }
+// The code above is required for the NavBar and Hamburger menu
 
 class TeamSection extends React.Component {
     render() {
@@ -103,7 +139,7 @@ class PurposeSection extends React.Component {
 class MainContainer extends React.Component {
     render() {
         return ce('div', null, 
-        ce(NavBarComponent, null, null),
+        ce(NavBarComponent, null, null), 
         ce('div', {className: 'container'},
             ce('div', {className: 'row equal-height'},
                 ce('div', {className: 'col-md-6'},
@@ -120,13 +156,13 @@ class MainContainer extends React.Component {
     
 }
 
-class Version4MainComponent extends React.Component {
-    render() {
-        return ce(MainContainer, null, null);
-    }
-}
+// class Version4MainComponent extends React.Component {
+//     render() {
+//         return ce(MainContainer, null, null);
+//     }
+// }
 
 ReactDOM.render(
-    ce(Version4MainComponent, null, null),
+    ce(MainContainer, null, null),
     document.getElementById('react-root')
 );
