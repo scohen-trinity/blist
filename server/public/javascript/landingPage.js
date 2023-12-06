@@ -7,6 +7,7 @@ const ce = React.createElement;
 const csrfToken = document.getElementById("csrfToken").value;
 const loginRoute = document.getElementById("loginRoute").value;
 const landingRoute = document.getElementById("landingRoute").value;
+const profileRoute = document.getElementById("profileRoute").value;
 
 class Hamburger extends React.Component {
     constructor(props) {
@@ -34,6 +35,13 @@ class Hamburger extends React.Component {
         this.closeMenu();
         console.log("Go to log in page");
         window.location.href = loginRoute;
+    }
+
+    goToProfile(e){
+        e.preventDefault();
+        this.closeMenu();
+        console.log("Go to profile page");
+        window.location.href = profileRoute;
     }
 
     toggleMenu() {
@@ -73,7 +81,12 @@ class Hamburger extends React.Component {
             onClick: e => this.goToLogin(e), 
             style: { cursor: 'pointer' }, 
             tabIndex: 0 
-        }, "Login")
+        }, "Login"),
+        ce('a', { 
+            onClick: e => this.goToProfile(e), 
+            style: { cursor: 'pointer' }, 
+            tabIndex: 0 
+        }, "Profile")
         ) : null
     );
     
@@ -109,6 +122,10 @@ class NavBarComponent extends React.Component {
     goToLanding(e) {
         console.log("Go to landing page")
         window.location.href = landingRoute;
+    }
+    goToProfile(e) {
+        console.log("Go to landing page")
+        window.location.href = profileRoute;
     }
 }
 // The code above is required for the NavBar and Hamburger menu
@@ -156,13 +173,9 @@ class MainContainer extends React.Component {
     
 }
 
-// class Version4MainComponent extends React.Component {
-//     render() {
-//         return ce(MainContainer, null, null);
-//     }
-// }
+
 
 ReactDOM.render(
     ce(MainContainer, null, null),
-    document.getElementById('react-root')
+    document.getElementById('landing-page')
 );

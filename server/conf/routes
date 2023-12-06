@@ -7,6 +7,9 @@ GET        /                             controllers.Application.landing
 GET        /login                        controllers.Application.login
 GET        /create                       controllers.Application.accountCreation
 
+# Account Settings Route
+GET        /profile                      controllers.Application.accountSettings
+
 # userController Routes
 
 POST       /validate                     controllers.UserController.validate
