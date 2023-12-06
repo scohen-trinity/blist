@@ -1,3 +1,33 @@
+/* Base Font Style */
+/* .basic-font, .navbar, .login-form, .submission-button, .navbar-header, .login-header, form {
+    font-family: 'Lato', sans-serif;
+} */
+
+/* Navbar Styles */
+.navbar {
+    background-color: #0097b2;
+    color: #fff;
+    padding: 5px;
+    width: 100%;
+    text-align: center;
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar-header {
+    font-size: 20px;
+}
+
+.login-navbar {
+    height: 50px;
+}
+
+.login-header {
+    align-items: center;
+}
+
+/* Login Form Styles */
 .login-form {
     width: 300px;
     padding: 20px;
@@ -9,6 +39,7 @@
     align-items: center;
 }
 
+/* Submission Button Styles */
 .submission-button {
     margin: 12px;
     border: none;
@@ -17,7 +48,6 @@
     transition: 0.2s all;
     right: 0px;
     border-radius: 20px;
-    font-family: 'Lato', sans-serif;
     width: 100px;
     height: 25px;
 }
@@ -26,56 +56,107 @@
     background-color: #86ebfd;
 }
 
-.navbar {
-    background-color: #0097b2;
-    color: #fff;
-    padding: 5px;
-    width: 100%;
-    top: 0;
-    left: 0;
-    font-family: 'Lato', sans-serif;
-    text-align: center;
-    font-size: 15px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.navbar-header {
-    font-size: 20px;
-}
-
-.navbar-login-div {
-    display: flex;
-    justify-content: space-evenly;
-}
-
-.hamburger-navbar {
-
-}
-
-.login-navbar {
-    height: 50px;
-}
-
-.login-header {
-    align-items: center;
-    font-family: 'Lato', sans-serif;
-}
-
-.basic-font {
-    font-family: 'Lato', sans-serif;
-}
-
 .form-container {
-    position: absolute;
-    top: 25%;
-    left: 45%;
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-49%, -50%); /* Center the form */
+
 }
 
+/* Since the form itself is also a flex container, 
+   make sure its children are aligned properly */
 form {
-    padding: 20px;
-    border-radius: 5px;
+    width: 300px; /* Set a fixed width for the form */
+
+}
+
+
+/* Flexbox Adjustments */
+.equal-height {
+    display: flex;
+}
+
+.equal-height > [class^="col-"] {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+/* Section Styles */
+.section {
+    background: #D1D2D2; 
+    padding: 20px; 
+    border-radius: 8px; 
+    margin-bottom: 20px;
+    margin-top: 150px;
+    flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
+}
+
+/* List Styles */
+.team-list li::before { 
+    content: '● '; 
+    color: #000; 
+    margin-right: 5px;
+}
+
+.team-list, .purpose p { 
+    margin: 0; 
+    padding: 20; 
+}
+
+.team-list li { 
+    list-style: none; 
+    padding-left: 0; 
+}
+
+/* Hamburger Menu Styles */
+.hamburger-navbar {
+    position: relative; /* Ensure the navbar has a relative position */
+}
+
+.hamburger {
+    /* styles for the hamburger icon container */
+}
+
+.burger {
+    width: 2rem;
+    height: 0.25rem;
+    background-color: black;
+    transition: all 0.3s linear;
+    transform-origin: 1px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.burger.open:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.burger.open:nth-child(2) {
+    opacity: 0;
+}
+
+.burger.open:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
+.menu {
+    position: absolute;
+    top: 100%; /* Align the top of the menu with the bottom of the navbar */
+    left: 0; /* Align the menu to the left edge of the navbar */
+    width: max-content; /* Set the width of the menu to match the widest item */
+    background-color: #fff; /* Set the background color to white */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Adds a shadow for depth (optional) */
+    z-index: 1000; /* Ensures the menu is above other content */
+}
+
+.menu a {
+    color: black; /* Set text color for the menu items */
+    padding: 10px 15px; /* Add padding for each link for spacing */
+    text-decoration: none; /* Removes the underline from links */
+    display: block; /* Make each link block level */
+    white-space: nowrap; /* Prevents the text from wrapping */
 }
