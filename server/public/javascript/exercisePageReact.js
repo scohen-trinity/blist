@@ -81,11 +81,15 @@ class NavBarComponent extends React.Component {
 class ExerciseSection extends React.Component {
     render() {
         return ce('div', {className: 'exercise name'},
+<<<<<<< HEAD
+            ce('h2', {className: 'text-center'}, 'Exercise: '),
+=======
             ce('br'),
             ce('br'),
             ce('br'),
             ce('h2', {className: 'text-center'}, 'Exercise: '),
             ce('br'),
+>>>>>>> master
             ce('h4', {className: 'text-center'}, 'Description: '),
             ce('h4', {className: 'text-center'}, 'Muscle Group: '),
             ce('h4', {className: 'text-center'}, 'Link to video: ')
