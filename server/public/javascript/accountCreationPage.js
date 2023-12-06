@@ -9,6 +9,14 @@ const validateRoute = document.getElementById("validateRoute").value;
 const creationPageRoute = document.getElementById("creationPageRoute").value;
 const creationActionRoute = document.getElementById("creationActionRoute").value;
 
+const retrieveSettingsRoute = document.getElementById("retrieveSettingsRoute").value;
+const initializeSettingsRoute = document.getElementById("initializeSettingsRoute").value;
+const updatePasswordRoute = document.getElementById("updatePasswordRoute").value;
+const updateWeightRoute = document.getElementById("updateWeightRoute").value;
+const updateHeightRoute = document.getElementById("updateHeightRoute").value;
+const updateGoalRoute = document.getElementById("updateGoalRoute").value;
+const updateDaysRoute = document.getElementById("updateDaysRoute").value;
+
 class MainAccountCreationComponent extends React.Component {
     constructor(props){
         super(props);
@@ -50,7 +58,9 @@ class AccountComponent extends React.Component {
             ce('input', {type: "password", id: "newConfirmPass", value: this.state.newConfirmPass, onChange: e => this.onChangeHandler(e)}),
             ce('br'),
             ce('br'),
-            ce('button', {className: "submission-button", onClick: e=> this.createAccount(e)}, 'Create'),
+            ce('button', {className: "submission-button", onClick: e => this.createAccount(e)}, 'Create'),
+            ce('br'),
+            ce('button', {className: "submission-button", onClick: e => this.runTests(e)}, 'Run Tests'),
             ce('br'),
             ce('br'),
             ce('span', {className: 'basic-font', id: "popupMessage"}, this.state.popupMessage)
@@ -90,6 +100,61 @@ class AccountComponent extends React.Component {
                 }
             })
         }
+    }
+
+    /* USED FOR RUNNING DEV TESTS */
+    runTests(e){
+        
+    }
+
+    /* WHOEVER NEEDS THIS FUNCTIONALITY SHOULD TAKE IT*/
+    retrieveUserSettings(username){
+        fetch(retrieveSettingsRoute, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json', 'Csrf-Token': csrfToken},
+            body: JSON.stringify(username)
+        }).then(res => res.json()).then(data => {
+            console.log(data);
+            //USE data[index] to access the weight, height, goal, and days
+            //You'll get back all -1s if there is an error or the user does not exist and -2s if the user did not have that particular setting
+        })
+    }
+
+    /* WHOEVER NEEDS THIS FUNCTIONALITY SHOULD TAKE IT*/
+    initializeUserSettings(username, weight, height, goal, days){
+        fetch(initializeSettingsRoute, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json', 'Csrf-Token': csrfToken},
+            body: JSON.stringify({username, weight, height, goal, days})
+        }).then(res => res.json()).then(data => {
+            console.log(data);
+            //data will return a boolean telling you if it succeeded or not
+        })
+    }
+
+    /* WHOEVER NEEDS THIS FUNCTIONALITY SHOULD TAKE IT*/
+    updatePassword(username, oldPassword, newPassword){
+        fetch(updatePasswordRoute, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json', 'Csrf-Token': csrfToken},
+            body: JSON.stringify({username, oldPassword, newPassword})
+        }).then(res => res.json()).then(data => {
+            console.log(data);
+            //data will return a boolean telling you if it succeeded or not
+        })
+    }
+
+    /* WHOEVER NEEDS THIS FUNCTIONALITY SHOULD TAKE IT*/
+    //Works for weight, height, days, and goals 
+    updateSetting(username, newSetting, route){
+        fetch(route, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json', 'Csrf-Token': csrfToken},
+            body: JSON.stringify({username, newSetting})
+        }).then(res => res.json()).then(data => {
+            console.log(data);
+            //data will return a boolean telling you if it succeeded or not
+        })
     }
 }
 
