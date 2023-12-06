@@ -123,7 +123,10 @@ class BasicSearchComponent extends React.Component {
     }
 
     render() {
-        return ce('div', null, this.state.username);
+        return ce('div', {className: "form-container"},
+            ce('h2', {className: "login-header"}, "hi " + this.state.username), 
+            ce('input', {placeholder: "search for a workout"}, null),
+            );
     }
 
     getInfo() {
@@ -132,7 +135,6 @@ class BasicSearchComponent extends React.Component {
             .then(userData => {
                 console.log(userData)
                 this.setState({ username: userData });
-                // document.getElementById('usernameDisplay').innerText = 'Logged in as: ' + userData.username;
             })
             .catch(error => {
                 console.error('Error', error);
