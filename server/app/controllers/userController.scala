@@ -55,7 +55,8 @@ class UserController @Inject()(cc: ControllerComponents) extends AbstractControl
     def getUserInfo = Action.async { implicit request =>
         request.session.get("username") match {
             case Some(username) =>
-                // val userData = UserData(username)
+                // val userData = UserData(username)\
+                println(username)
                 Future.successful(Ok(Json.toJson(username)))
             case None =>
                 Future.successful(Ok(Json.toJson(false)))

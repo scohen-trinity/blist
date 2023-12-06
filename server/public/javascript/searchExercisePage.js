@@ -130,8 +130,8 @@ class BasicSearchComponent extends React.Component {
         fetch(getUserInfo)
             .then(response => response.json())
             .then(userData => {
-                console.log(userData.username)
-                this.setState({ username: userData.username });
+                console.log(userData)
+                this.setState({ username: userData });
                 // document.getElementById('usernameDisplay').innerText = 'Logged in as: ' + userData.username;
             })
             .catch(error => {
