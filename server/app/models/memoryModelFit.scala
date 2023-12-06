@@ -99,4 +99,9 @@ class MemoryModelFit(implicit ec: ExecutionContext) extends ModelTrait {
             }
         }
     }
+
+    def getExercise(): Future[String] = {
+        //I need to get the correct exercise when it is clicked in the workout section... not sure how
+        Future.successful("Bicep curl")
+    }
 }
