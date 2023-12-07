@@ -10,10 +10,12 @@ CREATE TABLE users (
 
 CREATE TABLE exercises (
     exercise_id INTEGER NOT NULL UNIQUE,
-    exercise_name VARCHAR(20) NOT NULL,
-    exercise_description VARCHAR(100) NOT NULL,
-    exercise_link VARCHAR(100) NOT NULL,
-    exercise_muscle_group VARCHAR(10) ARRAY NOT NULL,
+    exercise_name VARCHAR(100) NOT NULL,
+    exercise_description VARCHAR(400) NOT NULL,
+    exercise_link VARCHAR(400) NOT NULL,
+    exercise_muscle_group1 VARCHAR(10) NOT NULL,
+    exercise_muscle_group2 VARCHAR(10),
+    exercise_muscle_group3 VARCHAR(10),
     PRIMARY KEY (exercise_id)
 );
 

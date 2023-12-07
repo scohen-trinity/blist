@@ -20,7 +20,8 @@ POST       /updateGoal                   controllers.UserController.changeGoal
 POST       /updateDays                   controllers.UserController.changeDays
 
 # exerciseController Routes
-GET        /exercise                     controllers.exerciseController.exercise
+POST       /retrieveExercise             controllers.ExerciseController.obtainExercise
+POST       /searchForExercises           controllers.ExerciseController.searchExercises
 
 # Prefix must match `play.assets.urlPrefix`
 GET        /assets/*file                 controllers.Assets.at(file)
