@@ -66,32 +66,38 @@ trait Tables {
 
   /** Entity class storing rows of table Exercises
    *  @param exerciseId Database column exercise_id SqlType(int4), PrimaryKey
-   *  @param exerciseName Database column exercise_name SqlType(varchar), Length(20,true)
-   *  @param exerciseDescription Database column exercise_description SqlType(varchar), Length(100,true)
-   *  @param exerciseLink Database column exercise_link SqlType(varchar), Length(100,true)
-   *  @param exerciseMuscleGroup Database column exercise_muscle_group SqlType(_varchar), Length(10,false) */
-  case class ExercisesRow(exerciseId: Int, exerciseName: String, exerciseDescription: String, exerciseLink: String, exerciseMuscleGroup: String)
+   *  @param exerciseName Database column exercise_name SqlType(varchar), Length(100,true)
+   *  @param exerciseDescription Database column exercise_description SqlType(varchar), Length(400,true)
+   *  @param exerciseLink Database column exercise_link SqlType(varchar), Length(400,true)
+   *  @param exerciseMuscleGroup1 Database column exercise_muscle_group1 SqlType(varchar), Length(10,true)
+   *  @param exerciseMuscleGroup2 Database column exercise_muscle_group2 SqlType(varchar), Length(10,true), Default(None)
+   *  @param exerciseMuscleGroup3 Database column exercise_muscle_group3 SqlType(varchar), Length(10,true), Default(None) */
+  case class ExercisesRow(exerciseId: Int, exerciseName: String, exerciseDescription: String, exerciseLink: String, exerciseMuscleGroup1: String, exerciseMuscleGroup2: Option[String] = None, exerciseMuscleGroup3: Option[String] = None)
   /** GetResult implicit for fetching ExercisesRow objects using plain SQL queries */
-  implicit def GetResultExercisesRow(implicit e0: GR[Int], e1: GR[String]): GR[ExercisesRow] = GR{
+  implicit def GetResultExercisesRow(implicit e0: GR[Int], e1: GR[String], e2: GR[Option[String]]): GR[ExercisesRow] = GR{
     prs => import prs._
-    ExercisesRow.tupled((<<[Int], <<[String], <<[String], <<[String], <<[String]))
+    ExercisesRow.tupled((<<[Int], <<[String], <<[String], <<[String], <<[String], <<?[String], <<?[String]))
   }
   /** Table description of table exercises. Objects of this class serve as prototypes for rows in queries. */
   class Exercises(_tableTag: Tag) extends profile.api.Table[ExercisesRow](_tableTag, "exercises") {
-    def * = (exerciseId, exerciseName, exerciseDescription, exerciseLink, exerciseMuscleGroup).<>(ExercisesRow.tupled, ExercisesRow.unapply)
+    def * = (exerciseId, exerciseName, exerciseDescription, exerciseLink, exerciseMuscleGroup1, exerciseMuscleGroup2, exerciseMuscleGroup3).<>(ExercisesRow.tupled, ExercisesRow.unapply)
     /** Maps whole row to an option. Useful for outer joins. */
-    def ? = ((Rep.Some(exerciseId), Rep.Some(exerciseName), Rep.Some(exerciseDescription), Rep.Some(exerciseLink), Rep.Some(exerciseMuscleGroup))).shaped.<>({r=>import r._; _1.map(_=> ExercisesRow.tupled((_1.get, _2.get, _3.get, _4.get, _5.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+    def ? = ((Rep.Some(exerciseId), Rep.Some(exerciseName), Rep.Some(exerciseDescription), Rep.Some(exerciseLink), Rep.Some(exerciseMuscleGroup1), exerciseMuscleGroup2, exerciseMuscleGroup3)).shaped.<>({r=>import r._; _1.map(_=> ExercisesRow.tupled((_1.get, _2.get, _3.get, _4.get, _5.get, _6, _7)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
 
     /** Database column exercise_id SqlType(int4), PrimaryKey */
     val exerciseId: Rep[Int] = column[Int]("exercise_id", O.PrimaryKey)
-    /** Database column exercise_name SqlType(varchar), Length(20,true) */
-    val exerciseName: Rep[String] = column[String]("exercise_name", O.Length(20,varying=true))
-    /** Database column exercise_description SqlType(varchar), Length(100,true) */
-    val exerciseDescription: Rep[String] = column[String]("exercise_description", O.Length(100,varying=true))
-    /** Database column exercise_link SqlType(varchar), Length(100,true) */
-    val exerciseLink: Rep[String] = column[String]("exercise_link", O.Length(100,varying=true))
-    /** Database column exercise_muscle_group SqlType(_varchar), Length(10,false) */
-    val exerciseMuscleGroup: Rep[String] = column[String]("exercise_muscle_group", O.Length(10,varying=false))
+    /** Database column exercise_name SqlType(varchar), Length(100,true) */
+    val exerciseName: Rep[String] = column[String]("exercise_name", O.Length(100,varying=true))
+    /** Database column exercise_description SqlType(varchar), Length(400,true) */
+    val exerciseDescription: Rep[String] = column[String]("exercise_description", O.Length(400,varying=true))
+    /** Database column exercise_link SqlType(varchar), Length(400,true) */
+    val exerciseLink: Rep[String] = column[String]("exercise_link", O.Length(400,varying=true))
+    /** Database column exercise_muscle_group1 SqlType(varchar), Length(10,true) */
+    val exerciseMuscleGroup1: Rep[String] = column[String]("exercise_muscle_group1", O.Length(10,varying=true))
+    /** Database column exercise_muscle_group2 SqlType(varchar), Length(10,true), Default(None) */
+    val exerciseMuscleGroup2: Rep[Option[String]] = column[Option[String]]("exercise_muscle_group2", O.Length(10,varying=true), O.Default(None))
+    /** Database column exercise_muscle_group3 SqlType(varchar), Length(10,true), Default(None) */
+    val exerciseMuscleGroup3: Rep[Option[String]] = column[Option[String]]("exercise_muscle_group3", O.Length(10,varying=true), O.Default(None))
   }
   /** Collection-like TableQuery object for table Exercises */
   lazy val Exercises = new TableQuery(tag => new Exercises(tag))

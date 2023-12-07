@@ -1,3 +1,5 @@
+const retrieveExerciseRoute = document.getElementById("retrieveExerciseRoute").value;
+const searchExercisesRoute = document.getElementById("searchExercisesRoute").value;
 
 const ce = React.createElement;
 

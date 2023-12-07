@@ -17,6 +17,9 @@ const updateHeightRoute = document.getElementById("updateHeightRoute").value;
 const updateGoalRoute = document.getElementById("updateGoalRoute").value;
 const updateDaysRoute = document.getElementById("updateDaysRoute").value;
 
+const retrieveExerciseRoute = document.getElementById("retrieveExerciseRoute").value;
+const searchExercisesRoute = document.getElementById("searchExercisesRoute").value;
+
 class MainAccountCreationComponent extends React.Component {
     constructor(props){
         super(props);
@@ -84,6 +87,14 @@ class AccountComponent extends React.Component {
             this.setState({popupMessage: "Fields Cannot Be Empty."});
             this.setState({newName: "", newPass: "", newConfirmPass: ""});
         }
+        else if(username.length > 20) {
+            this.setState({popupMessage: "Username must not exceed 20 characters."});
+            this.setState({newName: "", newPass: "", newConfirmPass: ""});
+        }
+        else if(password.length > 20) {
+            this.setState({popupMessage: "Password must not exceed 20 characters."});
+            this.setState({newName: "", newPass: "", newConfirmPass: ""});
+        }
         else {
             fetch(creationActionRoute, {
                 method: 'POST',
@@ -104,7 +115,29 @@ class AccountComponent extends React.Component {
 
     /* USED FOR RUNNING DEV TESTS */
     runTests(e){
-        
+
+    }
+
+    /* WHOEVER NEEDS THIS FUNCTIONALITY SHOULD TAKE IT*/
+    searchByLabel(label){
+        fetch(searchExercisesRoute, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json', 'Csrf-Token': csrfToken},
+            body: JSON.stringify(label)
+        }).then(res => res.json()).then(data => {
+            console.log(data);
+        })
+    }
+
+    /* WHOEVER NEEDS THIS FUNCTIONALITY SHOULD TAKE IT*/
+    retrieveExerciseById(id){
+        fetch(retrieveExerciseRoute, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json', 'Csrf-Token': csrfToken},
+            body: JSON.stringify(id)
+        }).then(res => res.json()).then(data => {
+            console.log(data);
+        })
     }
 
     /* WHOEVER NEEDS THIS FUNCTIONALITY SHOULD TAKE IT*/

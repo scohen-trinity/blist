@@ -10,9 +10,10 @@
 
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
     
-    
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@@700&family=Neucha&display=swap" rel="stylesheet"> 
 
+    <input type="hidden" id="retrieveExerciseRoute" value="@routes.ExerciseController.obtainExercise">
+    <input type="hidden" id="searchExercisesRoute" value="@routes.ExerciseController.searchExercises">
 
     <div id="exercise"></div>   
     <script src="@routes.Assets.versioned("javascript/exercisePageReact.js")"></script>
