@@ -12,6 +12,14 @@ const creationPageRoute   = document.getElementById("creationPageRoute").value;
 const creationActionRoute = document.getElementById("creationActionRoute").value;
 const searchRoute         = document.getElementById("searchExerciseRoute").value;
 
+const retrieveSettingsRoute = document.getElementById("retrieveSettingsRoute").value;
+const initializeSettingsRoute = document.getElementById("initializeSettingsRoute").value;
+const updatePasswordRoute = document.getElementById("updatePasswordRoute").value;
+const updateWeightRoute = document.getElementById("updateWeightRoute").value;
+const updateHeightRoute = document.getElementById("updateHeightRoute").value;
+const updateGoalRoute = document.getElementById("updateGoalRoute").value;
+const updateDaysRoute = document.getElementById("updateDaysRoute").value;
+
 // Hamburger Component
 class Hamburger extends React.Component {
     constructor(props) {
@@ -85,8 +93,6 @@ class Hamburger extends React.Component {
     }
 
 }
-
-// Hamburger component above
 
 class MainLoginComponent extends React.Component {
     constructor(props) {

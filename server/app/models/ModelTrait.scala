@@ -12,7 +12,5 @@ trait ModelTrait {
     def updateHeight(username: String, newHeight: Int): Future[Boolean]
     def updateGoal(username: String, newGoalIndex: Int): Future[Boolean] 
     def updateDays(username: String, newDays: Int): Future[Boolean]
-    def retrieveUserSettings(username: String): Future[Tuple4[Int, Int, String, Int]]
-
-    
+    def retrieveUserSettings(username: String): Future[Tuple5[Option[String], Option[Int], Option[Int], Option[Int], Option[Int]]]
 }
