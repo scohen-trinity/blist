@@ -9,7 +9,6 @@ GET        /create                       controllers.Application.accountCreation
 
 
 # workoutController Routes
-GET        /exercise                     controllers.exerciseController.exercise 
 
 # userController Routes
 
@@ -26,6 +25,7 @@ POST       /updateDays                   controllers.UserController.changeDays
 # exerciseController Routes
 POST       /retrieveExercise             controllers.ExerciseController.obtainExercise
 POST       /searchForExercises           controllers.ExerciseController.searchExercises
+GET        /exercise                     controllers.ExerciseController.exercise 
 
 # Prefix must match `play.assets.urlPrefix`
 GET        /assets/*file                 controllers.Assets.at(file)

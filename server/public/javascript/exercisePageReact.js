@@ -1,5 +1,6 @@
 const retrieveExerciseRoute = document.getElementById("retrieveExerciseRoute").value;
 const searchExercisesRoute = document.getElementById("searchExercisesRoute").value;
+const csrfToken = document.getElementById("csrfToken").value;
 
 const ce = React.createElement;
 
@@ -83,21 +84,91 @@ class NavBarComponent extends React.Component {
 class ExerciseSection extends React.Component {
     render() {
         return ce('div', {className: 'exercise name'},
-<<<<<<< HEAD
-            ce('h2', {className: 'text-center'}, 'Exercise: '),
-=======
             ce('br'),
             ce('br'),
             ce('br'),
             ce('h2', {className: 'text-center'}, 'Exercise: '),
             ce('br'),
->>>>>>> master
             ce('h4', {className: 'text-center'}, 'Description: '),
             ce('h4', {className: 'text-center'}, 'Muscle Group: '),
             ce('h4', {className: 'text-center'}, 'Link to video: ')
         );
     }
 }
+
+class ExerciseListSection extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            id: 1,
+            exercises: [],
+            selectExercises: [], 
+          
+        }; 
+    }
+
+    getAll() {
+        for (var i=1; i < 29; i++) {
+            this.state.id = i
+            fetch(retrieveExerciseRoute, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Csrf-Token': csrfToken },
+                body: JSON.stringify( this.state.id )  // Send an empty object as the request body
+            })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`HTTP error! Status: ${res.status}`);
+                }
+                return res.json();
+            })
+            .then(data => {
+                console.log('Received data:', data);
+        
+                // Assuming data is an array or tuple with at least 5 elements
+                const [, secondValue] = data;
+        
+                if (secondValue !== undefined) {
+                    // Update the state with the 2nd value
+                    //this.setState({ exercises: [secondValue] });
+                    this.setState({
+                        exercises: this.state.exercises.concat(secondValue)
+                      })
+                } else {
+                    console.error("Invalid data format:", data);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching exercises:', error);
+                console.error('Error details:', error.response ? error.response.data : 'No response data');
+            });
+        }
+    }
+    
+
+    handleGoToExercise(e){
+
+    }
+
+    componentDidMount() {
+        this.getAll();
+    }
+
+    render() {
+        return ce('div', {className: 'All-exercises'},
+            ce('br'),
+            ce('br'),
+            ce('br'),
+            ce('h2', {className: 'text-center'}, 'Exercise List'),
+            ce('br'),
+            ce('ul', null,
+                this.state.exercises.map((exercise, index) => 
+                    ce('li', {key: index, onClick: e => this.handleGoToExercise(exercise)}, exercise))
+            )   
+        );
+    }
+}
+
+
 
 class MainContainer extends React.Component {
     render() {
@@ -106,7 +177,8 @@ class MainContainer extends React.Component {
         ce('div', {className: 'container'},
             ce('div', {className: 'row justify-content-center'},
                 ce('div', {className: 'col-md-6'},
-                    ce(ExerciseSection, null, null)
+                    //ce(ExerciseSection, null, null)
+                    ce(ExerciseListSection, null, null)
                 )
             )
         )
