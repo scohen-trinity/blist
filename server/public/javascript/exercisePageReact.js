@@ -102,7 +102,7 @@ class ExerciseListSection extends React.Component {
         this.state = {
             id: 1,
             exercises: [],
-            selectExercises: [], 
+            //selectExercise: null, 
           
         }; 
     }
@@ -141,12 +141,41 @@ class ExerciseListSection extends React.Component {
                 console.error('Error fetching exercises:', error);
                 console.error('Error details:', error.response ? error.response.data : 'No response data');
             });
-        }
+       }
+    }
+    
+    handleGoToExercise(index) {
+        this.props.noList();
+        console.log(index + 1);
+        fetch(retrieveExerciseRoute, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Csrf-Token': csrfToken },
+            body: JSON.stringify(index + 1)
+        })
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+            return res.json();
+        })
+        .then(data => {
+            console.log('Received data:', data);
+            if (data) {
+                this.setState({ selectedExercise: data });  
+                //console.log("hey" + this.state.selectedExercise)              
+            } else {
+                console.error("Invalid data format:", data);
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching exercise details:', error);
+            console.error('Error details:', error.response ? error.response.data : 'No response data');
+        });
     }
     
 
-    handleGoToExercise(e){
-
+    triceps(e){
+        //do something similar to get all except check for those that work triceps
     }
 
     componentDidMount() {
@@ -154,38 +183,70 @@ class ExerciseListSection extends React.Component {
     }
 
     render() {
+        if (this.state.selectedExercise == null){
         return ce('div', {className: 'All-exercises'},
             ce('br'),
             ce('br'),
             ce('br'),
             ce('h2', {className: 'text-center'}, 'Exercise List'),
             ce('br'),
+            'I want to workout out my:',
+            ce('br'),
+            ce('button', {onClick: e => this.triceps(e)}, 'Triceps'),
+            ce('button', {onClick: e => this.Quads(e)}, 'Quads'),
+            ce('button', {onClick: e => this.Hamstring(e)}, 'Hamstring'),
+            ce('button', {onClick: e => this.Calf(e)}, 'Calf'),
+            ce('button', {onClick: e => this.Glutes(e)}, 'Glutes'),
+            ce('button', {onClick: e => this.Biceps(e)}, 'Biceps'),
+            //etc
+            ce('br'),
+            ce('br'),
             ce('ul', null,
                 this.state.exercises.map((exercise, index) => 
-                    ce('li', {key: index, onClick: e => this.handleGoToExercise(exercise)}, exercise))
-            )   
-        );
+                    ce('li', {key: index, onClick: e => this.handleGoToExercise(index)}, exercise))
+            ),   
+
+        );} else return ce('div', { className: 'exercise-details' },
+            ce('br'),
+            ce('h2', { className: 'text-center' }, 'Exercise Details'),
+            ce('br'),ce('br'),
+            ce('h4', { className: 'text-center' }, `Name: ${this.state.selectedExercise[1]}`),
+            ce('h4', { className: 'text-center' }, `Link to video: ${this.state.selectedExercise[2]}`),
+            ce('h4', { className: 'text-center' }, `Description: ${this.state.selectedExercise[3]}`),
+            ce('h4', { className: 'text-center' }, `Muscle Group(s): ${this.state.selectedExercise[4]}`)
+
+        )
     }
 }
 
 
 
 class MainContainer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            listIt: true,
+            selectedExercise: null,
+        };
+    }
+
     render() {
-        return ce('div', null, 
-        ce(NavBarComponent, null, null),
-        ce('div', {className: 'container'},
-            ce('div', {className: 'row justify-content-center'},
-                ce('div', {className: 'col-md-6'},
-                    //ce(ExerciseSection, null, null)
-                    ce(ExerciseListSection, null, null)
+        return ce('div', null,
+            ce(NavBarComponent, null, null),
+            ce('div', { className: 'container' },
+                ce('div', { className: 'row justify-content-center' },
+                    ce('div', { className: 'col-md-12' },
+                        ce(ExerciseListSection, { noList: () => this.setState({ listIt: false }) }, null),
+                        // Render Exercise Details
+                        console.log(this.state.selectedExercise)
+                        
+                    )
                 )
             )
-        )
-        )
+        );
     }
-    
 }
+
 
 class Version4MainComponent extends React.Component {
     render() {
