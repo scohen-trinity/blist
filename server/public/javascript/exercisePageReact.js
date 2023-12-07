@@ -162,6 +162,9 @@ class ExerciseListSection extends React.Component {
     triceps(e){
         //do something similar to get all except check for those that work triceps
     }
+    back(e){
+        this.setState({ selectedExercise: null });  
+    }
 
     componentDidMount() {
         this.getAll();
@@ -200,7 +203,9 @@ class ExerciseListSection extends React.Component {
                 ce('a', { href: this.state.selectedExercise[2], target: '_blank' }, 'Link to video')
             ),
             ce('h4', { className: 'text-center' }, `Description: ${this.state.selectedExercise[3]}`),
-            ce('h4', { className: 'text-center' }, `Muscle Group(s): ${this.state.selectedExercise[4]}`)
+            ce('h4', { className: 'text-center' }, `Muscle Group(s): ${this.state.selectedExercise[4]}`),
+            ce('button', {onClick: e => this.back(e)}, 'Back to List')
+            
 
         )
     }
