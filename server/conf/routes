@@ -6,7 +6,7 @@
 GET        /                             controllers.Application.landing
 GET        /login                        controllers.Application.login
 GET        /create                       controllers.Application.accountCreation
-GET        /search                       controllers.Application.exerciseSearch
+GET        /search                       controllers.Application.searchWorkout
 
 # userController Routes
 

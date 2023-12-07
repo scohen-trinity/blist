@@ -23,7 +23,6 @@ class UserController @Inject()(cc: ControllerComponents) extends AbstractControl
                 case JsSuccess(ld, path) => {
                     memInstance.validateUser(ld.username, ld.password).flatMap{status => 
                         if(status) {
-                            // Redirect(routes.Application.exerciseSearch)
                             val session = request.session + ("username" -> ld.username)
                             Future.successful(Ok(Json.toJson(true)).withSession(session))
                         } else {
@@ -55,8 +54,6 @@ class UserController @Inject()(cc: ControllerComponents) extends AbstractControl
     def getUserInfo = Action.async { implicit request =>
         request.session.get("username") match {
             case Some(username) =>
-                // val userData = UserData(username)\
-                println(username)
                 Future.successful(Ok(Json.toJson(username)))
             case None =>
                 Future.successful(Ok(Json.toJson(false)))
