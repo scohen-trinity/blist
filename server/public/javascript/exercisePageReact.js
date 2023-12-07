@@ -81,21 +81,6 @@ class NavBarComponent extends React.Component {
     }
 }
 
-class ExerciseSection extends React.Component {
-    render() {
-        return ce('div', {className: 'exercise name'},
-            ce('br'),
-            ce('br'),
-            ce('br'),
-            ce('h2', {className: 'text-center'}, 'Exercise: '),
-            ce('br'),
-            ce('h4', {className: 'text-center'}, 'Description: '),
-            ce('h4', {className: 'text-center'}, 'Muscle Group: '),
-            ce('h4', {className: 'text-center'}, 'Link to video: ')
-        );
-    }
-}
-
 class ExerciseListSection extends React.Component {
     constructor(props){
         super(props);
@@ -211,7 +196,9 @@ class ExerciseListSection extends React.Component {
             ce('h2', { className: 'text-center' }, 'Exercise Details'),
             ce('br'),ce('br'),
             ce('h4', { className: 'text-center' }, `Name: ${this.state.selectedExercise[1]}`),
-            ce('h4', { className: 'text-center' }, `Link to video: ${this.state.selectedExercise[2]}`),
+            ce('h4', { className: 'text-center' },
+                ce('a', { href: this.state.selectedExercise[2], target: '_blank' }, 'Link to video')
+            ),
             ce('h4', { className: 'text-center' }, `Description: ${this.state.selectedExercise[3]}`),
             ce('h4', { className: 'text-center' }, `Muscle Group(s): ${this.state.selectedExercise[4]}`)
 
