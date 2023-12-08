@@ -87,19 +87,21 @@ class ExerciseListSection extends React.Component {
         this.state = {
             id: 1,
             exercises: [],
-            //selectExercise: null, 
-          
+            muscleExercises: [],          
         }; 
     }
 
     getAll() {
-        this.state.exercises = []
+        this.setState({exercises: []})
         for (var i=1; i < 29; i++) {
+            console.log(i)
             this.state.id = i
+            //this.setState({id: i})
+            
             fetch(retrieveExerciseRoute, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Csrf-Token': csrfToken },
-                body: JSON.stringify( this.state.id )  // Send an empty object as the request body
+                body: JSON.stringify( this.state.id ) 
             })
             .then(res => {
                 if (!res.ok) {
@@ -108,30 +110,30 @@ class ExerciseListSection extends React.Component {
                 return res.json();
             })
             .then(data => {
-                //console.log('Received data:', data);
-        
+                
                 if (this.state.chosenMuscle == null){
-                    console.log("chosen muscle is " + this.state.chosenMuscle + " should be null")
-                    const [, secondValue, , , fourthValue] = data;
+                    //console.log("chosen muscle is " + this.state.chosenMuscle + " should be null")
+                    const [firstValue, secondValue, , , fourthValue] = data;
                     if (secondValue !== undefined) {
+                        console.log(this.state.id + "  " + data)
                         this.setState({
                             exercises: this.state.exercises.concat(secondValue)
                         })
+                        if (firstValue != this.state.id) console.log(firstValue + " this is id: " + this.state.id)
                     } else {
                         console.error("Invalid data format:", data);
                     }
                 }
                 else {
                      //if the data works the chosen muscle, add to exercises
-                     console.log("chosen muscle " + this.state.chosenMuscle + " should NOT be null")
+                     //console.log("chosen muscle " + this.state.chosenMuscle + " should NOT be null")
                      const [, secondValue, , , fourthValue] = data;
                      if (fourthValue.includes(this.state.chosenMuscle)) {
                         this.setState({
                             exercises: this.state.exercises.concat(secondValue),
                         });
-                        console.log("yes")
                     }
-                    console.log(this.state.exercises)
+                    //console.log(this.state.exercises)
                 }
             })
             .catch(error => {
@@ -143,11 +145,11 @@ class ExerciseListSection extends React.Component {
     
     handleGoToExercise(index) {
         this.props.noList();
-        console.log(index + 1);
+        console.log(index+1 + "dsaifahds;fh");
         fetch(retrieveExerciseRoute, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Csrf-Token': csrfToken },
-            body: JSON.stringify(index + 1)
+            body: JSON.stringify(index+1) // need to change this
         })
         .then(res => {
             if (!res.ok) {
@@ -157,9 +159,9 @@ class ExerciseListSection extends React.Component {
         })
         .then(data => {
             console.log('Received data:', data);
+            
             if (data) {
                 this.setState({ selectedExercise: data });  
-                //console.log("hey" + this.state.selectedExercise)              
             } else {
                 console.error("Invalid data format:", data);
             }
@@ -214,9 +216,13 @@ class ExerciseListSection extends React.Component {
             ce('br'),
             ce('br'),
             ce('ul', null,
+                /*this.state.exercises.map((exercise, index) => 
+                    ce('li', {key: index, onClick: e => this.handleGoToExercise(index)}, exercise)),*/
                 this.state.exercises.map((exercise, index) => 
-                    ce('li', {key: index, onClick: e => this.handleGoToExercise(index)}, exercise))
-            ),   
+                    ce('li', {key: index, onClick: e => this.handleGoToExercise(index)}, exercise)),
+            ),
+            //console.log(exercise),
+
 
         );} else return ce('div', { className: 'exercise-details' },
             ce('br'),
@@ -256,7 +262,6 @@ class MainContainer extends React.Component {
                         ce(ExerciseListSection, { noList: () => this.setState({ listIt: false }) }, null),
                         // Render Exercise Details
                         console.log(this.state.selectedExercise)
-                        
                     )
                 )
             )
