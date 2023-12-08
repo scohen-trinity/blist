@@ -93,6 +93,7 @@ class ExerciseListSection extends React.Component {
     }
 
     getAll() {
+        this.state.exercises = []
         for (var i=1; i < 29; i++) {
             this.state.id = i
             fetch(retrieveExerciseRoute, {
@@ -107,19 +108,30 @@ class ExerciseListSection extends React.Component {
                 return res.json();
             })
             .then(data => {
-                console.log('Received data:', data);
+                //console.log('Received data:', data);
         
-                // Assuming data is an array or tuple with at least 5 elements
-                const [, secondValue] = data;
-        
-                if (secondValue !== undefined) {
-                    // Update the state with the 2nd value
-                    //this.setState({ exercises: [secondValue] });
-                    this.setState({
-                        exercises: this.state.exercises.concat(secondValue)
-                      })
-                } else {
-                    console.error("Invalid data format:", data);
+                if (this.state.chosenMuscle == null){
+                    console.log("chosen muscle is " + this.state.chosenMuscle + " should be null")
+                    const [, secondValue, , , fourthValue] = data;
+                    if (secondValue !== undefined) {
+                        this.setState({
+                            exercises: this.state.exercises.concat(secondValue)
+                        })
+                    } else {
+                        console.error("Invalid data format:", data);
+                    }
+                }
+                else {
+                     //if the data works the chosen muscle, add to exercises
+                     console.log("chosen muscle " + this.state.chosenMuscle + " should NOT be null")
+                     const [, secondValue, , , fourthValue] = data;
+                     if (fourthValue.includes(this.state.chosenMuscle)) {
+                        this.setState({
+                            exercises: this.state.exercises.concat(secondValue),
+                        });
+                        console.log("yes")
+                    }
+                    console.log(this.state.exercises)
                 }
             })
             .catch(error => {
@@ -158,10 +170,6 @@ class ExerciseListSection extends React.Component {
         });
     }
     
-
-    triceps(e){
-        //do something similar to get all except check for those that work triceps
-    }
     back(e){
         this.setState({ selectedExercise: null });  
     }
@@ -170,9 +178,18 @@ class ExerciseListSection extends React.Component {
         this.getAll();
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        // Check if chosenMuscle has changed
+        if (this.state.chosenMuscle !== prevState.chosenMuscle) {
+            // If it has changed, call getAll to fetch new exercises
+            this.getAll();
+        }
+    }
+
     render() {
         if (this.state.selectedExercise == null){
-        return ce('div', {className: 'All-exercises'},
+            //if chosenMuscle == null:           else: create a new variable for muscle lists, alter that
+            return ce('div', {className: 'All-exercises'},
             ce('br'),
             ce('br'),
             ce('br'),
@@ -180,12 +197,18 @@ class ExerciseListSection extends React.Component {
             ce('br'),
             'I want to workout out my:',
             ce('br'),
-            ce('button', {onClick: e => this.triceps(e)}, 'Triceps'),
-            ce('button', {onClick: e => this.Quads(e)}, 'Quads'),
-            ce('button', {onClick: e => this.Hamstring(e)}, 'Hamstring'),
-            ce('button', {onClick: e => this.Calf(e)}, 'Calf'),
-            ce('button', {onClick: e => this.Glutes(e)}, 'Glutes'),
-            ce('button', {onClick: e => this.Biceps(e)}, 'Biceps'),
+            ce('button', {onClick: e => this.setState({chosenMuscle: 'Triceps'})}, 'Triceps'),
+            console.log(this.state.chosenMuscle),
+            console.log(this.state.exercises),
+            ce('button', {onClick: e => this.setState({chosenMuscle: 'Quads'})}, 'Quads'),
+            ce('button', {onClick: e => this.setState({chosenMuscle: 'Hamstring'})}, 'Hamstring'),
+            ce('button', {onClick: e => this.setState({chosenMuscle: 'Calf'})}, 'Calf'),
+            ce('button', {onClick: e => this.setState({chosenMuscle: 'Glutes'})}, 'Glutes'),
+            ce('button', {onClick: e => this.setState({chosenMuscle: 'Bicep'})}, 'Bicep'),
+            ce('button', {onClick: e => this.setState({chosenMuscle: 'Back'})}, 'Back'),
+            ce('button', {onClick: e => this.setState({chosenMuscle: 'Chest'})}, 'Chest'),
+            ce('button', {onClick: e => this.setState({chosenMuscle: 'Abs'})}, 'Abs'),
+
             //etc
             ce('br'),
             ce('br'),
@@ -204,7 +227,7 @@ class ExerciseListSection extends React.Component {
             ),
             ce('h4', { className: 'text-center' }, `Description: ${this.state.selectedExercise[3]}`),
             ce('h4', { className: 'text-center' }, `Muscle Group(s): ${this.state.selectedExercise[4]}`),
-            ce('button', {onClick: e => this.back(e)}, 'Back to List')
+            ce('button', {onClick: e => this.back(e)}, '<-- Back to List')
             
 
         )
@@ -219,6 +242,7 @@ class MainContainer extends React.Component {
         this.state = {
             listIt: true,
             selectedExercise: null,
+            chosenMuscle: null,
         };
     }
 
@@ -227,7 +251,7 @@ class MainContainer extends React.Component {
             ce(NavBarComponent, null, null),
             ce('div', { className: 'container' },
                 ce('div', { className: 'row justify-content-center' },
-                    ce('div', { className: 'col-md-12' },
+                    ce('div', { className: 'col-md-6' },
                         ce(ExerciseListSection, { noList: () => this.setState({ listIt: false }) }, null),
                         // Render Exercise Details
                         console.log(this.state.selectedExercise)

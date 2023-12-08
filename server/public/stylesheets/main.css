@@ -160,3 +160,17 @@ form {
     display: block; /* Make each link block level */
     white-space: nowrap; /* Prevents the text from wrapping */
 }
+
+/* Define the color change on hover */
+.All-exercises li:hover {
+    color: #0097b2; /* Change this to the desired color */
+    cursor: pointer; /* Change the cursor style if needed */
+}
+  
+/* Define the color change on button hover */
+button:hover {
+    background-color: #0097b2; /* Change this to the desired background color */
+    color: white; /* Change this to the desired text color */
+    cursor: pointer; /* Change the cursor style if needed */
+}
+  
