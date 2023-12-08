@@ -163,12 +163,19 @@ class BasicSearchComponent extends React.Component {
             workout_list.innerHTML = '';
             workouts.forEach(workout => {
                 var listItem = document.createElement('li');
-
+                var listDiv = document.createElement('div');
+                var listSpan = document.createElement('span');
+                var listButton = document.createElement('button');
+                listButton.textContent = "View";
+                listButton.className = "submission-button";
                 if(Array.isArray(workout)) {
                     const workoutText = workout.join(', ');
 
-                    listItem.textContent = workoutText;
+                    listSpan.textContent = workoutText;
                 }
+                listItem.appendChild(listDiv);
+                listDiv.appendChild(listSpan);
+                listDiv.appendChild(listButton);
                 workout_list.appendChild(listItem);
             });
 
@@ -214,5 +221,5 @@ class NavBarComponent extends React.Component {
 
 ReactDOM.render(
     ce(MainSearchComponent, null, null),
-    document.getElementById('search_exercise_page')
+    document.getElementById('search_workout_page')
 );
