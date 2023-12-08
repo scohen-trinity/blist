@@ -208,8 +208,9 @@ class ExerciseListSection extends React.Component {
             ce('button', {onClick: e => this.setState({chosenMuscle: 'Back'})}, 'Back'),
             ce('button', {onClick: e => this.setState({chosenMuscle: 'Chest'})}, 'Chest'),
             ce('button', {onClick: e => this.setState({chosenMuscle: 'Abs'})}, 'Abs'),
+            ce('button', {onClick: e => this.setState({chosenMuscle: null})}, 'See all exercises'),
 
-            //etc
+        
             ce('br'),
             ce('br'),
             ce('ul', null,
@@ -223,7 +224,7 @@ class ExerciseListSection extends React.Component {
             ce('br'),ce('br'),
             ce('h4', { className: 'text-center' }, `Name: ${this.state.selectedExercise[1]}`),
             ce('h4', { className: 'text-center' },
-                ce('a', { href: this.state.selectedExercise[2], target: '_blank' }, 'Link to video')
+                ce('a', { href: this.state.selectedExercise[2], target: '_blank' }, 'Link to explanatory video')
             ),
             ce('h4', { className: 'text-center' }, `Description: ${this.state.selectedExercise[3]}`),
             ce('h4', { className: 'text-center' }, `Muscle Group(s): ${this.state.selectedExercise[4]}`),
