@@ -6,6 +6,7 @@ import scala.concurrent.Future
 import scala.concurrent.ExecutionContext
 import models.Tables._
 import scala.util.matching.Regex
+import java.text.SimpleDateFormat
 
 
 class DatabaseModelFit(db: Database)(implicit ec: ExecutionContext) {
@@ -166,6 +167,25 @@ class DatabaseModelFit(db: Database)(implicit ec: ExecutionContext) {
                 compiledExercises
             }
             else Seq()
+        })
+    }
+
+    // Workout related methods
+
+    def retrieveWorkoutsByUsername(username: String): Future[Seq[(Int, String)]] = {
+        db.run(Assignments.filter(res => res.username === username).result).map(workouts => {
+            if(workouts.length > 0) {
+                var workout_list: Seq[(Int, String)] = Seq()
+                for(workout <- workouts) {
+                    val date_format = new SimpleDateFormat("MM-dd-yyyy")
+                    var date_assigned = date_format.format(workout.dateAssigned)
+                    workout_list = (workout.workoutId, date_assigned) +: workout_list
+                }
+
+                workout_list
+            } else {
+                Seq()
+            }
         })
     }
 }

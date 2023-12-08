@@ -12,6 +12,7 @@ const creationPageRoute   = document.getElementById("creationPageRoute").value;
 const creationActionRoute = document.getElementById("creationActionRoute").value;
 const searchExerciseRoute = document.getElementById("searchExerciseRoute").value;
 const getUserInfo         = document.getElementById("getUserInfoRoute").value;
+const getWorkouts         = document.getElementById("getWorkoutsRoute").value;
 
 // Hamburger Component
 class Hamburger extends React.Component {
@@ -114,18 +115,23 @@ class BasicSearchComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: ""
+            username: "",
+            workouts: []
         }
     }
 
     componentDidMount() {
-        this.getInfo();
+        this.getInfo()
+        console.log(this.state.username)
     }
 
     render() {
         return ce('div', {className: "form-container"},
             ce('h2', {className: "login-header"}, "hi " + this.state.username), 
             ce('input', {placeholder: "search for a workout"}, null),
+            ce('div', null, 
+                ce('ul', {id: "workout_list"}, null)
+            )
             );
     }
 
@@ -133,12 +139,45 @@ class BasicSearchComponent extends React.Component {
         fetch(getUserInfo)
             .then(response => response.json())
             .then(userData => {
-                console.log(userData)
                 this.setState({ username: userData });
+                this.getWorkoutsForPage();
+                console.log(userData)
             })
             .catch(error => {
                 console.error('Error', error);
             })
+    }
+
+    getWorkoutsForPage() {
+        fetch(getWorkouts, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Csrf-Token': csrfToken
+            },
+            body: JSON.stringify(this.state.username)
+        })
+        .then(response => response.json())
+        .then(workouts => {
+            const workout_list = document.getElementById('workout_list');
+            workout_list.innerHTML = '';
+            workouts.forEach(workout => {
+                var listItem = document.createElement('li');
+
+                if(Array.isArray(workout)) {
+                    const workoutText = workout.join(', ');
+
+                    listItem.textContent = workoutText;
+                }
+                workout_list.appendChild(listItem);
+            });
+
+            this.setState({ workouts: workouts });
+            console.log(this.state.workouts);
+        })
+        .catch(error => {
+            console.error('Error', error);
+        })
     }
 }
 
