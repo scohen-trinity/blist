@@ -160,3 +160,15 @@ form {
     display: block; /* Make each link block level */
     white-space: nowrap; /* Prevents the text from wrapping */
 }
+
+/* i dont like the dot by the list items - sam */
+
+ul {
+    list-style: none;
+}
+
+.completed-container label {
+    display: inline-block;
+    margin-right: 10px;
+    margin-left: 10px;
+}

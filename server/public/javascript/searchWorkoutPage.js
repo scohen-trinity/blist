@@ -129,6 +129,14 @@ class BasicSearchComponent extends React.Component {
         return ce('div', {className: "form-container d-flex justify-content-center align-items-center"},
             ce('div', {className: "text-center"}, 
                 ce('h2', {className: "login-header"}, "Search Past Workouts for  " + this.state.username), 
+                ce('div', {className: 'completed-container'}, 
+                    ce('input', {type: 'radio', name: 'options', id: 'All-Workouts'}),
+                    ce('label', null, 'All'),
+                    ce('input', {type: 'radio', name: 'options', id: 'Completed'}),
+                    ce('label', null, 'Complete'),
+                    ce('input', {type: 'radio', name: 'options', id: 'Incomplete'}),
+                    ce('label', null, 'Incomplete')
+                ),
                 ce('select', {id: "date-dropdown", className: "form-select mb-3"}, null),
                 ce('div', null, 
                     ce('ul', {id: "workout_list"}, null)
