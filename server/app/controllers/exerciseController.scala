@@ -26,7 +26,6 @@ class ExerciseController @Inject()(protected val dbConfigProvider: DatabaseConfi
     }
 
     def obtainExercise = Action.async { implicit request =>
-        println("in obtain exercise ")
         request.body.asJson.map {ed =>
             println("c")
             Json.fromJson[Int](ed) match {
@@ -54,4 +53,11 @@ class ExerciseController @Inject()(protected val dbConfigProvider: DatabaseConfi
             }
         }.getOrElse(Future.successful(Ok(Json.toJson(false))))
     }
+
+    def obtainAllExercises = Action.async { implicit request =>
+        memInstance.obtainAllExercises.map { res =>
+            Ok(Json.toJson(res))
+        }
+    }
+
 }

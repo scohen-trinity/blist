@@ -1,5 +1,6 @@
 const retrieveExerciseRoute = document.getElementById("retrieveExerciseRoute").value;
 const searchExercisesRoute = document.getElementById("searchExercisesRoute").value;
+const obtainAllExercisesRoute = document.getElementById("obtainAllExercisesRoute").value;
 const csrfToken = document.getElementById("csrfToken").value;
 
 const ce = React.createElement;
@@ -87,13 +88,46 @@ class ExerciseListSection extends React.Component {
         this.state = {
             id: 1,
             exercises: [],
-            muscleExercises: [],          
+            muscleExercises: [],   
         }; 
+    }
+
+    getAllNew(){
+        this.setState({exercises: []})
+        fetch(obtainAllExercisesRoute, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', 'Csrf-Token': csrfToken },
+        })
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+            return res.json();
+        })
+        .then(data => {
+            console.log(data)
+            for (var i = 0; i< data.length; i++){
+                if (this.state.chosenMuscle == null){
+                        this.setState({
+                        exercises: this.state.exercises.concat(data[i][1]) //dont just add name, add id
+                    })
+                }
+                else{
+                    if (data[i][4].includes(this.state.chosenMuscle)) {
+                        this.setState({
+                            exercises: this.state.exercises.concat(data[i][1]),
+                        });
+                    }
+                }
+
+            }
+        })
     }
 
     getAll() {
         this.setState({exercises: []})
         for (var i=1; i < 29; i++) {
+            
             console.log(i)
             this.state.id = i
             //this.setState({id: i})
@@ -110,16 +144,15 @@ class ExerciseListSection extends React.Component {
                 return res.json();
             })
             .then(data => {
-                
                 if (this.state.chosenMuscle == null){
                     //console.log("chosen muscle is " + this.state.chosenMuscle + " should be null")
                     const [firstValue, secondValue, , , fourthValue] = data;
                     if (secondValue !== undefined) {
                         console.log(this.state.id + "  " + data)
                         this.setState({
-                            exercises: this.state.exercises.concat(secondValue)
+                            exercises: this.state.exercises.concat(secondValue) //dont just add name, add id
                         })
-                        if (firstValue != this.state.id) console.log(firstValue + " this is id: " + this.state.id)
+                        //if (firstValue != this.state.id) console.log(firstValue + " this is id: " + this.state.id)
                     } else {
                         console.error("Invalid data format:", data);
                     }
@@ -145,7 +178,6 @@ class ExerciseListSection extends React.Component {
     
     handleGoToExercise(index) {
         this.props.noList();
-        console.log(index+1 + "dsaifahds;fh");
         fetch(retrieveExerciseRoute, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Csrf-Token': csrfToken },
@@ -177,14 +209,14 @@ class ExerciseListSection extends React.Component {
     }
 
     componentDidMount() {
-        this.getAll();
+        this.getAllNew();
     }
 
     componentDidUpdate(prevProps, prevState) {
         // Check if chosenMuscle has changed
         if (this.state.chosenMuscle !== prevState.chosenMuscle) {
             // If it has changed, call getAll to fetch new exercises
-            this.getAll();
+            this.getAllNew();
         }
     }
 
@@ -200,8 +232,6 @@ class ExerciseListSection extends React.Component {
             'I want to workout out my:',
             ce('br'),
             ce('button', {onClick: e => this.setState({chosenMuscle: 'Triceps'})}, 'Triceps'),
-            console.log(this.state.chosenMuscle),
-            console.log(this.state.exercises),
             ce('button', {onClick: e => this.setState({chosenMuscle: 'Quads'})}, 'Quads'),
             ce('button', {onClick: e => this.setState({chosenMuscle: 'Hamstring'})}, 'Hamstring'),
             ce('button', {onClick: e => this.setState({chosenMuscle: 'Calf'})}, 'Calf'),
@@ -211,8 +241,7 @@ class ExerciseListSection extends React.Component {
             ce('button', {onClick: e => this.setState({chosenMuscle: 'Chest'})}, 'Chest'),
             ce('button', {onClick: e => this.setState({chosenMuscle: 'Abs'})}, 'Abs'),
             ce('button', {onClick: e => this.setState({chosenMuscle: null})}, 'See all exercises'),
-
-        
+            //console.log(this.state.chosenMuscle),
             ce('br'),
             ce('br'),
             ce('ul', null,
