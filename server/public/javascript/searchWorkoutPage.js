@@ -122,16 +122,18 @@ class BasicSearchComponent extends React.Component {
 
     componentDidMount() {
         this.getInfo()
-        console.log(this.state.username)
+        // console.log(this.state.username)
     }
 
     render() {
-        return ce('div', {className: "form-container"},
-            ce('h2', {className: "login-header"}, "hi " + this.state.username), 
-            ce('input', {placeholder: "search for a workout"}, null),
-            ce('div', null, 
-                ce('ul', {id: "workout_list"}, null)
-            )
+        return ce('div', {className: "form-container d-flex justify-content-center align-items-center"},
+            ce('div', {className: "text-center"}, 
+                ce('h2', {className: "login-header"}, "Search Past Workouts for  " + this.state.username), 
+                ce('select', {id: "date-dropdown", className: "form-select mb-3"}, null),
+                ce('div', null, 
+                    ce('ul', {id: "workout_list"}, null)
+                )
+            ),
             );
     }
 
@@ -141,11 +143,25 @@ class BasicSearchComponent extends React.Component {
             .then(userData => {
                 this.setState({ username: userData });
                 this.getWorkoutsForPage();
-                console.log(userData)
+                // console.log(userData)
             })
             .catch(error => {
                 console.error('Error', error);
             })
+    }
+
+    setDropdown() {
+        const dropdown = document.getElementById("date-dropdown");
+        
+        const defaultOption = document.createElement('option');
+        defaultOption.textContent = 'Not Selected';
+        dropdown.appendChild(defaultOption);
+
+        this.state.workouts.map((workout, index) => {
+            const dateOption = document.createElement('option');
+            dateOption.textContent = workout[1];
+            dropdown.appendChild(dateOption);
+        })
     }
 
     getWorkoutsForPage() {
@@ -180,6 +196,7 @@ class BasicSearchComponent extends React.Component {
             });
 
             this.setState({ workouts: workouts });
+            this.setDropdown();
             console.log(this.state.workouts);
         })
         .catch(error => {
