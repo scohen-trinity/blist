@@ -88,10 +88,32 @@ class ExerciseListSection extends React.Component {
         this.state = {
             id: 1,
             exercises: [],
-            muscleExercises: [],   
+            muscleExercises: [],  
+            allExercises: [], 
+            tempId: null,
         }; 
     }
 
+    getAllAll(){
+        this.setState({allExercises: []})
+        fetch(obtainAllExercisesRoute, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', 'Csrf-Token': csrfToken },
+        })
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+            return res.json();
+        })
+        .then(data => {
+            for (var i = 0; i< data.length; i++){
+                this.setState({
+                    allExercises: this.state.allExercises.concat(data[i]) //dont just add name, add id
+                })
+            }
+        })
+    }
     getAllNew(){
         this.setState({exercises: []})
         fetch(obtainAllExercisesRoute, {
@@ -105,7 +127,6 @@ class ExerciseListSection extends React.Component {
             return res.json();
         })
         .then(data => {
-            console.log(data)
             for (var i = 0; i< data.length; i++){
                 if (this.state.chosenMuscle == null){
                         this.setState({
@@ -123,65 +144,13 @@ class ExerciseListSection extends React.Component {
             }
         })
     }
-
-    getAll() {
-        this.setState({exercises: []})
-        for (var i=1; i < 29; i++) {
-            
-            console.log(i)
-            this.state.id = i
-            //this.setState({id: i})
-            
-            fetch(retrieveExerciseRoute, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Csrf-Token': csrfToken },
-                body: JSON.stringify( this.state.id ) 
-            })
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error(`HTTP error! Status: ${res.status}`);
-                }
-                return res.json();
-            })
-            .then(data => {
-                if (this.state.chosenMuscle == null){
-                    //console.log("chosen muscle is " + this.state.chosenMuscle + " should be null")
-                    const [firstValue, secondValue, , , fourthValue] = data;
-                    if (secondValue !== undefined) {
-                        console.log(this.state.id + "  " + data)
-                        this.setState({
-                            exercises: this.state.exercises.concat(secondValue) //dont just add name, add id
-                        })
-                        //if (firstValue != this.state.id) console.log(firstValue + " this is id: " + this.state.id)
-                    } else {
-                        console.error("Invalid data format:", data);
-                    }
-                }
-                else {
-                     //if the data works the chosen muscle, add to exercises
-                     //console.log("chosen muscle " + this.state.chosenMuscle + " should NOT be null")
-                     const [, secondValue, , , fourthValue] = data;
-                     if (fourthValue.includes(this.state.chosenMuscle)) {
-                        this.setState({
-                            exercises: this.state.exercises.concat(secondValue),
-                        });
-                    }
-                    //console.log(this.state.exercises)
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching exercises:', error);
-                console.error('Error details:', error.response ? error.response.data : 'No response data');
-            });
-       }
-    }
     
     handleGoToExercise(index) {
         this.props.noList();
         fetch(retrieveExerciseRoute, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Csrf-Token': csrfToken },
-            body: JSON.stringify(index+1) // need to change this
+            body: JSON.stringify(Math.floor((index/5)+1)) 
         })
         .then(res => {
             if (!res.ok) {
@@ -189,9 +158,7 @@ class ExerciseListSection extends React.Component {
             }
             return res.json();
         })
-        .then(data => {
-            console.log('Received data:', data);
-            
+        .then(data => {            
             if (data) {
                 this.setState({ selectedExercise: data });  
             } else {
@@ -210,6 +177,8 @@ class ExerciseListSection extends React.Component {
 
     componentDidMount() {
         this.getAllNew();
+        this.getAllAll()
+
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -217,6 +186,7 @@ class ExerciseListSection extends React.Component {
         if (this.state.chosenMuscle !== prevState.chosenMuscle) {
             // If it has changed, call getAll to fetch new exercises
             this.getAllNew();
+            this.getAllAll()
         }
     }
 
@@ -231,26 +201,32 @@ class ExerciseListSection extends React.Component {
             ce('br'),
             'I want to workout out my:',
             ce('br'),
-            ce('button', {onClick: e => this.setState({chosenMuscle: 'Triceps'})}, 'Triceps'),
-            ce('button', {onClick: e => this.setState({chosenMuscle: 'Quads'})}, 'Quads'),
-            ce('button', {onClick: e => this.setState({chosenMuscle: 'Hamstring'})}, 'Hamstring'),
-            ce('button', {onClick: e => this.setState({chosenMuscle: 'Calf'})}, 'Calf'),
-            ce('button', {onClick: e => this.setState({chosenMuscle: 'Glutes'})}, 'Glutes'),
-            ce('button', {onClick: e => this.setState({chosenMuscle: 'Bicep'})}, 'Bicep'),
-            ce('button', {onClick: e => this.setState({chosenMuscle: 'Back'})}, 'Back'),
-            ce('button', {onClick: e => this.setState({chosenMuscle: 'Chest'})}, 'Chest'),
-            ce('button', {onClick: e => this.setState({chosenMuscle: 'Abs'})}, 'Abs'),
-            ce('button', {onClick: e => this.setState({chosenMuscle: null})}, 'See all exercises'),
-            //console.log(this.state.chosenMuscle),
+            ce('button', {className: 'submission-button', onClick: e => this.setState({chosenMuscle: 'Triceps'})}, 'Triceps'),
+            ce('button', {className: 'submission-button', onClick: e => this.setState({chosenMuscle: 'Quads'})}, 'Quads'),
+            ce('button', {className: 'submission-button', onClick: e => this.setState({chosenMuscle: 'Hamstring'})}, 'Hamstring'),
+            ce('button', {className: 'submission-button', onClick: e => this.setState({chosenMuscle: 'Calf'})}, 'Calf'),
+            ce('button', {className: 'submission-button', onClick: e => this.setState({chosenMuscle: 'Glutes'})}, 'Glutes'),
+            ce('button', {className: 'submission-button', onClick: e => this.setState({chosenMuscle: 'Bicep'})}, 'Bicep'),
+            ce('button', {className: 'submission-button', onClick: e => this.setState({chosenMuscle: 'Back'})}, 'Back'),
+            ce('button', {className: 'submission-button', onClick: e => this.setState({chosenMuscle: 'Chest'})}, 'Chest'),
+            ce('button', {className: 'submission-button', onClick: e => this.setState({chosenMuscle: 'Abs'})}, 'Abs'),
+            ce('br'),
+            ce('button', {className: 'large-button', onClick: e => this.setState({chosenMuscle: null})}, 'See all exercises'),
             ce('br'),
             ce('br'),
             ce('ul', null,
-                /*this.state.exercises.map((exercise, index) => 
-                    ce('li', {key: index, onClick: e => this.handleGoToExercise(index)}, exercise)),*/
                 this.state.exercises.map((exercise, index) => 
-                    ce('li', {key: index, onClick: e => this.handleGoToExercise(index)}, exercise)),
-            ),
-            //console.log(exercise),
+                    ce('li', {
+                        key: index,
+                        onClick: e => {
+                            this.setState({ tempId: this.state.allExercises.indexOf(exercise) }, () => {
+                                this.handleGoToExercise(this.state.tempId);
+                            });
+                        }
+                    }, exercise)
+                ),
+            )
+
 
 
         );} else return ce('div', { className: 'exercise-details' },
@@ -263,7 +239,7 @@ class ExerciseListSection extends React.Component {
             ),
             ce('h4', { className: 'text-center' }, `Description: ${this.state.selectedExercise[3]}`),
             ce('h4', { className: 'text-center' }, `Muscle Group(s): ${this.state.selectedExercise[4]}`),
-            ce('button', {onClick: e => this.back(e)}, '<-- Back to List')
+            ce('button', {className: 'large-button', onClick: e => this.back(e)}, '<-- Back to List')
             
 
         )
@@ -290,7 +266,6 @@ class MainContainer extends React.Component {
                     ce('div', { className: 'col-md-6' },
                         ce(ExerciseListSection, { noList: () => this.setState({ listIt: false }) }, null),
                         // Render Exercise Details
-                        console.log(this.state.selectedExercise)
                     )
                 )
             )
