@@ -27,12 +27,9 @@ class ExerciseController @Inject()(protected val dbConfigProvider: DatabaseConfi
 
     def obtainExercise = Action.async { implicit request =>
         request.body.asJson.map {ed =>
-            println("c")
             Json.fromJson[Int](ed) match {
                 case JsSuccess(id, path) => {
-                    println(id)
                     memInstance.retrieveExerciseById(id).flatMap { res =>
-                        println(res)
                         Future.successful(Ok(Json.toJson(res)))
                     }
                 }
