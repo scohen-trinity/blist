@@ -20,14 +20,14 @@ CREATE TABLE exercises (
 );
 
 CREATE TABLE workouts (
-    workout_id INTEGER NOT NULL UNIQUE,
+    workout_id INTEGER NOT NULL,
     exercise_id INTEGER NOT NULL REFERENCES exercises (exercise_id),
     PRIMARY KEY (workout_id, exercise_id)
 );
 
 CREATE TABLE assignments (
     username VARCHAR(20) NOT NULL REFERENCES users (username) ON DELETE CASCADE,
-    workout_id INTEGER NOT NULL REFERENCES workouts (workout_id),
+    workout_id INTEGER NOT NULL,
     date_assigned DATE NOT NULL,
     date_completed DATE, 
     reps INTEGER NOT NULL,
