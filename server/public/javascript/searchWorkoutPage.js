@@ -122,7 +122,6 @@ class BasicSearchComponent extends React.Component {
 
     componentDidMount() {
         this.getInfo();
-        // console.log(this.state.username)
     }
 
     render() {
@@ -137,7 +136,7 @@ class BasicSearchComponent extends React.Component {
                     ce('input', {type: 'radio', name: 'options', id: 'Incomplete'}),
                     ce('label', null, 'Incomplete')
                 ),
-                ce('select', {id: "date-dropdown", className: "form-select mb-3", onChange: this.dateSelectedContent}, null),
+                ce('select', {id: "date-dropdown", className: "form-select mb-3", onChange: this.dateSelectedContent.bind(this)}, null),
                 ce('div', null, 
                     ce('ul', {id: "workout_list"}, null)
                 )
@@ -145,18 +144,13 @@ class BasicSearchComponent extends React.Component {
             );
     }
 
-    // createAssignment() {
-
-    // }
-
     getInfo() {
         fetch(getUserInfo)
             .then(response => response.json())
             .then(userData => {
                 this.setState({ username: userData });
-                // this.createAssignment();
+                
                 this.getWorkoutsForPage();
-                // console.log(userData)
             })
             .catch(error => {
                 console.error('Error', error);
@@ -181,14 +175,39 @@ class BasicSearchComponent extends React.Component {
         const workout_list = document.getElementById("workout_list");
         const selectedDate = document.getElementById("date-dropdown").value;
         if(selectedDate!=="Not Selected") {
-            const dateOption = document.createElement('option');
-            dateOption.textContent = selectedDate;
             workout_list.innerHTML = '';
-            workout_list.appendChild(dateOption);
+            var listItem = document.createElement('li');
+            var listDiv = document.createElement('div');
+            var listSpan = document.createElement('span');
+            var listButton = document.createElement('button');
+            listButton.textContent = "View";
+            listButton.className = "submission-button";
+            listSpan.textContent = selectedDate;
+            listItem.appendChild(listDiv);
+            listDiv.appendChild(listSpan);
+            listDiv.appendChild(listButton);
+            workout_list.appendChild(listItem);
         } else {
-            this.state.workouts;
+            workout_list.innerHTML = ''
+            console.log(this.state.workouts)
+            for(const workout of this.state.workouts) {
+                var listItem = document.createElement('li');
+                var listDiv = document.createElement('div');
+                var listSpan = document.createElement('span');
+                var listButton = document.createElement('button');
+                listButton.textContent = "View";
+                listButton.className = "submission-button";
+                if(Array.isArray(workout)) {
+                    const workoutText = workout.join(', ');
+
+                    listSpan.textContent = workoutText;
+                }
+                listItem.appendChild(listDiv);
+                listDiv.appendChild(listSpan);
+                listDiv.appendChild(listButton);
+                workout_list.appendChild(listItem);
+            }
         }
-        // console.log(selectedDate);
     }
 
     getWorkoutsForPage() {
