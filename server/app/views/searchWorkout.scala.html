@@ -15,15 +15,9 @@
   <input type="hidden" id="creationPageRoute" value="@routes.Application.accountCreation">
   <input type="hidden" id="creationActionRoute" value="@routes.UserController.create">
   <input type="hidden" id="searchExerciseRoute" value="@routes.Application.searchWorkout">
+  <input type="hidden" id="getUserInfoRoute" value="@routes.UserController.getUserInfo">
+  <input type="hidden" id="getWorkoutsRoute" value="@routes.WorkoutController.getWorkouts">
   
-  <input type="hidden" id="retrieveSettingsRoute" value="@routes.UserController.obtainSettings">
-  <input type="hidden" id="initializeSettingsRoute" value="@routes.UserController.setAllSettings">
-  <input type="hidden" id="updatePasswordRoute" value="@routes.UserController.changePassword">
-  <input type="hidden" id="updateWeightRoute" value="@routes.UserController.changeWeight">
-  <input type="hidden" id="updateHeightRoute" value="@routes.UserController.changeHeight">
-  <input type="hidden" id="updateGoalRoute" value="@routes.UserController.changeGoal">
-  <input type="hidden" id="updateDaysRoute" value="@routes.UserController.changeDays">
-
-  <div id="login_page"></div>
-  <script src="@routes.Assets.versioned("javascript/loginPage.js")"></script>
+  <div id="search_workout_page"></div>
+  <script src="@routes.Assets.versioned("javascript/searchWorkoutPage.js")"></script>
 }

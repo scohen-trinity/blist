@@ -4,12 +4,13 @@ console.log("Running react successfully")
 
 const ce = React.createElement
 
-const csrfToken = document.getElementById("csrfToken").value;
-const loginRoute = document.getElementById("loginRoute").value;
-const landingRoute = document.getElementById("landingRoute").value;
-const validateRoute = document.getElementById("validateRoute").value;
-const creationPageRoute = document.getElementById("creationPageRoute").value;
+const csrfToken           = document.getElementById("csrfToken").value;
+const loginRoute          = document.getElementById("loginRoute").value;
+const landingRoute        = document.getElementById("landingRoute").value;
+const validateRoute       = document.getElementById("validateRoute").value;
+const creationPageRoute   = document.getElementById("creationPageRoute").value;
 const creationActionRoute = document.getElementById("creationActionRoute").value;
+const searchRoute         = document.getElementById("searchExerciseRoute").value;
 
 const retrieveSettingsRoute = document.getElementById("retrieveSettingsRoute").value;
 const initializeSettingsRoute = document.getElementById("initializeSettingsRoute").value;
@@ -103,7 +104,7 @@ class MainLoginComponent extends React.Component {
 
     render() {
         if(this.state.loggedIn) {
-            window.location.href = landingRoute;
+            window.location.href = searchRoute;
             return null;
         } else {
             return ce('div', null, 
