@@ -8,14 +8,18 @@ const csrfToken = document.getElementById("csrfToken").value;
 const loginRoute = document.getElementById("loginRoute").value;
 const landingRoute = document.getElementById("landingRoute").value;
 const profileRoute = document.getElementById("profileRoute").value;
+const creationPageRoute = document.getElementById("creationPageRoute").value;
+const searchExerciseRoute  = document.getElementById("searchExerciseRoute").value;
 
 class Hamburger extends React.Component {
     constructor(props) {
         super(props);
         this.state = { isOpen: false };
         this.toggleMenu = this.toggleMenu.bind(this);
-        this.goToLogin = this.goToLogin.bind(this);
         this.goToLanding = this.goToLanding.bind(this);
+        this.goToSearch = this.goToSearch.bind(this);
+        this.goToCreation = this.goToCreation.bind(this);
+
     }
 
     closeMenu() {
@@ -30,12 +34,6 @@ class Hamburger extends React.Component {
         window.location.href = landingRoute;
     }
 
-    goToLogin(e) {
-        e.preventDefault();
-        this.closeMenu();
-        console.log("Go to log in page");
-        window.location.href = loginRoute;
-    }
 
     goToProfile(e){
         e.preventDefault();
@@ -43,6 +41,22 @@ class Hamburger extends React.Component {
         console.log("Go to profile page");
         window.location.href = profileRoute;
     }
+
+    goToSearch(e){
+        e.preventDefault();
+        this.closeMenu();
+        console.log("Go to search page");
+        window.location.href = searchExerciseRoute;
+    }
+
+    goToCreation(e){
+        e.preventDefault();
+        this.closeMenu();
+        console.log("Go to creation page");
+        window.location.href = creationPageRoute;
+    }
+
+
 
     toggleMenu() {
         this.setState(prevState => ({
@@ -69,7 +83,7 @@ class Hamburger extends React.Component {
         ce('div', hamburgerProps,
             ce('div', burgerProps(1)), // First line of hamburger
             ce('div', burgerProps(2)), // Second line of hamburger
-            ce('div', burgerProps(3))  // Third line of hamburger
+            ce('div', burgerProps(3)) // Third line of hamburger
         ),
         this.state.isOpen ? ce('div', { className: 'menu' },
         ce('a', { 
@@ -78,15 +92,20 @@ class Hamburger extends React.Component {
             tabIndex: 0 
         }, "Home"),
         ce('a', { 
-            onClick: e => this.goToLogin(e), 
-            style: { cursor: 'pointer' }, 
-            tabIndex: 0 
-        }, "Login"),
-        ce('a', { 
             onClick: e => this.goToProfile(e), 
             style: { cursor: 'pointer' }, 
             tabIndex: 0 
-        }, "Profile")
+        }, "Profile"),
+        ce('a', { 
+            onClick: e => this.goToSearch(e), 
+            style: { cursor: 'pointer' }, 
+            tabIndex: 0 
+        }, "Search Workouts"),
+        ce('a', { 
+            onClick: e => this.goToLanding(e), 
+            style: { cursor: 'pointer' }, 
+            tabIndex: 0 
+        }, "------"),
         ) : null
     );
     
@@ -124,8 +143,16 @@ class NavBarComponent extends React.Component {
         window.location.href = landingRoute;
     }
     goToProfile(e) {
-        console.log("Go to landing page")
+        console.log("Go to profile page")
         window.location.href = profileRoute;
+    }
+    goToSearch(e) {
+        console.log("Go to search page")
+        window.location.href = searchExerciseRoute;
+    }
+    goToCreation(e) {
+        console.log("Go to creation page")
+        window.location.href = creationPageRoute;
     }
 }
 // The code above is required for the NavBar and Hamburger menu
