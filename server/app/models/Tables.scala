@@ -58,8 +58,6 @@ trait Tables {
 
     /** Foreign key referencing Users (database name assignments_username_fkey) */
     lazy val usersFk = foreignKey("assignments_username_fkey", username, Users)(r => r.username, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.Cascade)
-    /** Foreign key referencing Workouts (database name assignments_workout_id_fkey) */
-    lazy val workoutsFk = foreignKey("assignments_workout_id_fkey", workoutId, Workouts)(r => r.workoutId, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.NoAction)
   }
   /** Collection-like TableQuery object for table Assignments */
   lazy val Assignments = new TableQuery(tag => new Assignments(tag))
@@ -162,9 +160,6 @@ trait Tables {
 
     /** Foreign key referencing Exercises (database name workouts_exercise_id_fkey) */
     lazy val exercisesFk = foreignKey("workouts_exercise_id_fkey", exerciseId, Exercises)(r => r.exerciseId, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.NoAction)
-
-    /** Uniqueness Index over (workoutId) (database name workouts_workout_id_key) */
-    val index1 = index("workouts_workout_id_key", workoutId, unique=true)
   }
   /** Collection-like TableQuery object for table Workouts */
   lazy val Workouts = new TableQuery(tag => new Workouts(tag))

@@ -33,7 +33,109 @@ class MainAccountCreationComponent extends React.Component {
             window.location.href = landingRoute; //THIS SHOULD BECOME THE SETTINGS PAGE ONCE ITS FINISHED
             return null;
         }
-        else return ce('div', null, ce(AccountComponent, {successfulCreation: () => this.setState({loggedIn: true})}));
+        else return ce('div', null, 
+            ce(NavBarComponent, null, null), 
+            ce(AccountComponent, {successfulCreation: () => this.setState({loggedIn: true})}));
+    }
+}
+
+
+class Hamburger extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { isOpen: false };
+        this.toggleMenu = this.toggleMenu.bind(this);
+        this.goToLanding = this.goToLanding.bind(this);
+    }
+
+    closeMenu() {
+        this.setState({ isOpen: false });
+    }
+
+    // Call this method after navigation actions
+    goToLanding(e) {
+        e.preventDefault();
+        this.closeMenu();
+        console.log("Go to landing page");
+        window.location.href = landingRoute;
+    }
+
+    goToLogin(e){
+        e.preventDefault();
+        this.closeMenu();
+        window.location.href = loginRoute;
+    }
+
+    toggleMenu() {
+        this.setState(prevState => ({
+            isOpen: !prevState.isOpen
+        }));
+    }
+
+    render() {
+        const navbarProps = {
+            className: 'hamburger-navbar',
+            onClick: this.toggleMenu 
+        };
+
+        const hamburgerProps = {
+            className: `hamburger ${this.state.isOpen ? 'open' : ''}`
+        };
+
+        const burgerProps = index => ({
+            key: index,
+            className: `burger burger${index} ${this.state.isOpen ? 'open' : ''}`
+        });
+
+        return ce('div', navbarProps,
+        ce('div', hamburgerProps,
+            ce('div', burgerProps(1)), // First line of hamburger
+            ce('div', burgerProps(2)), // Second line of hamburger
+            ce('div', burgerProps(3)) // Third line of hamburger
+        ),
+        this.state.isOpen ? ce('div', { className: 'menu' },
+        ce('a', { 
+            onClick: e => this.goToLanding(e), 
+            style: { cursor: 'pointer' }, 
+            tabIndex: 0 
+        }, "Home"),
+        ce('a', { 
+            onClick: e => this.goToLogin(e), 
+            style: { cursor: 'pointer' }, 
+            tabIndex: 0 
+        }, "Login"),
+        ) : null
+    );
+    
+    }
+
+}
+
+
+class NavBarComponent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.goToLogin = this.goToLogin.bind(this);
+        this.goToLanding = this.goToLanding.bind(this);
+    }
+
+    render() {
+        return ce('div', {className: "navbar"},
+           ce(Hamburger, {className: "hamburger-navbar"}, null),
+           ce('h1', {className: "navbar-header", onClick: e => this.goToLanding(e)}, 'TIGER FIT'),
+           ce('div', {className: "navbar-login-div", onClick: e => this.goToLogin(e)}, 
+            ce('h2', {className: "navbar-header"}, 'LOGIN'),
+            ce('img', { src: "https://cdn4.iconfinder.com/data/icons/man-user-human-person-business-profile-avatar/100/20-1User_13-512.png", className: "login-navbar"}, null) 
+           ),
+        )
+    }
+
+    goToLogin(e) {
+        window.location.href = loginRoute;
+    }
+
+    goToLanding(e) {
+        window.location.href = landingRoute;
     }
 }
 
@@ -57,14 +159,12 @@ class AccountComponent extends React.Component {
             ce('h4', {className: 'basic-font'}, 'Password'),
             ce('input', {type: "password", id: "newPass", value: this.state.newPass, onChange: e => this.onChangeHandler(e)}),
             ce('br'),
+            ce('br'),
             ce('h4', {className: 'basic-font'}, 'Confirm Password'),
             ce('input', {type: "password", id: "newConfirmPass", value: this.state.newConfirmPass, onChange: e => this.onChangeHandler(e)}),
             ce('br'),
             ce('br'),
             ce('button', {className: "submission-button", onClick: e => this.createAccount(e)}, 'Create'),
-            ce('br'),
-            ce('button', {className: "submission-button", onClick: e => this.runTests(e)}, 'Run Tests'),
-            ce('br'),
             ce('br'),
             ce('span', {className: 'basic-font', id: "popupMessage"}, this.state.popupMessage)
         );

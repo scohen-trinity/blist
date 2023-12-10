@@ -3,7 +3,6 @@
 const ce = React.createElement;
 
 // The code below is required for nav bar and hamburger menu
-
 const csrfToken = document.getElementById("csrfToken").value;
 const loginRoute = document.getElementById("loginRoute").value;
 const landingRoute = document.getElementById("landingRoute").value;
@@ -19,7 +18,6 @@ class Hamburger extends React.Component {
         this.goToLanding = this.goToLanding.bind(this);
         this.goToSearch = this.goToSearch.bind(this);
         this.goToCreation = this.goToCreation.bind(this);
-
     }
 
     closeMenu() {
@@ -129,29 +127,23 @@ class NavBarComponent extends React.Component {
             ce('h2', {className: "navbar-header"}, 'LOGIN'),
             ce('img', { src: "https://cdn4.iconfinder.com/data/icons/man-user-human-person-business-profile-avatar/100/20-1User_13-512.png", className: "login-navbar"}, null) 
            ),
-           
         )
     }
 
     goToLogin(e) {
-        console.log("Go to log in page")
         window.location.href = loginRoute;
     }
 
     goToLanding(e) {
-        console.log("Go to landing page")
         window.location.href = landingRoute;
     }
     goToProfile(e) {
-        console.log("Go to profile page")
         window.location.href = profileRoute;
     }
     goToSearch(e) {
-        console.log("Go to search page")
         window.location.href = searchExerciseRoute;
     }
     goToCreation(e) {
-        console.log("Go to creation page")
         window.location.href = creationPageRoute;
     }
 }
