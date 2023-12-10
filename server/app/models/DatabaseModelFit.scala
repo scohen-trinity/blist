@@ -193,28 +193,73 @@ class DatabaseModelFit(db: Database)(implicit ec: ExecutionContext) {
 
     // adding a workout algorithm
 
-    def createAssignment(username: String): Future[Int] = {
+    def createAssignment(username: String): Future[Boolean] = {
         val random = new Random()
-        
+        val dayOfWeek = java.time.LocalDate.now().getDayOfWeek.getDisplayName(java.time.format.TextStyle.FULL, java.util.Locale.ENGLISH)
+        println(dayOfWeek)
+
+        val daysFuture = db.run(
+            (for {
+                user <- Users if user.username === username
+            } yield {
+                user.days
+            }).result.headOption
+        )
+
+        daysFuture.flatMap { maybeDays =>
+            maybeDays match {
+                case Some(Some(days)) =>
+                    if(days == 2 && (dayOfWeek == "Tuesday" || dayOfWeek == "Thursday")) {
+                        println("We do workout today")
+                        makeAssignment(username)
+                        Future.successful(false)
+                    } else if(days == 3 && (dayOfWeek == "Monday" || dayOfWeek == "Wednesday" || dayOfWeek == "Friday")) {
+                        println("We do workout today")
+                        makeAssignment(username)
+                        Future.successful(false)
+                    } else {
+                        println("No workout for you today")
+                        Future.successful(false)
+                    }
+                case None =>
+                    println("ruh roh")
+                    Future.successful(false)
+            }    
+        }
+    }
+
+    def makeAssignment(username: String): Future[Int] = {
+        val random = new Random()
         val fitnessGoalFuture = db.run(
             (for {
                 user <- Users if user.username === username
             } yield {
-                // println(user.fitnessGoal)
                 user.fitnessGoal
             }).result.headOption
         )
 
         fitnessGoalFuture.flatMap { maybeFitnessGoal =>
             maybeFitnessGoal match {
-                case Some(fitnessGoal) =>
+                case Some(Some(fitnessGoal)) => 
+                    println(fitnessGoal)
                     val rand_workout = random.nextInt(8) + 1
                     val time = java.sql.Date.valueOf(java.time.LocalDate.now)
-                    val newRow = AssignmentsRow(username, rand_workout, time, null, 1, 1, 1)
-
-                    val result = Await.result(db.run(Assignments += newRow), 5.seconds)
-                    Future.successful(result)
-
+                    if(fitnessGoal == 1) {
+                        val newRow = AssignmentsRow(username, rand_workout, time, null, 10, 4, 1)
+                        println(newRow)
+                        val result = Await.result(db.run(Assignments += newRow), 5.seconds)
+                        Future.successful(result)
+                    } else if(fitnessGoal == 2) {
+                        val newRow = AssignmentsRow(username, rand_workout, time, null, 5, 5, 1)
+                        println(newRow)
+                        val result = Await.result(db.run(Assignments += newRow), 5.seconds)
+                        Future.successful(result)
+                    } else {
+                        val newRow = AssignmentsRow(username, rand_workout, time, null, 1, 1, 1)
+                        println(newRow)
+                        val result = Await.result(db.run(Assignments += newRow), 5.seconds)
+                        Future.successful(result)
+                    }
                 case None =>
                     Future.failed(new Exception("User not found"))
             }    
