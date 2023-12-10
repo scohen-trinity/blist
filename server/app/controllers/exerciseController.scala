@@ -12,10 +12,14 @@ import play.api.db.slick.HasDatabaseConfigProvider
 import play.api.db.slick.DatabaseConfigProvider
 import slick.jdbc.JdbcProfile
 import slick.jdbc.PostgresProfile.api._
+import play.filters.csrf.CSRF
+
 
 @Singleton
 class ExerciseController @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, cc: ControllerComponents)(implicit ec: ExecutionContext) extends AbstractController(cc) with HasDatabaseConfigProvider[JdbcProfile] {
     private val memInstance = new models.DatabaseModelFit(db)
+
+    
 
     def obtainExercise = Action.async { implicit request =>
         request.body.asJson.map {ed =>
@@ -42,4 +46,11 @@ class ExerciseController @Inject()(protected val dbConfigProvider: DatabaseConfi
             }
         }.getOrElse(Future.successful(Ok(Json.toJson(false))))
     }
+
+    def obtainAllExercises = Action.async { implicit request =>
+        memInstance.obtainAllExercises.map { res =>
+            Ok(Json.toJson(res))
+        }
+    }
+
 }

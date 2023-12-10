@@ -1,5 +1,9 @@
 const retrieveExerciseRoute = document.getElementById("retrieveExerciseRoute").value;
 const searchExercisesRoute = document.getElementById("searchExercisesRoute").value;
+const obtainAllExercisesRoute = document.getElementById("obtainAllExercisesRoute").value;
+const loginRoute = document.getElementById("loginRoute").value;
+
+const csrfToken = document.getElementById("csrfToken").value;
 
 const ce = React.createElement;
 
@@ -80,36 +84,197 @@ class NavBarComponent extends React.Component {
     }
 }
 
-class ExerciseSection extends React.Component {
+class ExerciseListSection extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            id: 1,
+            exercises: [],
+            muscleExercises: [],  
+            allExercises: [], 
+            tempId: null,
+        }; 
+    }
+
+    getAllAll(){
+        this.setState({allExercises: []})
+        fetch(obtainAllExercisesRoute, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', 'Csrf-Token': csrfToken },
+        })
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+            return res.json();
+        })
+        .then(data => {
+            for (var i = 0; i< data.length; i++){
+                this.setState({
+                    allExercises: this.state.allExercises.concat(data[i]) //dont just add name, add id
+                })
+            }
+        })
+    }
+    getAllNew(){
+        this.setState({exercises: []})
+        fetch(obtainAllExercisesRoute, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', 'Csrf-Token': csrfToken },
+        })
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+            return res.json();
+        })
+        .then(data => {
+            for (var i = 0; i< data.length; i++){
+                if (this.state.chosenMuscle == null){
+                        this.setState({
+                        exercises: this.state.exercises.concat(data[i][1]) //dont just add name, add id
+                    })
+                }
+                else{
+                    if (data[i][4].includes(this.state.chosenMuscle)) {
+                        this.setState({
+                            exercises: this.state.exercises.concat(data[i][1]),
+                        });
+                    }
+                }
+
+            }
+        })
+    }
+    
+    handleGoToExercise(index) {
+        this.props.noList();
+        fetch(retrieveExerciseRoute, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Csrf-Token': csrfToken },
+            body: JSON.stringify(Math.floor((index/5)+1)) 
+        })
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+            return res.json();
+        })
+        .then(data => {            
+            if (data) {
+                this.setState({ selectedExercise: data });  
+            } else {
+                console.error("Invalid data format:", data);
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching exercise details:', error);
+            console.error('Error details:', error.response ? error.response.data : 'No response data');
+        });
+    }
+    
+    back(e){
+        this.setState({ selectedExercise: null });  
+    }
+
+    componentDidMount() {
+        this.getAllNew();
+        this.getAllAll()
+
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        // Check if chosenMuscle has changed
+        if (this.state.chosenMuscle !== prevState.chosenMuscle) {
+            // If it has changed, call getAll to fetch new exercises
+            this.getAllNew();
+            this.getAllAll()
+        }
+    }
+
     render() {
-        return ce('div', {className: 'exercise name'},
+        if (this.state.selectedExercise == null){
+            //if chosenMuscle == null:           else: create a new variable for muscle lists, alter that
+            return ce('div', {className: 'All-exercises'},
             ce('br'),
             ce('br'),
             ce('br'),
-            ce('h2', {className: 'text-center'}, 'Exercise: '),
+            ce('h2', {className: 'text-center'}, 'Exercise List'),
             ce('br'),
-            ce('h4', {className: 'text-center'}, 'Description: '),
-            ce('h4', {className: 'text-center'}, 'Muscle Group: '),
-            ce('h4', {className: 'text-center'}, 'Link to video: ')
+            'I want to workout out my:',
+            ce('br'),
+            ce('button', {className: 'submission-button', onClick: e => this.setState({chosenMuscle: 'Triceps'})}, 'Triceps'),
+            ce('button', {className: 'submission-button', onClick: e => this.setState({chosenMuscle: 'Quads'})}, 'Quads'),
+            ce('button', {className: 'submission-button', onClick: e => this.setState({chosenMuscle: 'Hamstring'})}, 'Hamstring'),
+            ce('button', {className: 'submission-button', onClick: e => this.setState({chosenMuscle: 'Calf'})}, 'Calf'),
+            ce('button', {className: 'submission-button', onClick: e => this.setState({chosenMuscle: 'Glutes'})}, 'Glutes'),
+            ce('button', {className: 'submission-button', onClick: e => this.setState({chosenMuscle: 'Bicep'})}, 'Bicep'),
+            ce('button', {className: 'submission-button', onClick: e => this.setState({chosenMuscle: 'Back'})}, 'Back'),
+            ce('button', {className: 'submission-button', onClick: e => this.setState({chosenMuscle: 'Chest'})}, 'Chest'),
+            ce('button', {className: 'submission-button', onClick: e => this.setState({chosenMuscle: 'Abs'})}, 'Abs'),
+            ce('br'),
+            ce('button', {className: 'large-button', onClick: e => this.setState({chosenMuscle: null})}, 'See all exercises'),
+            ce('br'),
+            ce('br'),
+            ce('ul', null,
+                this.state.exercises.map((exercise, index) => 
+                    ce('li', {
+                        key: index,
+                        onClick: e => {
+                            this.setState({ tempId: this.state.allExercises.indexOf(exercise) }, () => {
+                                this.handleGoToExercise(this.state.tempId);
+                            });
+                        }
+                    }, exercise)
+                ),
+            )
+
+
+
+        );} else return ce('div', { className: 'exercise-details' },
+            ce('br'),
+            ce('h2', { className: 'text-center' }, 'Exercise Details'),
+            ce('br'),ce('br'),
+            ce('h4', { className: 'text-center' }, `Name: ${this.state.selectedExercise[1]}`),
+            ce('h4', { className: 'text-center' },
+                ce('a', { href: this.state.selectedExercise[2], target: '_blank' }, 'Link to explanatory video')
+            ),
+            ce('h4', { className: 'text-center' }, `Description: ${this.state.selectedExercise[3]}`),
+            ce('h4', { className: 'text-center' }, `Muscle Group(s): ${this.state.selectedExercise[4]}`),
+            ce('button', {className: 'large-button', onClick: e => this.back(e)}, '<-- Back to List')
+            
+
+        )
+    }
+}
+
+
+
+class MainContainer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            listIt: true,
+            selectedExercise: null,
+            chosenMuscle: null,
+        };
+    }
+
+    render() {
+        return ce('div', null,
+            ce(NavBarComponent, null, null),
+            ce('div', { className: 'container' },
+                ce('div', { className: 'row justify-content-center' },
+                    ce('div', { className: 'col-md-6' },
+                        ce(ExerciseListSection, { noList: () => this.setState({ listIt: false }) }, null),
+                        // Render Exercise Details
+                    )
+                )
+            )
         );
     }
 }
 
-class MainContainer extends React.Component {
-    render() {
-        return ce('div', null, 
-        ce(NavBarComponent, null, null),
-        ce('div', {className: 'container'},
-            ce('div', {className: 'row justify-content-center'},
-                ce('div', {className: 'col-md-6'},
-                    ce(ExerciseSection, null, null)
-                )
-            )
-        )
-        )
-    }
-    
-}
 
 class Version4MainComponent extends React.Component {
     render() {

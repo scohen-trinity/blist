@@ -33,4 +33,8 @@ class Application @Inject()(cc: ControllerComponents) extends AbstractController
   def accountSettings = Action { implicit request =>
     Ok(views.html.accountSettings())
   }
+
+  def exercise = Action { implicit request =>
+        Ok(views.html.exercise())
+    }
 }

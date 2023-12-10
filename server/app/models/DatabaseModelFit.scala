@@ -191,6 +191,29 @@ class DatabaseModelFit(db: Database)(implicit ec: ExecutionContext) {
         })
     }
 
+    //make a new method that get everything from the db
+    def obtainAllExercises(): Future[Seq[Tuple5[Int, String, String, String, Seq[String]]]] = {
+        db.run(Exercises.result).map(exercises => {
+            exercises.map { exercise =>
+            var muscleGroups: Seq[String] = Seq()
+
+            muscleGroups = exercise.exerciseMuscleGroup1 +: muscleGroups
+
+            exercise.exerciseMuscleGroup2 match {
+                case Some(e) => muscleGroups = e +: muscleGroups
+                case None    => {}
+            }
+
+            exercise.exerciseMuscleGroup3 match {
+                case Some(e) => muscleGroups = e +: muscleGroups
+                case None    => {}
+            }
+
+            (exercise.exerciseId, exercise.exerciseName, exercise.exerciseDescription, exercise.exerciseLink, muscleGroups)
+            }
+        })
+    }
+
     // adding a workout algorithm
 
     def createAssignment(username: String): Future[Boolean] = {
