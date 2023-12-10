@@ -61,11 +61,22 @@ class UserController @Inject()(protected val dbConfigProvider: DatabaseConfigPro
     def getUserInfo = Action.async { implicit request =>
         request.session.get("username") match {
             case Some(username) =>
+                memInstance.createAssignment(username)
                 Future.successful(Ok(Json.toJson(username)))
             case None =>
                 Future.successful(Ok(Json.toJson(false)))
         }   
     }
+
+    // def createAssignment = Action.async { implicit request =>
+    //     request.body.asJson.map {username =>
+    //         Json.fromJson[String](username) match {
+    //             case JsSuccess(user, path) => {
+    //                 memInstance.createAssignment(user.username)
+    //             }
+    //         }
+    //     }
+    // }
 
     def setAllSettings = Action.async { implicit request =>
         request.body.asJson.map {st =>

@@ -121,7 +121,7 @@ class BasicSearchComponent extends React.Component {
     }
 
     componentDidMount() {
-        this.getInfo()
+        this.getInfo();
         // console.log(this.state.username)
     }
 
@@ -137,7 +137,7 @@ class BasicSearchComponent extends React.Component {
                     ce('input', {type: 'radio', name: 'options', id: 'Incomplete'}),
                     ce('label', null, 'Incomplete')
                 ),
-                ce('select', {id: "date-dropdown", className: "form-select mb-3"}, null),
+                ce('select', {id: "date-dropdown", className: "form-select mb-3", onChange: this.dateSelectedContent}, null),
                 ce('div', null, 
                     ce('ul', {id: "workout_list"}, null)
                 )
@@ -145,11 +145,16 @@ class BasicSearchComponent extends React.Component {
             );
     }
 
+    // createAssignment() {
+
+    // }
+
     getInfo() {
         fetch(getUserInfo)
             .then(response => response.json())
             .then(userData => {
                 this.setState({ username: userData });
+                // this.createAssignment();
                 this.getWorkoutsForPage();
                 // console.log(userData)
             })
@@ -170,6 +175,20 @@ class BasicSearchComponent extends React.Component {
             dateOption.textContent = workout[1];
             dropdown.appendChild(dateOption);
         })
+    }
+
+    dateSelectedContent() {
+        const workout_list = document.getElementById("workout_list");
+        const selectedDate = document.getElementById("date-dropdown").value;
+        if(selectedDate!=="Not Selected") {
+            const dateOption = document.createElement('option');
+            dateOption.textContent = selectedDate;
+            workout_list.innerHTML = '';
+            workout_list.appendChild(dateOption);
+        } else {
+            this.state.workouts;
+        }
+        // console.log(selectedDate);
     }
 
     getWorkoutsForPage() {

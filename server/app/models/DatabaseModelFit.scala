@@ -188,4 +188,23 @@ class DatabaseModelFit(db: Database)(implicit ec: ExecutionContext) {
             }
         })
     }
+
+    // adding a workout algorithm
+
+    def createAssignment(username: String): Future[Int] = {
+        db.run(
+            (for {
+                user <- Users if user.username === username
+            } yield {
+                println(user.fitnessGoal)
+                user.fitnessGoal
+            }).result
+        )
+        val time = java.sql.Date.valueOf(java.time.LocalDate.now)
+        println(time)
+        
+        println(AssignmentsRow(username, -1, time, null, 1, 1, 1))
+        db.run(Assignments += AssignmentsRow(username, -1, time, null, 1, 1, 1))
+        
+    }
 }
