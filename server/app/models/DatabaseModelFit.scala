@@ -7,7 +7,9 @@ import scala.concurrent.ExecutionContext
 import models.Tables._
 import scala.util.matching.Regex
 import java.text.SimpleDateFormat
-
+import scala.concurrent.Await
+import scala.concurrent.duration._
+import scala.util.Random
 
 class DatabaseModelFit(db: Database)(implicit ec: ExecutionContext) {
 
@@ -192,19 +194,30 @@ class DatabaseModelFit(db: Database)(implicit ec: ExecutionContext) {
     // adding a workout algorithm
 
     def createAssignment(username: String): Future[Int] = {
-        db.run(
+        val random = new Random()
+        
+        val fitnessGoalFuture = db.run(
             (for {
                 user <- Users if user.username === username
             } yield {
-                println(user.fitnessGoal)
+                // println(user.fitnessGoal)
                 user.fitnessGoal
-            }).result
+            }).result.headOption
         )
-        val time = java.sql.Date.valueOf(java.time.LocalDate.now)
-        println(time)
-        
-        println(AssignmentsRow(username, -1, time, null, 1, 1, 1))
-        db.run(Assignments += AssignmentsRow(username, -1, time, null, 1, 1, 1))
-        
+
+        fitnessGoalFuture.flatMap { maybeFitnessGoal =>
+            maybeFitnessGoal match {
+                case Some(fitnessGoal) =>
+                    val rand_workout = random.nextInt(8) + 1
+                    val time = java.sql.Date.valueOf(java.time.LocalDate.now)
+                    val newRow = AssignmentsRow(username, rand_workout, time, null, 1, 1, 1)
+
+                    val result = Await.result(db.run(Assignments += newRow), 5.seconds)
+                    Future.successful(result)
+
+                case None =>
+                    Future.failed(new Exception("User not found"))
+            }    
+        } 
     }
 }
