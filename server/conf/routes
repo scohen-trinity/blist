@@ -7,9 +7,8 @@ GET        /                             controllers.Application.landing
 GET        /login                        controllers.Application.login
 GET        /create                       controllers.Application.accountCreation
 
-
-# workoutController Routes
-GET        /exercise                     controllers.exerciseController.exercise 
+# Account Settings Route
+GET        /profile                      controllers.Application.accountSettings
 
 # userController Routes
 

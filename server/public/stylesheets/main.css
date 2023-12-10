@@ -1,7 +1,7 @@
 /* Base Font Style */
-/* .basic-font, .navbar, .login-form, .submission-button, .navbar-header, .login-header, form {
+.basic-font, .navbar, .login-form, .submission-button, .navbar-header, .login-header, form {
     font-family: 'Lato', sans-serif;
-} */
+}
 
 /* Navbar Styles */
 .navbar {
@@ -160,3 +160,59 @@ form {
     display: block; /* Make each link block level */
     white-space: nowrap; /* Prevents the text from wrapping */
 }
+
+/* Account Settings CSS */
+
+.personal-form {
+    text-align: center;
+    
+}
+
+.account-settings {
+    text-align: center;
+}
+
+.toggle-switch {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+.option {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+  
+.option.selected {
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+}
+  
+/* Dropdown CSS */
+.dropdown-title {
+    text-align: center;
+}
+.dropdown-container {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+.dropdown-container label {
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+.dropdown-container select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+  
+

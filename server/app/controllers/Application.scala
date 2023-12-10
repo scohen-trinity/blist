@@ -19,4 +19,8 @@ class Application @Inject()(cc: ControllerComponents) extends AbstractController
   def accountCreation = Action { implicit request =>
     Ok(views.html.accountCreation())
   }
+
+  def accountSettings = Action { implicit request =>
+    Ok(views.html.accountSettings())
+  }
 }
