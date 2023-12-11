@@ -93,6 +93,14 @@ class Hamburger extends React.Component {
             onClick: e => this.goToProfile(e), 
             style: { cursor: 'pointer' }, 
             tabIndex: 0 
+
+        }, "Login")
+        /*ce('a', { 
+            onClick: e => this.goToProfile(e), 
+            style: { cursor: 'pointer' }, 
+            tabIndex: 0 
+        }, "Profile")*/
+
         }, "Profile"),
         ce('a', { 
             onClick: e => this.goToSearch(e), 
@@ -104,6 +112,7 @@ class Hamburger extends React.Component {
             style: { cursor: 'pointer' }, 
             tabIndex: 0 
         }, "------"),
+
         ) : null
     );
     
