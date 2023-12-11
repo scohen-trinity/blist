@@ -178,7 +178,8 @@ class WorkoutPage extends React.Component {
     }
 
     componentDidMount() {
-        this.workoutExercises(1);
+        console.log(workoutId)
+        this.workoutExercises(workoutId);
     }
 
     workoutExercises(id) {
