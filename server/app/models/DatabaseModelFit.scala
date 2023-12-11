@@ -242,14 +242,26 @@ class DatabaseModelFit(db: Database)(implicit ec: ExecutionContext) {
         daysFuture.flatMap { maybeDays =>
             maybeDays match {
                 case Some(Some(days)) =>
-                    if(days == 2 && (dayOfWeek == "Tuesday" || dayOfWeek == "Thursday")) {
+                    if(days == 1 && dayOfWeek == "Monday") {
                         println("We do workout today")
                         makeAssignment(username)
-                        Future.successful(false)
+                        Future.successful(true)
+                    } else if(days == 2 && (dayOfWeek == "Tuesday" || dayOfWeek == "Thursday")) {
+                        println("We do workout today")
+                        makeAssignment(username)
+                        Future.successful(true)
                     } else if(days == 3 && (dayOfWeek == "Monday" || dayOfWeek == "Wednesday" || dayOfWeek == "Friday")) {
                         println("We do workout today")
                         makeAssignment(username)
-                        Future.successful(false)
+                        Future.successful(true)
+                    } else if(days == 4 && (dayOfWeek == "Monday" || dayOfWeek == "Tuesday" || dayOfWeek == "Wednesday" || dayOfWeek == "Friday")) {
+                        println("We do workout today")
+                        makeAssignment(username)
+                        Future.successful(true)
+                    } else if(days == 5 && (dayOfWeek == "Monday" || dayOfWeek == "Tuesday" || dayOfWeek == "Wednesday" || dayOfWeek == "Thursday" || dayOfWeek == "Friday")) {
+                        println("We do workout today")
+                        makeAssignment(username)
+                        Future.successful(true)
                     } else {
                         println("No workout for you today")
                         Future.successful(false)
