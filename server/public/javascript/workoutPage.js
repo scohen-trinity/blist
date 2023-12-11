@@ -1,7 +1,8 @@
 "use strict"
 
 const ce = React.createElement;
-
+const workoutId = document.getElementById("workoutPage").getAttribute("data-workoutid");
+// console.log(workoutId);
 // The code below is required for nav bar and hamburger menu
 
 const csrfToken = document.getElementById("csrfToken").value;
@@ -170,7 +171,9 @@ class WorkoutPage extends React.Component {
     }
 
     componentDidMount() {
-        this.workoutExercises(1);
+        let workoutIdInt = +workoutId;
+        console.log(typeof workoutIdInt);
+        this.workoutExercises(workoutIdInt);
     }
 
     workoutExercises(id) {
@@ -180,11 +183,13 @@ class WorkoutPage extends React.Component {
             body: JSON.stringify(id)
         }).then(res => res.json()).then(data => {
             if (data.exerciseIds) {
+                console.log("it work")
                 this.setState({ exercises: data.exerciseIds }, () => {
                     this.state.exercises.forEach(this.fetchExerciseDetails);
                 });
             }
         }).catch(error => {
+            console.log("not work")
             console.error('Error:', error);
         });
     }

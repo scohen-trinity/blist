@@ -1,4 +1,4 @@
-@()(implicit request: RequestHeader, flash: Flash)
+@(workoutId: Int)(implicit request: RequestHeader, flash: Flash)
 
 @main("Workout Page") {
     
@@ -23,7 +23,7 @@
     <input type="hidden" id="retrieveExerciseRoute" value="@routes.ExerciseController.obtainExercise">
 
 
-    <div id="workoutPage"></div>   
+    <div id="workoutPage" data-workoutid="@workoutId"></div>   
     <script src="@routes.Assets.versioned("javascript/workoutPage.js")"></script>
 
 }
