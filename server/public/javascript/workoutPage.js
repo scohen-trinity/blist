@@ -13,6 +13,7 @@ const retrieveExerciseRoute = document.getElementById("retrieveExerciseRoute").v
 
 const creationPageRoute = document.getElementById("creationPageRoute").value;
 const searchExerciseRoute  = document.getElementById("searchExerciseRoute").value;
+const logoutRoute = document.getElementById("logoutRoute").value;
 
 class Hamburger extends React.Component {
     constructor(props) {
@@ -21,8 +22,6 @@ class Hamburger extends React.Component {
         this.toggleMenu = this.toggleMenu.bind(this);
         this.goToLanding = this.goToLanding.bind(this);
         this.goToSearch = this.goToSearch.bind(this);
-        this.goToCreation = this.goToCreation.bind(this);
-
     }
 
     closeMenu() {
@@ -36,7 +35,6 @@ class Hamburger extends React.Component {
         console.log("Go to landing page");
         window.location.href = landingRoute;
     }
-
 
     goToProfile(e){
         e.preventDefault();
@@ -52,17 +50,10 @@ class Hamburger extends React.Component {
         window.location.href = searchExerciseRoute;
     }
 
-    goToCreation(e){
-        e.preventDefault();
-        this.closeMenu();
-        console.log("Go to creation page");
-        window.location.href = creationPageRoute;
-    }
-
     logOut(e){
         e.preventDefault();
         this.closeMenu();
-        window.location.href = loginRoute;
+        window.location.href = logoutRoute;
     }
 
     toggleMenu() {

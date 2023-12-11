@@ -2,6 +2,7 @@ const retrieveExerciseRoute = document.getElementById("retrieveExerciseRoute").v
 const searchExercisesRoute = document.getElementById("searchExercisesRoute").value;
 const obtainAllExercisesRoute = document.getElementById("obtainAllExercisesRoute").value;
 const loginRoute = document.getElementById("loginRoute").value;
+const logoutRoute = document.getElementById("logoutRoute").value;
 
 const csrfToken = document.getElementById("csrfToken").value;
 
