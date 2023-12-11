@@ -15,6 +15,7 @@ const getUserInfo         = document.getElementById("getUserInfoRoute").value;
 const getWorkouts         = document.getElementById("getWorkoutsRoute").value;
 const logoutRoute         = document.getElementById("logoutRoute").value;
 const profileRoute        = document.getElementById("profileRoute").value;
+const workoutRoute        = document.getElementById("getWorkoutRoute").value;
 
 // Hamburger Component
 class Hamburger extends React.Component {
@@ -166,7 +167,7 @@ class BasicSearchComponent extends React.Component {
                     ce('input', {type: 'radio', name: 'options', id: 'Incomplete', onClick: this.incompleteClicked.bind(this)}),
                     ce('label', null, 'Incomplete')
                 ),
-                ce('select', {id: "date-dropdown", className: "form-select mb-3", onChange: this.dateSelectedContent.bind(this)}, null),
+                // ce('select', {id: "date-dropdown", className: "form-select mb-3", onChange: this.dateSelectedContent.bind(this)}, null),
                 ce('div', null, 
                     ce('ul', {id: "workout_list"}, null)
                 )
@@ -183,6 +184,8 @@ class BasicSearchComponent extends React.Component {
             var listButton = document.createElement('button');
             listButton.textContent = "View";
             listButton.className = "submission-button";
+            listButton.id = workout[0];
+            listButton.onclick = () => this.goToWorkoutRoute(workout[0]);
             if(Array.isArray(workout)) {
                 const workoutText = workout[1];
 
@@ -204,18 +207,28 @@ class BasicSearchComponent extends React.Component {
                 var listSpan = document.createElement('span');
                 var listButton = document.createElement('button');
                 listButton.textContent = "View";
+                listButton.id = workout[0];
                 listButton.className = "submission-button";
+                listButton.onclick = () => this.goToWorkoutRoute(workout[0]);
                 if(Array.isArray(workout)) {
                     const workoutText = workout[1];
 
                     listSpan.textContent = workoutText;
                 }
+                console.log(listButton)
                 listItem.appendChild(listDiv);
                 listDiv.appendChild(listSpan);
                 listDiv.appendChild(listButton);
                 workout_list.appendChild(listItem);
             }
         }
+    }
+
+    goToWorkoutRoute(id) {
+            console.log("Should redirect")
+            var urlWithParams = workoutRoute + "?id=" + id;
+            window.location.href = urlWithParams;
+        
     }
     
     incompleteClicked() {
@@ -226,8 +239,10 @@ class BasicSearchComponent extends React.Component {
                 var listDiv = document.createElement('div');
                 var listSpan = document.createElement('span');
                 var listButton = document.createElement('button');
+                listButton.id = workout[0];
                 listButton.textContent = "View";
                 listButton.className = "submission-button";
+                listButton.onclick = () => this.goToWorkoutRoute(workout[0]);
                 if(Array.isArray(workout)) {
                     const workoutText = workout[1];
 
@@ -260,26 +275,33 @@ class BasicSearchComponent extends React.Component {
         const defaultOption = document.createElement('option');
         defaultOption.textContent = 'Not Selected';
         dropdown.appendChild(defaultOption);
-
+    
         this.state.workouts.map((workout, index) => {
             const dateOption = document.createElement('option');
             dateOption.textContent = workout[1];
+            dateOption.id = workout[0];
             dropdown.appendChild(dateOption);
         })
     }
 
     dateSelectedContent() {
-        const workout_list = document.getElementById("workout_list");
+        const workout_list = document.getElementById("workout_list");    
         const selectedDate = document.getElementById("date-dropdown").value;
+        console.log(selectedDate)
+        const selectedOption = document.querySelector(`#date-dropdown option[value="${selectedDate}"]`);
+        console.log(selectedOption);
         if(selectedDate!=="Not Selected") {
             workout_list.innerHTML = '';
+            console.log(selectedDate.id);
             var listItem = document.createElement('li');
             var listDiv = document.createElement('div');
             var listSpan = document.createElement('span');
             var listButton = document.createElement('button');
             listButton.textContent = "View";
             listButton.className = "submission-button";
+            listButton.id = selectedDate.id;
             listSpan.textContent = selectedDate;
+            listButton.onclick = () => this.goToWorkoutRoute(selectedDate.id);
             listItem.appendChild(listDiv);
             listDiv.appendChild(listSpan);
             listDiv.appendChild(listButton);
@@ -317,15 +339,19 @@ class BasicSearchComponent extends React.Component {
         })
         .then(response => response.json())
         .then(workouts => {
+            this.setState({ workouts: workouts });
+
             const workout_list = document.getElementById('workout_list');
             workout_list.innerHTML = '';
-            workouts.forEach(workout => {
+            for(const workout of this.state.workouts) {
                 var listItem = document.createElement('li');
                 var listDiv = document.createElement('div');
                 var listSpan = document.createElement('span');
                 var listButton = document.createElement('button');
                 listButton.textContent = "View";
                 listButton.className = "submission-button";
+                listButton.id = workout[0];
+                listButton.onclick = () => this.goToWorkoutRoute(workout[0]);
                 if(Array.isArray(workout)) {
                     const workoutText = workout[1];
 
@@ -335,10 +361,8 @@ class BasicSearchComponent extends React.Component {
                 listDiv.appendChild(listSpan);
                 listDiv.appendChild(listButton);
                 workout_list.appendChild(listItem);
-            });
-
-            this.setState({ workouts: workouts });
-            this.setDropdown();
+            }
+            // this.setDropdown();
         })
         .catch(error => {
             console.error('Error', error);

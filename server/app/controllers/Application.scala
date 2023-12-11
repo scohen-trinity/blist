@@ -39,6 +39,12 @@ class Application @Inject()(cc: ControllerComponents) extends AbstractController
   }
   
   def workoutPage = Action { implicit request => 
-    Ok(views.html.workoutPage())
+    val workoutIdOption = request.getQueryString("id")
+    workoutIdOption match {
+      case Some(workoutId) =>
+        Ok(views.html.workoutPage(workoutId.toInt))
+      case None =>
+        BadRequest("No workout id womp womp")
+    }
   }
 }

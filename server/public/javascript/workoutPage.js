@@ -1,7 +1,8 @@
 "use strict"
 
 const ce = React.createElement;
-
+const workoutId = document.getElementById("workoutPage").getAttribute("data-workoutid");
+// console.log(workoutId);
 // The code below is required for nav bar and hamburger menu
 
 const csrfToken = document.getElementById("csrfToken").value;
@@ -10,7 +11,7 @@ const landingRoute = document.getElementById("landingRoute").value;
 const pullWorkoutExercisesRoute = document.getElementById("pullWorkoutExercisesRoute").value;
 const profileRoute = document.getElementById("profileRoute").value;
 const retrieveExerciseRoute = document.getElementById("retrieveExerciseRoute").value;
-const workoutSearchRoute = document.getElementById("workoutSearchRoute").value;
+workoutSearchRoute = document.getElementById("workoutSearchRoute").value;
 const creationPageRoute = document.getElementById("creationPageRoute").value;
 const searchExerciseRoute  = document.getElementById("searchExerciseRoute").value;
 const logoutRoute = document.getElementById("logoutRoute").value;
@@ -177,7 +178,7 @@ class WorkoutPage extends React.Component {
     }
 
     componentDidMount() {
-        this.workoutExercises(8);
+        this.workoutExercises(1);
     }
 
     workoutExercises(id) {
@@ -187,11 +188,13 @@ class WorkoutPage extends React.Component {
             body: JSON.stringify(id)
         }).then(res => res.json()).then(data => {
             if (data.exerciseIds) {
+                console.log("it work")
                 this.setState({ exercises: data.exerciseIds }, () => {
                     this.state.exercises.forEach(this.fetchExerciseDetails);
                 });
             }
         }).catch(error => {
+            console.log("not work")
             console.error('Error:', error);
         });
     }
