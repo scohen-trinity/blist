@@ -14,6 +14,16 @@
     <input type="hidden" id="csrfToken" value="@helper.CSRF.getToken.value">
     <input type="hidden" id="loginRoute" value="@routes.Application.login">
     <input type="hidden" id="landingRoute" value="@routes.Application.landing">
+    <input type="hidden" id="validateRoute" value="@routes.UserController.validate">
+    <input type="hidden" id="retrieveSettingsRoute" value="@routes.UserController.obtainSettings">
+    <input type="hidden" id="setAllSettingsRoute" value="@routes.UserController.setAllSettings">
+    <input type="hidden" id="changePasswordRoute" value="@routes.UserController.changePassword">
+    <input type="hidden" id="changeWeightRoute" value="@routes.UserController.changeWeight">
+    <input type="hidden" id="changeHeightRoute" value="@routes.UserController.changeHeight">
+    <input type="hidden" id="changeGoalRoute" value="@routes.UserController.changeGoal">
+    <input type="hidden" id="changeDaysRoute" value="@routes.UserController.changeDays">
+    <input type="hidden" id="getUserInfoRoute" value="@routes.UserController.getUserInfo">
+    <input type="hidden" id="logoutRoute" value="@routes.UserController.logout"> 
 
 
     <div id="profile"></div>   

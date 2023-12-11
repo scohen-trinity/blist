@@ -19,7 +19,7 @@ class WorkoutController @Inject()(protected val dbConfigProvider: DatabaseConfig
 
     def getWorkouts = Action.async { implicit request =>
         val requestBody = request.body
-        println(s"Request body: $requestBody")
+        // println(s"Request body: $requestBody")
         request.body.asJson.map {ed =>
             Json.fromJson[String](ed) match {
                 case JsSuccess(username, path) => {
@@ -44,4 +44,24 @@ class WorkoutController @Inject()(protected val dbConfigProvider: DatabaseConfig
             }
         }.getOrElse(Future.successful(Ok(Json.toJson(false))))
     }
+
+def workoutExercises = Action.async { implicit request =>
+    request.body.asJson.map { jsonBody =>
+        Json.fromJson[Int](jsonBody) match {
+            case JsSuccess(workoutId, path) =>
+                memInstance.pullWorkoutExercises(workoutId).flatMap { exerciseIds =>
+                    val jsonExercises = Json.obj(
+                        "exerciseIds" -> exerciseIds
+                    )
+                    Future.successful(Ok(jsonExercises))
+                }
+            case e @ JsError(_) => Future.successful(Ok(Json.toJson(false)))
+        }
+    }.getOrElse(Future.successful(Ok(Json.toJson(false))))
+}
+
+
+
+
+    
 }

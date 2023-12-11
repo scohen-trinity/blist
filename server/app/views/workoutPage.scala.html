@@ -1,6 +1,6 @@
 @()(implicit request: RequestHeader, flash: Flash)
 
-@main("Tiger Fit") {
+@main("Workout Page") {
     
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -14,11 +14,16 @@
     <input type="hidden" id="csrfToken" value="@helper.CSRF.getToken.value">
     <input type="hidden" id="loginRoute" value="@routes.Application.login">
     <input type="hidden" id="landingRoute" value="@routes.Application.landing">
+    <input type="hidden" id="validateRoute" value="@routes.UserController.validate">
+    <input type="hidden" id="pullWorkoutExercisesRoute" value="@routes.WorkoutController.workoutExercises">
     <input type="hidden" id="profileRoute" value="@routes.Application.accountSettings">
     <input type="hidden" id="creationPageRoute" value="@routes.Application.accountCreation">
+    <input type="hidden" id="creationActionRoute" value="@routes.UserController.create">
     <input type="hidden" id="searchExerciseRoute" value="@routes.Application.searchWorkout">
+    <input type="hidden" id="retrieveExerciseRoute" value="@routes.ExerciseController.obtainExercise">
 
-    <div id="landing-page"></div>   
-    <script src="@routes.Assets.versioned("javascript/landingPage.js")"></script>
+
+    <div id="workoutPage"></div>   
+    <script src="@routes.Assets.versioned("javascript/workoutPage.js")"></script>
 
 }

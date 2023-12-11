@@ -43,6 +43,12 @@ class Hamburger extends React.Component {
         window.location.href = loginRoute;
     }
 
+    logOut(e){
+        e.preventDefault();
+        this.closeMenu();
+        window.location.href = loginRoute;
+      }
+
     toggleMenu() {
         this.setState(prevState => ({
             isOpen: !prevState.isOpen
@@ -77,10 +83,10 @@ class Hamburger extends React.Component {
             tabIndex: 0 
         }, "Home"),
         ce('a', { 
-            onClick: e => this.goToLogin(e), 
+            onClick: e => this.logOut(e), 
             style: { cursor: 'pointer' }, 
             tabIndex: 0 
-        }, "Login")
+        }, "Log Out")
         ) : null
     );
     
@@ -129,11 +135,11 @@ class BasicSearchComponent extends React.Component {
             ce('div', {className: "text-center"}, 
                 ce('h2', {className: "login-header"}, "Search Past Workouts for  " + this.state.username), 
                 ce('div', {className: 'completed-container'}, 
-                    ce('input', {type: 'radio', name: 'options', id: 'All-Workouts'}),
+                    ce('input', {type: 'radio', name: 'options', id: 'All-Workouts', onClick: this.allClicked.bind(this)}),
                     ce('label', null, 'All'),
-                    ce('input', {type: 'radio', name: 'options', id: 'Completed'}),
+                    ce('input', {type: 'radio', name: 'options', id: 'Completed', onClick: this.completeClicked.bind(this)}),
                     ce('label', null, 'Complete'),
-                    ce('input', {type: 'radio', name: 'options', id: 'Incomplete'}),
+                    ce('input', {type: 'radio', name: 'options', id: 'Incomplete', onClick: this.incompleteClicked.bind(this)}),
                     ce('label', null, 'Incomplete')
                 ),
                 ce('select', {id: "date-dropdown", className: "form-select mb-3", onChange: this.dateSelectedContent.bind(this)}, null),
@@ -142,6 +148,73 @@ class BasicSearchComponent extends React.Component {
                 )
             ),
             );
+    }
+
+    allClicked() {
+        workout_list.innerHTML = ''
+        for(const workout of this.state.workouts) {
+            var listItem = document.createElement('li');
+            var listDiv = document.createElement('div');
+            var listSpan = document.createElement('span');
+            var listButton = document.createElement('button');
+            listButton.textContent = "View";
+            listButton.className = "submission-button";
+            if(Array.isArray(workout)) {
+                const workoutText = workout[1];
+
+                listSpan.textContent = workoutText;
+            }
+            listItem.appendChild(listDiv);
+            listDiv.appendChild(listSpan);
+            listDiv.appendChild(listButton);
+            workout_list.appendChild(listItem);
+        }
+    }
+
+    completeClicked() {
+        workout_list.innerHTML = ''
+        for(const workout of this.state.workouts) {
+            if(workout[2]!="null") {
+                var listItem = document.createElement('li');
+                var listDiv = document.createElement('div');
+                var listSpan = document.createElement('span');
+                var listButton = document.createElement('button');
+                listButton.textContent = "View";
+                listButton.className = "submission-button";
+                if(Array.isArray(workout)) {
+                    const workoutText = workout[1];
+
+                    listSpan.textContent = workoutText;
+                }
+                listItem.appendChild(listDiv);
+                listDiv.appendChild(listSpan);
+                listDiv.appendChild(listButton);
+                workout_list.appendChild(listItem);
+            }
+        }
+    }
+    
+    incompleteClicked() {
+        workout_list.innerHTML = ''
+        for(const workout of this.state.workouts) {
+            if(workout[2]=="null") {
+                var listItem = document.createElement('li');
+                var listDiv = document.createElement('div');
+                var listSpan = document.createElement('span');
+                var listButton = document.createElement('button');
+                listButton.textContent = "View";
+                listButton.className = "submission-button";
+                if(Array.isArray(workout)) {
+                    const workoutText = workout[1];
+
+                    listSpan.textContent = workoutText;
+                }
+                listItem.appendChild(listDiv);
+                listDiv.appendChild(listSpan);
+                listDiv.appendChild(listButton);
+                workout_list.appendChild(listItem);
+            }
+        }
     }
 
     getInfo() {
@@ -189,7 +262,6 @@ class BasicSearchComponent extends React.Component {
             workout_list.appendChild(listItem);
         } else {
             workout_list.innerHTML = ''
-            console.log(this.state.workouts)
             for(const workout of this.state.workouts) {
                 var listItem = document.createElement('li');
                 var listDiv = document.createElement('div');
@@ -198,7 +270,7 @@ class BasicSearchComponent extends React.Component {
                 listButton.textContent = "View";
                 listButton.className = "submission-button";
                 if(Array.isArray(workout)) {
-                    const workoutText = workout.join(', ');
+                    const workoutText = workout[1];
 
                     listSpan.textContent = workoutText;
                 }
@@ -231,7 +303,7 @@ class BasicSearchComponent extends React.Component {
                 listButton.textContent = "View";
                 listButton.className = "submission-button";
                 if(Array.isArray(workout)) {
-                    const workoutText = workout.join(', ');
+                    const workoutText = workout[1];
 
                     listSpan.textContent = workoutText;
                 }
@@ -243,7 +315,6 @@ class BasicSearchComponent extends React.Component {
 
             this.setState({ workouts: workouts });
             this.setDropdown();
-            console.log(this.state.workouts);
         })
         .catch(error => {
             console.error('Error', error);

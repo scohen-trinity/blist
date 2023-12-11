@@ -9,16 +9,7 @@ const loginRoute          = document.getElementById("loginRoute").value;
 const landingRoute        = document.getElementById("landingRoute").value;
 const validateRoute       = document.getElementById("validateRoute").value;
 const creationPageRoute   = document.getElementById("creationPageRoute").value;
-const creationActionRoute = document.getElementById("creationActionRoute").value;
 const searchRoute         = document.getElementById("searchExerciseRoute").value;
-
-const retrieveSettingsRoute = document.getElementById("retrieveSettingsRoute").value;
-const initializeSettingsRoute = document.getElementById("initializeSettingsRoute").value;
-const updatePasswordRoute = document.getElementById("updatePasswordRoute").value;
-const updateWeightRoute = document.getElementById("updateWeightRoute").value;
-const updateHeightRoute = document.getElementById("updateHeightRoute").value;
-const updateGoalRoute = document.getElementById("updateGoalRoute").value;
-const updateDaysRoute = document.getElementById("updateDaysRoute").value;
 
 // Hamburger Component
 class Hamburger extends React.Component {
@@ -47,6 +38,13 @@ class Hamburger extends React.Component {
         this.closeMenu();
         console.log("Go to log in page");
         window.location.href = loginRoute;
+    }
+
+    goToCreation(e){
+        e.preventDefault();
+        this.closeMenu();
+        console.log("Go to creation page");
+        window.location.href = creationPageRoute;
     }
 
     toggleMenu() {
@@ -86,7 +84,12 @@ class Hamburger extends React.Component {
             onClick: e => this.goToLogin(e), 
             style: { cursor: 'pointer' }, 
             tabIndex: 0 
-        }, "Login")
+        }, "Login"),
+        ce('a', { 
+            onClick: e => this.goToCreation(e), 
+            style: { cursor: 'pointer' }, 
+            tabIndex: 0 
+        }, "Create Account")
         ) : null
     );
     
@@ -164,12 +167,13 @@ class BasicLoginComponent extends React.Component {
             ce('input', {type: "text", id: "loginName", className: "form-control", value: this.state.loginName, onChange: e => this.onChangeHandler(e)}),
             ce('br'),
             ce('h4', { className: 'basic-font'}, 'Password '),
-            ce('input', {type: "password", id: "loginPass", value: this.state.loginPass, onChange: e => this.onChangeHandler(e)}),
+            ce('input', {type: "password", id: "loginPass", className: "form-control", value: this.state.loginPass, onChange: e => this.onChangeHandler(e)}),
             ce('br'),
             ce('br'),
-            ce('button', {className: "submission-button", onClick: e=> this.login(e)}, 'Login'),
+            ce('button', {className: "submission-button", onClick: e => this.login(e)}, 'Login'),
             ce('br'),
             ce('br'),
+            ce('button', {className: "large-button", onClick: e => this.redirectToCreate(e)}, 'Create An Account Instead'),
             ce('span', {className: 'basic-font', id: "login-message"}, this.state.loginMessage),
         )
     }
@@ -195,6 +199,10 @@ class BasicLoginComponent extends React.Component {
                 this.setState({ loginName: "", loginPass: ""});
             }
         })
+    }
+
+    redirectToCreate(e) {
+        window.location.href = creationPageRoute;
     }
 }
 

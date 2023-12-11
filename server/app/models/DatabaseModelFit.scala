@@ -174,14 +174,24 @@ class DatabaseModelFit(db: Database)(implicit ec: ExecutionContext) {
 
     // Workout related methods
 
-    def retrieveWorkoutsByUsername(username: String): Future[Seq[(Int, String)]] = {
+    def retrieveWorkoutsByUsername(username: String): Future[Seq[(Int, String, String)]] = {
         db.run(Assignments.filter(res => res.username === username).result).map(workouts => {
             if(workouts.length > 0) {
-                var workout_list: Seq[(Int, String)] = Seq()
+                var workout_list: Seq[(Int, String, String)] = Seq()
                 for(workout <- workouts) {
                     val date_format = new SimpleDateFormat("MM-dd-yyyy")
                     var date_assigned = date_format.format(workout.dateAssigned)
-                    workout_list = (workout.workoutId, date_assigned) +: workout_list
+                    var completed = workout.dateCompleted
+                    var date_completed = ""
+                    completed match {
+                        case Some(date) =>
+                            date_completed = date_format.format(date)
+                        case None =>
+                            date_completed = "null"
+                    }
+                    
+                    println(date_completed)
+                    workout_list = (workout.workoutId, date_assigned, date_completed) +: workout_list
                 }
 
                 workout_list
@@ -288,4 +298,13 @@ class DatabaseModelFit(db: Database)(implicit ec: ExecutionContext) {
             }    
         } 
     }
+
+def pullWorkoutExercises(workoutID: Int): Future[Seq[Int]] = {
+    db.run(
+        Workouts.filter(_.workoutId === workoutID).result
+    ).map { workoutExercises =>
+        workoutExercises.map(_.exerciseId)
+    }
+}
+
 }

@@ -3,10 +3,14 @@
 const ce = React.createElement;
 
 // The code below is required for nav bar and hamburger menu
+
 const csrfToken = document.getElementById("csrfToken").value;
 const loginRoute = document.getElementById("loginRoute").value;
 const landingRoute = document.getElementById("landingRoute").value;
+const pullWorkoutExercisesRoute = document.getElementById("pullWorkoutExercisesRoute").value;
 const profileRoute = document.getElementById("profileRoute").value;
+const retrieveExerciseRoute = document.getElementById("retrieveExerciseRoute").value;
+
 const creationPageRoute = document.getElementById("creationPageRoute").value;
 const searchExerciseRoute  = document.getElementById("searchExerciseRoute").value;
 
@@ -18,6 +22,7 @@ class Hamburger extends React.Component {
         this.goToLanding = this.goToLanding.bind(this);
         this.goToSearch = this.goToSearch.bind(this);
         this.goToCreation = this.goToCreation.bind(this);
+
     }
 
     closeMenu() {
@@ -54,7 +59,11 @@ class Hamburger extends React.Component {
         window.location.href = creationPageRoute;
     }
 
-
+    logOut(e){
+        e.preventDefault();
+        this.closeMenu();
+        window.location.href = loginRoute;
+    }
 
     toggleMenu() {
         this.setState(prevState => ({
@@ -93,14 +102,6 @@ class Hamburger extends React.Component {
             onClick: e => this.goToProfile(e), 
             style: { cursor: 'pointer' }, 
             tabIndex: 0 
-
-        }, "Login")
-        /*ce('a', { 
-            onClick: e => this.goToProfile(e), 
-            style: { cursor: 'pointer' }, 
-            tabIndex: 0 
-        }, "Profile")*/
-
         }, "Profile"),
         ce('a', { 
             onClick: e => this.goToSearch(e), 
@@ -108,11 +109,15 @@ class Hamburger extends React.Component {
             tabIndex: 0 
         }, "Search Workouts"),
         ce('a', { 
+            onClick: e => this.logOut(e), 
+            style: { cursor: 'pointer' }, 
+            tabIndex: 0 
+        }, "Log Out"),
+        ce('a', { 
             onClick: e => this.goToLanding(e), 
             style: { cursor: 'pointer' }, 
             tabIndex: 0 
         }, "------"),
-
         ) : null
     );
     
@@ -136,74 +141,116 @@ class NavBarComponent extends React.Component {
             ce('h2', {className: "navbar-header"}, 'LOGIN'),
             ce('img', { src: "https://cdn4.iconfinder.com/data/icons/man-user-human-person-business-profile-avatar/100/20-1User_13-512.png", className: "login-navbar"}, null) 
            ),
+           
         )
     }
 
     goToLogin(e) {
+        console.log("Go to log in page")
         window.location.href = loginRoute;
     }
 
     goToLanding(e) {
+        console.log("Go to landing page")
         window.location.href = landingRoute;
     }
     goToProfile(e) {
+        console.log("Go to profile page")
         window.location.href = profileRoute;
     }
     goToSearch(e) {
+        console.log("Go to search page")
         window.location.href = searchExerciseRoute;
     }
     goToCreation(e) {
+        console.log("Go to creation page")
         window.location.href = creationPageRoute;
     }
 }
 // The code above is required for the NavBar and Hamburger menu
 
-class TeamSection extends React.Component {
-    render() {
-        return ce('div', {className: 'section team'},
-            ce('h2', {className: 'text-center'}, 'Our Team'),
-            ce('ul', {className: 'team-list'},
-                ce('li', null, 'Olivia Bangs'),
-                ce('li', null, 'Samuel Cohen'),
-                ce('li', null, 'Seth Owirodu'),
-                ce('li', null, 'Samuel Pappas')
-            )
-        );
+class WorkoutPage extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            exercises: [],
+            exerciseDetails: [] 
+        };
     }
-}
 
-class PurposeSection extends React.Component {
-    render() {
-        return ce('div', {className: 'section purpose'},
-            ce('h2', {className: 'text-center'}, 'Our Purpose'),
-            ce('p', {className: 'text-center'}, 'Our application makes visiting a gym and lifting weights significantly less intimidating by assembling a programmatic structure for each workout and having exercise descriptions and links to videos about that exercise attached for easy reference.')
-        );
+    componentDidMount() {
+        this.workoutExercises(1);
     }
-}
 
-class MainContainer extends React.Component {
-    render() {
-        return ce('div', null, 
-        ce(NavBarComponent, null, null), 
-        ce('div', {className: 'container'},
-            ce('div', {className: 'row equal-height'},
-                ce('div', {className: 'col-md-6'},
-                    ce(TeamSection, null, null)
+    workoutExercises(id) {
+        fetch(pullWorkoutExercisesRoute, { 
+            method: 'POST',
+            headers: {'Content-Type': 'application/json', 'Csrf-Token': csrfToken},
+            body: JSON.stringify(id)
+        }).then(res => res.json()).then(data => {
+            if (data.exerciseIds) {
+                this.setState({ exercises: data.exerciseIds }, () => {
+                    this.state.exercises.forEach(this.fetchExerciseDetails);
+                });
+            }
+        }).catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    fetchExerciseDetails = (exerciseId) => {
+        fetch(retrieveExerciseRoute, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Csrf-Token': csrfToken },
+            body: JSON.stringify(exerciseId) 
+        })
+        .then(res => res.json())
+        .then(data => {            
+            if (data) {
+                this.setState(prevState => ({
+                    exerciseDetails: [...prevState.exerciseDetails, data]
+                }));
+            } else {
+                console.error("Invalid data format:", data);
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching exercise details:', error);
+        });
+    }
+
+    renderExerciseDetails = () => {
+        return this.state.exerciseDetails.map((details, index) => {
+            return ce('div', { key: index, className: 'exercise-details' },
+                ce('br'),
+                ce('h2', { className: 'text-center' }, 'Exercise Details'),
+                ce('br'),ce('br'),
+                ce('h4', { className: 'text-center' }, `Name: ${details[1]}`),
+                ce('h4', { className: 'text-center' },
+                    ce('a', { href: details[2], target: '_blank' }, 'Link to explanatory video')
                 ),
-
-                ce('div', {className: 'col-md-6'},
-                    ce(PurposeSection, null, null)
-                )
-            )
-        )
-        )
+                ce('h4', { className: 'text-center' }, `Description: ${details[3]}`),
+                ce('h4', { className: 'text-center' }, `Muscle Group(s): ${details[4].join(', ')}`),
+                // Additional elements like button can be added here if needed
+            );
+        });
     }
-    
+
+    render() {
+        return ce('div', null,
+            ce(NavBarComponent, null, null), // Render the NavBarComponent at the top of the page
+            ce('div', { className: 'workout-page' },
+                ce('h1', { className: 'Workout-Title' }, 'Workout Exercises'),
+                this.renderExerciseDetails()
+            )
+        );
+    }
 }
-
-
 
 ReactDOM.render(
-    ce(MainContainer, null, null),
-    document.getElementById('landing-page')
+    ce(WorkoutPage, null, null),
+    document.getElementById('workoutPage')
 );
+
+
+

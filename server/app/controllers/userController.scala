@@ -203,4 +203,9 @@ class UserController @Inject()(protected val dbConfigProvider: DatabaseConfigPro
             }
         }.getOrElse(Future.successful(Ok(Json.toJson(false))))
     }
+
+  def logout = Action { implicit request =>
+    Redirect(routes.Application.landing).withNewSession
+  }
+
 }
