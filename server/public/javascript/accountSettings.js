@@ -17,6 +17,7 @@ const changeHeightRoute = document.getElementById("changeHeightRoute").value;
 const changeGoalRoute = document.getElementById("changeGoalRoute").value;
 const changeDaysRoute = document.getElementById("changeDaysRoute").value;
 const getUserInfoRoute = document.getElementById("getUserInfoRoute").value;
+const logoutRoute = document.getElementById("logoutRoute").value;
 
 class Hamburger extends React.Component {
   constructor(props) {
@@ -44,6 +45,12 @@ class Hamburger extends React.Component {
     this.closeMenu();
     console.log("Go to log in page");
     window.location.href = loginRoute;
+  }
+
+  logOut(e){
+    e.preventDefault();
+    this.closeMenu();
+    window.location.href = logoutRoute;
   }
 
   toggleMenu() {
@@ -93,11 +100,11 @@ class Hamburger extends React.Component {
             ce(
               "a",
               {
-                onClick: e => this.goToLogin(e),
+                onClick: e => this.logOut(e),
                 style: { cursor: "pointer" },
                 tabIndex: 0
               },
-              "Login"
+              "Log Out"
             )
           )
         : null
