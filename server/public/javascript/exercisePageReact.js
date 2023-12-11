@@ -2,10 +2,10 @@ const retrieveExerciseRoute = document.getElementById("retrieveExerciseRoute").v
 const searchExercisesRoute = document.getElementById("searchExercisesRoute").value;
 const obtainAllExercisesRoute = document.getElementById("obtainAllExercisesRoute").value;
 const loginRoute = document.getElementById("loginRoute").value;
+const logoutRoute = document.getElementById("logoutRoute").value;
 const workoutSearchRoute = document.getElementById("workoutSearchRoute").value;
 const profileRoute = document.getElementById("profileRoute").value;
 const landingRoute = document.getElementById("landingRoute").value;
-
 
 const csrfToken = document.getElementById("csrfToken").value;
 
@@ -49,7 +49,7 @@ class Hamburger extends React.Component {
     logOut(e){
         e.preventDefault();
         this.closeMenu();
-        window.location.href = loginRoute;  
+        window.location.href = logoutRoute;  
     }
 
     goToWorkouts(e){

@@ -13,6 +13,7 @@ const creationActionRoute = document.getElementById("creationActionRoute").value
 const searchExerciseRoute = document.getElementById("searchExerciseRoute").value;
 const getUserInfo         = document.getElementById("getUserInfoRoute").value;
 const getWorkouts         = document.getElementById("getWorkoutsRoute").value;
+const logoutRoute = document.getElementById("logoutRoute").value;
 
 // Hamburger Component
 class Hamburger extends React.Component {
@@ -46,7 +47,7 @@ class Hamburger extends React.Component {
     logOut(e){
         e.preventDefault();
         this.closeMenu();
-        window.location.href = loginRoute;
+        window.location.href = logoutRoute;
       }
 
     toggleMenu() {

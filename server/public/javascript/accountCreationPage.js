@@ -152,7 +152,7 @@ class AccountComponent extends React.Component {
 
     render(){
         return ce('div', {className: "form-container"}, 
-            ce('h2', {className: "login-header"}, 'Create An Account'),
+            ce('h2', {className: "login-header"}, 'Create Account'),
             ce('h4', {className: 'basic-font'}, 'Username'),
             ce('input', {type: "text", id: "newName", className: "form-control", value: this.state.newName, onChange: e => this.onChangeHandler(e)}),
             ce('br'),

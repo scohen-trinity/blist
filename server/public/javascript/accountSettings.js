@@ -57,12 +57,6 @@ class Hamburger extends React.Component {
     }));
   }
 
-  logOut(e){
-    e.preventDefault();
-    this.closeMenu();
-    window.location.href = loginRoute;
-  }
-
   render() {
     const navbarProps = {
       className: "hamburger-navbar",

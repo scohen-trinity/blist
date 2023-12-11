@@ -16,8 +16,6 @@ class Hamburger extends React.Component {
         this.state = { isOpen: false };
         this.toggleMenu = this.toggleMenu.bind(this);
         this.goToLanding = this.goToLanding.bind(this);
-        this.goToSearch = this.goToSearch.bind(this);
-        this.goToCreation = this.goToCreation.bind(this);
     }
 
     closeMenu() {
@@ -32,29 +30,12 @@ class Hamburger extends React.Component {
         window.location.href = landingRoute;
     }
 
-
-    goToProfile(e){
-        e.preventDefault();
-        this.closeMenu();
-        console.log("Go to profile page");
-        window.location.href = profileRoute;
-    }
-
-    goToSearch(e){
-        e.preventDefault();
-        this.closeMenu();
-        console.log("Go to search page");
-        window.location.href = searchExerciseRoute;
-    }
-
     goToCreation(e){
         e.preventDefault();
         this.closeMenu();
         console.log("Go to creation page");
         window.location.href = creationPageRoute;
     }
-
-
 
     toggleMenu() {
         this.setState(prevState => ({
@@ -89,24 +70,6 @@ class Hamburger extends React.Component {
             style: { cursor: 'pointer' }, 
             tabIndex: 0 
         }, "Home"),
-        ce('a', { 
-            onClick: e => this.goToProfile(e), 
-            style: { cursor: 'pointer' }, 
-            tabIndex: 0 
-
-        }, "Login")
-        /*ce('a', { 
-            onClick: e => this.goToProfile(e), 
-            style: { cursor: 'pointer' }, 
-            tabIndex: 0 
-        }, "Profile")*/
-
-        }, "Profile"),
-        ce('a', { 
-            onClick: e => this.goToSearch(e), 
-            style: { cursor: 'pointer' }, 
-            tabIndex: 0 
-        }, "Search Workouts"),
         ce('a', { 
             onClick: e => this.goToLanding(e), 
             style: { cursor: 'pointer' }, 
