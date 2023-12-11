@@ -11,9 +11,10 @@ const landingRoute = document.getElementById("landingRoute").value;
 const pullWorkoutExercisesRoute = document.getElementById("pullWorkoutExercisesRoute").value;
 const profileRoute = document.getElementById("profileRoute").value;
 const retrieveExerciseRoute = document.getElementById("retrieveExerciseRoute").value;
-
+const workoutSearchRoute = document.getElementById("workoutSearchRoute").value;
 const creationPageRoute = document.getElementById("creationPageRoute").value;
 const searchExerciseRoute  = document.getElementById("searchExerciseRoute").value;
+const logoutRoute = document.getElementById("logoutRoute").value;
 
 class Hamburger extends React.Component {
     constructor(props) {
@@ -22,8 +23,6 @@ class Hamburger extends React.Component {
         this.toggleMenu = this.toggleMenu.bind(this);
         this.goToLanding = this.goToLanding.bind(this);
         this.goToSearch = this.goToSearch.bind(this);
-        this.goToCreation = this.goToCreation.bind(this);
-
     }
 
     closeMenu() {
@@ -34,33 +33,32 @@ class Hamburger extends React.Component {
     goToLanding(e) {
         e.preventDefault();
         this.closeMenu();
-        console.log("Go to landing page");
         window.location.href = landingRoute;
     }
-
 
     goToProfile(e){
         e.preventDefault();
         this.closeMenu();
-        console.log("Go to profile page");
         window.location.href = profileRoute;
     }
 
     goToSearch(e){
         e.preventDefault();
         this.closeMenu();
-        console.log("Go to search page");
         window.location.href = searchExerciseRoute;
     }
 
-    goToCreation(e){
+    goToWorkouts(e){
         e.preventDefault();
         this.closeMenu();
-        console.log("Go to creation page");
-        window.location.href = creationPageRoute;
+        window.location.href = workoutSearchRoute;
     }
 
-
+    logOut(e){
+        e.preventDefault();
+        this.closeMenu();
+        window.location.href = logoutRoute;
+    }
 
     toggleMenu() {
         this.setState(prevState => ({
@@ -104,7 +102,17 @@ class Hamburger extends React.Component {
             onClick: e => this.goToSearch(e), 
             style: { cursor: 'pointer' }, 
             tabIndex: 0 
+        }, "Search Exercises"),
+        ce('a', { 
+            onClick: e => this.goToWorkouts(e), 
+            style: { cursor: 'pointer' }, 
+            tabIndex: 0 
         }, "Search Workouts"),
+        ce('a', { 
+            onClick: e => this.logOut(e), 
+            style: { cursor: 'pointer' }, 
+            tabIndex: 0 
+        }, "Log Out"),
         ce('a', { 
             onClick: e => this.goToLanding(e), 
             style: { cursor: 'pointer' }, 
@@ -217,20 +225,30 @@ class WorkoutPage extends React.Component {
 
     renderExerciseDetails = () => {
         return this.state.exerciseDetails.map((details, index) => {
-            return ce('div', { key: index, className: 'exercise-details' },
+            // Extract the video ID and construct the embed URL
+            const videoId = new URL(details[2]).searchParams.get('v');
+            const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+    
+            return ce('div', { key: index, className: 'exercise-detail', style: { display: 'flex', flexDirection: 'column', alignItems: 'center', maxWidth: '560px', margin: 'auto' }},
                 ce('br'),
                 ce('h2', { className: 'text-center' }, 'Exercise Details'),
-                ce('br'),ce('br'),
+                ce('br'), ce('br'),
                 ce('h4', { className: 'text-center' }, `Name: ${details[1]}`),
-                ce('h4', { className: 'text-center' },
-                    ce('a', { href: details[2], target: '_blank' }, 'Link to explanatory video')
+                ce('div', { className: 'video-container' },
+                    ce('iframe', { 
+                        src: embedUrl,
+                        frameborder: "0", 
+                        allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
+                        allowfullscreen: true,
+                        style: { width: '560px', height: '315px'} // Adjust the size as needed
+                    }, null)
                 ),
                 ce('h4', { className: 'text-center' }, `Description: ${details[3]}`),
-                ce('h4', { className: 'text-center' }, `Muscle Group(s): ${details[4].join(', ')}`),
-                // Additional elements like button can be added here if needed
+                ce('h4', { className: 'text-center' }, `Muscle Group(s): ${details[4].join(', ')}`)
             );
         });
     }
+    
 
     render() {
         return ce('div', null,

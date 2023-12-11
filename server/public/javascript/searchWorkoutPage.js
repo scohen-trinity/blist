@@ -13,6 +13,8 @@ const creationActionRoute = document.getElementById("creationActionRoute").value
 const searchExerciseRoute = document.getElementById("searchExerciseRoute").value;
 const getUserInfo         = document.getElementById("getUserInfoRoute").value;
 const getWorkouts         = document.getElementById("getWorkoutsRoute").value;
+const logoutRoute         = document.getElementById("logoutRoute").value;
+const profileRoute        = document.getElementById("profileRoute").value;
 const workoutRoute        = document.getElementById("getWorkoutRoute").value;
 
 // Hamburger Component
@@ -23,6 +25,8 @@ class Hamburger extends React.Component {
         this.toggleMenu = this.toggleMenu.bind(this);
         this.goToLogin = this.goToLogin.bind(this);
         this.goToLanding = this.goToLanding.bind(this);
+        this.goToProfile = this.goToProfile.bind(this);
+        this.goToSearch = this.goToSearch.bind(this);
     }
 
     closeMenu() {
@@ -33,15 +37,31 @@ class Hamburger extends React.Component {
     goToLanding(e) {
         e.preventDefault();
         this.closeMenu();
-        console.log("Go to landing page");
         window.location.href = landingRoute;
     }
 
     goToLogin(e) {
         e.preventDefault();
         this.closeMenu();
-        console.log("Go to log in page");
         window.location.href = loginRoute;
+    }
+
+    logOut(e){
+        e.preventDefault();
+        this.closeMenu();
+        window.location.href = logoutRoute;
+    }
+
+    goToProfile(e){
+        e.preventDefault();
+        this.closeMenu();
+        window.location.href = profileRoute;
+    }
+
+    goToSearch(e){
+        e.preventDefault();
+        this.closeMenu();
+        window.location.href = searchExerciseRoute;
     }
 
     toggleMenu() {
@@ -78,10 +98,20 @@ class Hamburger extends React.Component {
             tabIndex: 0 
         }, "Home"),
         ce('a', { 
-            onClick: e => this.goToLogin(e), 
+            onClick: e => this.goToProfile(e), 
             style: { cursor: 'pointer' }, 
             tabIndex: 0 
-        }, "Login")
+        }, "Profile"),
+        ce('a', { 
+            onClick: e => this.goToSearch(e), 
+            style: { cursor: 'pointer' }, 
+            tabIndex: 0 
+        }, "Search Exercises"),
+        ce('a', { 
+            onClick: e => this.logOut(e), 
+            style: { cursor: 'pointer' }, 
+            tabIndex: 0 
+        }, "Log Out")
         ) : null
     );
     

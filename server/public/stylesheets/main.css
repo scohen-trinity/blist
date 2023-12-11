@@ -57,10 +57,13 @@
 }*/
 
 .form-container {
-    position:absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-49%, -50%); /* Center the form */
+    max-width: 300px; 
+    margin: auto; 
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 20px; 
 
 }
 
@@ -117,10 +120,6 @@ form {
     position: relative; /* Ensure the navbar has a relative position */
 }
 
-.hamburger {
-    /* styles for the hamburger icon container */
-}
-
 .burger {
     width: 2rem;
     height: 0.25rem;
@@ -163,10 +162,6 @@ form {
 
 /* Account Settings CSS */
 
-.personal-form {
-    text-align: center;
-    
-}
 
 .account-settings {
     text-align: center;
@@ -219,10 +214,6 @@ form {
 
 /* Account Settings CSS */
 
-.personal-form {
-    text-align: center;
-    
-}
 
 .account-settings {
     text-align: center;
@@ -330,3 +321,4 @@ button:hover {
 .Workout-Title {
     text-align: center;
 }
+

@@ -2,6 +2,10 @@ const retrieveExerciseRoute = document.getElementById("retrieveExerciseRoute").v
 const searchExercisesRoute = document.getElementById("searchExercisesRoute").value;
 const obtainAllExercisesRoute = document.getElementById("obtainAllExercisesRoute").value;
 const loginRoute = document.getElementById("loginRoute").value;
+const logoutRoute = document.getElementById("logoutRoute").value;
+const workoutSearchRoute = document.getElementById("workoutSearchRoute").value;
+const profileRoute = document.getElementById("profileRoute").value;
+const landingRoute = document.getElementById("landingRoute").value;
 
 const csrfToken = document.getElementById("csrfToken").value;
 
@@ -12,6 +16,47 @@ class Hamburger extends React.Component {
         super(props);
         this.state = { isOpen: false };
         this.toggleMenu = this.toggleMenu.bind(this);
+        this.goToLogin = this.goToLogin.bind(this);
+        this.goToLanding = this.goToLanding.bind(this);
+    }
+
+    closeMenu() {
+        this.setState({ isOpen: false });
+    }
+
+    // Call this method after navigation actions
+    goToLanding(e) {
+        e.preventDefault();
+        this.closeMenu();
+        console.log("Go to landing page");
+        window.location.href = landingRoute;
+    }
+
+    goToLogin(e) {
+        e.preventDefault();
+        this.closeMenu();
+        console.log("Go to log in page");
+        window.location.href = loginRoute;
+    }
+
+    goToProfile(e){
+        e.preventDefault();
+        this.closeMenu();
+        console.log("Go to profile page");
+        window.location.href = profileRoute;
+    }
+
+    logOut(e){
+        e.preventDefault();
+        this.closeMenu();
+        window.location.href = logoutRoute;  
+    }
+
+    goToWorkouts(e){
+        e.preventDefault();
+        this.closeMenu();
+        console.log("Go to profile page");
+        window.location.href = workoutSearchRoute;
     }
 
     toggleMenu() {
@@ -23,7 +68,6 @@ class Hamburger extends React.Component {
     render() {
         const navbarProps = {
             className: 'hamburger-navbar',
-            //className: `hamburger-navbar ${this.props.className || ''}`,
             onClick: this.toggleMenu 
         };
 
@@ -37,28 +81,45 @@ class Hamburger extends React.Component {
         });
 
         return ce('div', navbarProps,
-            ce('div', hamburgerProps,
-                ce('div', burgerProps(1)), // First line of hamburger
-                ce('div', burgerProps(2)), // Second line of hamburger
-                ce('div', burgerProps(3))  // Third line of hamburger
-            ),
-            this.state.isOpen ? ce('div', { className: 'menu' },
-                ce('a', { href: '#home' }, 'Home'),
-                ce('a', { href: '#about' }, 'About'),
-                ce('a', { href: '#services' }, 'Services'),
-                ce('a', { href: '#contact' }, 'Contact')
-            ) : null
-        );
+        ce('div', hamburgerProps,
+            ce('div', burgerProps(1)), // First line of hamburger
+            ce('div', burgerProps(2)), // Second line of hamburger
+            ce('div', burgerProps(3))  // Third line of hamburger
+        ),
+        this.state.isOpen ? ce('div', { className: 'menu' },
+        ce('a', { 
+            onClick: e => this.goToLanding(e), 
+            style: { cursor: 'pointer' }, 
+            tabIndex: 0 
+        }, "Home"),
+        ce('a', { 
+            onClick: e => this.goToWorkouts(e), 
+            style: { cursor: 'pointer' }, 
+            tabIndex: 0 
+        }, "Search Workouts"),
+        ce('a', { 
+            onClick: e => this.goToProfile(e), 
+            style: { cursor: 'pointer' }, 
+            tabIndex: 0 
+        }, "Profile"),
+        ce('a', { 
+            onClick: e => this.logOut(e), 
+            style: { cursor: 'pointer' }, 
+            tabIndex: 0 
+        }, "Log Out")
+        ) : null
+    );
+    
     }
+
 }
 
 
 class NavBarComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            
-        };
+        this.goToLogin = this.goToLogin.bind(this);
+        this.goToLanding = this.goToLanding.bind(this);
     }
 
     render() {
@@ -81,6 +142,10 @@ class NavBarComponent extends React.Component {
     goToLanding(e) {
         console.log("Go to landing page")
         window.location.href = landingRoute;
+    }
+    goToProfile(e) {
+        console.log("Go to landing page")
+        window.location.href = profileRoute;
     }
 }
 

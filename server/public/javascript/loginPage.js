@@ -167,7 +167,7 @@ class BasicLoginComponent extends React.Component {
             ce('input', {type: "text", id: "loginName", className: "form-control", value: this.state.loginName, onChange: e => this.onChangeHandler(e)}),
             ce('br'),
             ce('h4', { className: 'basic-font'}, 'Password '),
-            ce('input', {type: "password", id: "loginPass", value: this.state.loginPass, onChange: e => this.onChangeHandler(e)}),
+            ce('input', {type: "password", id: "loginPass", className: "form-control", value: this.state.loginPass, onChange: e => this.onChangeHandler(e)}),
             ce('br'),
             ce('br'),
             ce('button', {className: "submission-button", onClick: e => this.login(e)}, 'Login'),

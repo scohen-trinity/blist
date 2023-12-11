@@ -30,7 +30,7 @@ class MainAccountCreationComponent extends React.Component {
 
     render(){
         if(this.state.loggedIn) {
-            window.location.href = landingRoute; //THIS SHOULD BECOME THE SETTINGS PAGE ONCE ITS FINISHED
+            window.location.href = loginRoute;
             return null;
         }
         else return ce('div', null, 
@@ -152,16 +152,16 @@ class AccountComponent extends React.Component {
 
     render(){
         return ce('div', {className: "form-container"}, 
-            ce('h2', {className: "login-header"}, 'Create An Account'),
+            ce('h2', {className: "login-header"}, 'Create Account'),
             ce('h4', {className: 'basic-font'}, 'Username'),
             ce('input', {type: "text", id: "newName", className: "form-control", value: this.state.newName, onChange: e => this.onChangeHandler(e)}),
             ce('br'),
             ce('h4', {className: 'basic-font'}, 'Password'),
-            ce('input', {type: "password", id: "newPass", value: this.state.newPass, onChange: e => this.onChangeHandler(e)}),
+            ce('input', {type: "password", id: "newPass",className: "form-control", value: this.state.newPass, onChange: e => this.onChangeHandler(e)}),
             ce('br'),
             ce('br'),
             ce('h4', {className: 'basic-font'}, 'Confirm Password'),
-            ce('input', {type: "password", id: "newConfirmPass", value: this.state.newConfirmPass, onChange: e => this.onChangeHandler(e)}),
+            ce('input', {type: "password", id: "newConfirmPass",className: "form-control", value: this.state.newConfirmPass, onChange: e => this.onChangeHandler(e)}),
             ce('br'),
             ce('br'),
             ce('button', {className: "submission-button", onClick: e => this.createAccount(e)}, 'Create'),

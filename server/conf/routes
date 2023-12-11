@@ -27,7 +27,7 @@ POST       /updateWeight                 controllers.UserController.changeWeight
 POST       /updateHeight                 controllers.UserController.changeHeight
 POST       /updateGoal                   controllers.UserController.changeGoal
 POST       /updateDays                   controllers.UserController.changeDays
-
+GET        /logout                       controllers.UserController.logout
 # exerciseController Routes
 
 POST       /retrieveExercise             controllers.ExerciseController.obtainExercise

@@ -19,8 +19,6 @@ import play.filters.csrf.CSRF
 class ExerciseController @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, cc: ControllerComponents)(implicit ec: ExecutionContext) extends AbstractController(cc) with HasDatabaseConfigProvider[JdbcProfile] {
     private val memInstance = new models.DatabaseModelFit(db)
 
-    
-
     def obtainExercise = Action.async { implicit request =>
         request.body.asJson.map {ed =>
             Json.fromJson[Int](ed) match {
