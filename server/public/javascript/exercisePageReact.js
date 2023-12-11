@@ -96,7 +96,7 @@ class Hamburger extends React.Component {
             onClick: e => this.goToWorkouts(e), 
             style: { cursor: 'pointer' }, 
             tabIndex: 0 
-        }, "Workouts"),
+        }, "Search Workouts"),
         ce('a', { 
             onClick: e => this.goToProfile(e), 
             style: { cursor: 'pointer' }, 

@@ -18,6 +18,8 @@ const changeGoalRoute = document.getElementById("changeGoalRoute").value;
 const changeDaysRoute = document.getElementById("changeDaysRoute").value;
 const getUserInfoRoute = document.getElementById("getUserInfoRoute").value;
 const logoutRoute = document.getElementById("logoutRoute").value;
+const workoutSearchRoute = document.getElementById("workoutSearchRoute").value;
+const searchExerciseRoute = document.getElementById("searchExerciseRoute").value;
 
 class Hamburger extends React.Component {
   constructor(props) {
@@ -49,6 +51,19 @@ class Hamburger extends React.Component {
     e.preventDefault();
     this.closeMenu();
     window.location.href = logoutRoute;
+  }
+
+  goToWorkouts(e){
+    e.preventDefault();
+    this.closeMenu();
+    console.log("Go to profile page");
+    window.location.href = workoutSearchRoute;
+  }
+
+  goToSearch(e){
+    e.preventDefault();
+    this.closeMenu();
+    window.location.href = searchExerciseRoute;
   }
 
   toggleMenu() {
@@ -94,6 +109,24 @@ class Hamburger extends React.Component {
                 tabIndex: 0
               },
               "Home"
+            ),
+            ce(
+              "a",
+              {
+                onClick: e => this.goToWorkouts(e),
+                style: { cursor: "pointer" },
+                tabIndex: 0
+              },
+              "Search Workouts"
+            ),
+            ce(
+              "a",
+              {
+                onClick: e => this.goToSearch(e),
+                style: { cursor: "pointer" },
+                tabIndex: 0
+              },
+              "Search Exercises"
             ),
             ce(
               "a",
