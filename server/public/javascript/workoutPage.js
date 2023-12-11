@@ -170,7 +170,7 @@ class WorkoutPage extends React.Component {
     }
 
     componentDidMount() {
-        this.workoutExercises(1);
+        this.workoutExercises(8);
     }
 
     workoutExercises(id) {
@@ -212,20 +212,30 @@ class WorkoutPage extends React.Component {
 
     renderExerciseDetails = () => {
         return this.state.exerciseDetails.map((details, index) => {
-            return ce('div', { key: index, className: 'exercise-details' },
+            // Extract the video ID and construct the embed URL
+            const videoId = new URL(details[2]).searchParams.get('v');
+            const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+    
+            return ce('div', { key: index, className: 'exercise-detail', style: { display: 'flex', flexDirection: 'column', alignItems: 'center', maxWidth: '560px', margin: 'auto' }},
                 ce('br'),
                 ce('h2', { className: 'text-center' }, 'Exercise Details'),
-                ce('br'),ce('br'),
+                ce('br'), ce('br'),
                 ce('h4', { className: 'text-center' }, `Name: ${details[1]}`),
-                ce('h4', { className: 'text-center' },
-                    ce('a', { href: details[2], target: '_blank' }, 'Link to explanatory video')
+                ce('div', { className: 'video-container' },
+                    ce('iframe', { 
+                        src: embedUrl,
+                        frameborder: "0", 
+                        allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
+                        allowfullscreen: true,
+                        style: { width: '560px', height: '315px'} // Adjust the size as needed
+                    }, null)
                 ),
                 ce('h4', { className: 'text-center' }, `Description: ${details[3]}`),
-                ce('h4', { className: 'text-center' }, `Muscle Group(s): ${details[4].join(', ')}`),
-                // Additional elements like button can be added here if needed
+                ce('h4', { className: 'text-center' }, `Muscle Group(s): ${details[4].join(', ')}`)
             );
         });
     }
+    
 
     render() {
         return ce('div', null,
