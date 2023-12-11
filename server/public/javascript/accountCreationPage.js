@@ -30,7 +30,7 @@ class MainAccountCreationComponent extends React.Component {
 
     render(){
         if(this.state.loggedIn) {
-            window.location.href = landingRoute; //THIS SHOULD BECOME THE SETTINGS PAGE ONCE ITS FINISHED
+            window.location.href = loginRoute;
             return null;
         }
         else return ce('div', null, 
