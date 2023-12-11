@@ -59,7 +59,11 @@ class Hamburger extends React.Component {
         window.location.href = creationPageRoute;
     }
 
-
+    logOut(e){
+        e.preventDefault();
+        this.closeMenu();
+        window.location.href = loginRoute;
+    }
 
     toggleMenu() {
         this.setState(prevState => ({
@@ -104,6 +108,11 @@ class Hamburger extends React.Component {
             style: { cursor: 'pointer' }, 
             tabIndex: 0 
         }, "Search Workouts"),
+        ce('a', { 
+            onClick: e => this.logOut(e), 
+            style: { cursor: 'pointer' }, 
+            tabIndex: 0 
+        }, "Log Out"),
         ce('a', { 
             onClick: e => this.goToLanding(e), 
             style: { cursor: 'pointer' }, 
