@@ -36,14 +36,12 @@ class Hamburger extends React.Component {
   goToLanding(e) {
     e.preventDefault();
     this.closeMenu();
-    console.log("Go to landing page");
     window.location.href = landingRoute;
   }
 
   goToLogin(e) {
     e.preventDefault();
     this.closeMenu();
-    console.log("Go to log in page");
     window.location.href = loginRoute;
   }
 
@@ -57,6 +55,12 @@ class Hamburger extends React.Component {
     this.setState(prevState => ({
       isOpen: !prevState.isOpen
     }));
+  }
+
+  logOut(e){
+    e.preventDefault();
+    this.closeMenu();
+    window.location.href = loginRoute;
   }
 
   render() {
