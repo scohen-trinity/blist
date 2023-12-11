@@ -19,7 +19,7 @@ class WorkoutController @Inject()(protected val dbConfigProvider: DatabaseConfig
 
     def getWorkouts = Action.async { implicit request =>
         val requestBody = request.body
-        println(s"Request body: $requestBody")
+        // println(s"Request body: $requestBody")
         request.body.asJson.map {ed =>
             Json.fromJson[String](ed) match {
                 case JsSuccess(username, path) => {
