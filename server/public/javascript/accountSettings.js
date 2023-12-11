@@ -9,9 +9,12 @@ const loginRoute = document.getElementById("loginRoute").value;
 const landingRoute = document.getElementById("landingRoute").value;
 const validateRoute = document.getElementById("validateRoute").value;
 const getUserInfo = document.getElementById("getUserInfoRoute").value;
-const retrieveSettingsRoute = document.getElementById("retrieveSettingsRoute").value;
-const setAllSettingsRoute = document.getElementById("setAllSettingsRoute").value;
-const changePasswordRoute = document.getElementById("changePasswordRoute").value;
+const retrieveSettingsRoute = document.getElementById("retrieveSettingsRoute")
+  .value;
+const setAllSettingsRoute = document.getElementById("setAllSettingsRoute")
+  .value;
+const changePasswordRoute = document.getElementById("changePasswordRoute")
+  .value;
 const changeWeightRoute = document.getElementById("changeWeightRoute").value;
 const changeHeightRoute = document.getElementById("changeHeightRoute").value;
 const changeGoalRoute = document.getElementById("changeGoalRoute").value;
@@ -19,7 +22,8 @@ const changeDaysRoute = document.getElementById("changeDaysRoute").value;
 const getUserInfoRoute = document.getElementById("getUserInfoRoute").value;
 const logoutRoute = document.getElementById("logoutRoute").value;
 const workoutSearchRoute = document.getElementById("workoutSearchRoute").value;
-const searchExerciseRoute = document.getElementById("searchExerciseRoute").value;
+const searchExerciseRoute = document.getElementById("searchExerciseRoute")
+  .value;
 
 class Hamburger extends React.Component {
   constructor(props) {
@@ -47,20 +51,20 @@ class Hamburger extends React.Component {
     window.location.href = loginRoute;
   }
 
-  logOut(e){
+  logOut(e) {
     e.preventDefault();
     this.closeMenu();
     window.location.href = logoutRoute;
   }
 
-  goToWorkouts(e){
+  goToWorkouts(e) {
     e.preventDefault();
     this.closeMenu();
     console.log("Go to profile page");
     window.location.href = workoutSearchRoute;
   }
 
-  goToSearch(e){
+  goToSearch(e) {
     e.preventDefault();
     this.closeMenu();
     window.location.href = searchExerciseRoute;
@@ -162,8 +166,8 @@ class NavBarComponent extends React.Component {
       ),
       ce(
         "div",
-        { className: "navbar-login-div", onClick: e => this.goToLogin(e) },
-        ce("h2", { className: "navbar-header" }, "LOGIN"),
+        { className: "navbar-login-div"},
+        ce("h2", { className: "navbar-header" }),
         ce(
           "img",
           {
@@ -194,8 +198,10 @@ class personalForm extends React.Component {
     super(props);
     this.state = {
       username: props.username,
-      newPassword: '',
-      oldPassword: '',
+      newPassword: "",
+      oldPassword: "",
+      error: null,
+      success: null
     };
     this.handleNewPasswordChange = this.handleNewPasswordChange.bind(this);
     this.handleOldPasswordChange = this.handleOldPasswordChange.bind(this);
@@ -212,7 +218,7 @@ class personalForm extends React.Component {
 
   changePassword() {
     const postData = {
-      username: this.state.username, 
+      username: this.state.username,
       oldPassword: this.state.oldPassword,
       newPassword: this.state.newPassword
     };
@@ -226,17 +232,28 @@ class personalForm extends React.Component {
       },
       body: JSON.stringify(postData)
     })
-    .then(response => response.json())
-    .then(result => {
-      if (result) {
-        console.log("Password changed successfully");
-      } else {
-        console.error("Failed to change password");
-      }
-    })
-    .catch(error => {
-      console.error("Error:", error);
-    });
+      .then(response => response.json())
+      .then(result => {
+        if (result) {
+          console.log("Password changed successfully"), this.setState({
+            error: null,
+            success: "Password changed successfully"
+          });
+        } else {
+          console.error("Failed to change password");
+          this.setState({
+            error: "Failed to change password",
+            success: null
+          });
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        this.setState({
+          error: "An error occurred. Please try again.",
+          success: null // Ensure the success message is cleared on error
+        });
+      });
   }
 
   render() {
@@ -244,7 +261,8 @@ class personalForm extends React.Component {
       "div",
       { className: "personal-form-container" }, // Use this class to style the form container
       ce("h2", { className: "personal-form" }, "Change Password"), // Use the class for styling header
-      ce("div",
+      ce(
+        "div",
         { className: "input-container" }, // Wrap the input in a div with a class for styling
         ce("input", {
           className: "login-form", // Use this class to style the input
@@ -254,7 +272,8 @@ class personalForm extends React.Component {
           placeholder: "Old Password"
         })
       ),
-      ce("div",
+      ce(
+        "div",
         { className: "input-container" }, // Wrap the input in a div with a class for styling
         ce("input", {
           className: "login-form", // Use this class to style the input
@@ -264,12 +283,18 @@ class personalForm extends React.Component {
           placeholder: "New Password"
         })
       ),
-      ce("button", { className: "submission-button", onClick: this.changePassword }, "Submit") // Button styling
+      ce(
+        "button",
+        { className: "submission-button", onClick: this.changePassword },
+        "Submit"
+      ),
+      this.state.error &&
+        ce("div", { className: "error-message" }, this.state.error),
+      this.state.success &&
+        ce("div", { className: "success-message" }, this.state.success) // Button styling
     );
   }
 }
-
-
 
 class workoutDropdown extends React.Component {
   constructor(props) {
@@ -277,33 +302,49 @@ class workoutDropdown extends React.Component {
     this.state = {
       username: props.username,
       fitnessGoal: props.fitnessGoal,
-      height: props.height !== -2 && props.height !== undefined ? props.height.toString() : "",
-      weight: props.weight !== -2 && props.weight !== undefined ? props.weight.toString() : "",
-      days: props.days !== -2 && props.days !== undefined ? props.days.toString() : ""
+      height:
+        props.height !== -2 && props.height !== undefined
+          ? props.height.toString()
+          : "",
+      weight:
+        props.weight !== -2 && props.weight !== undefined
+          ? props.weight.toString()
+          : "",
+      days:
+        props.days !== -2 && props.days !== undefined
+          ? props.days.toString()
+          : ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleHeightChange = this.handleHeightChange.bind(this);
     this.handleWeightChange = this.handleWeightChange.bind(this);
     this.handleDaysChange = this.handleDaysChange.bind(this);
     this.updateGoal = this.updateGoal.bind(this);
-
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.username !== prevProps.username ||
-        this.props.fitnessGoal !== prevProps.fitnessGoal ||
-        this.props.height !== prevProps.height ||
-        this.props.weight !== prevProps.weight ||
-        this.props.days !== prevProps.days) {
+    if (
+      this.props.username !== prevProps.username ||
+      this.props.fitnessGoal !== prevProps.fitnessGoal ||
+      this.props.height !== prevProps.height ||
+      this.props.weight !== prevProps.weight ||
+      this.props.days !== prevProps.days
+    ) {
       this.setState({
         username: this.props.username,
         fitnessGoal: this.props.fitnessGoal,
-        height: this.props.height !== -2 && this.props.height !== undefined
-                ? this.props.height.toString() : "",
-        weight: this.props.weight !== -2 && this.props.weight !== undefined
-                ? this.props.weight.toString() : "",
-        days: this.props.days !== -2 && this.props.days !== undefined
-              ? this.props.days.toString() : ""
+        height:
+          this.props.height !== -2 && this.props.height !== undefined
+            ? this.props.height.toString()
+            : "",
+        weight:
+          this.props.weight !== -2 && this.props.weight !== undefined
+            ? this.props.weight.toString()
+            : "",
+        days:
+          this.props.days !== -2 && this.props.days !== undefined
+            ? this.props.days.toString()
+            : ""
       });
     }
   }
@@ -359,17 +400,17 @@ class workoutDropdown extends React.Component {
       },
       body: JSON.stringify(data)
     })
-    .then(response => response.json())
-    .then(result => {
-      if (result) {
-        console.log("Setting updated successfully");
-      } else {
-        console.error("Failed to update setting");
-      }
-    })
-    .catch(error => {
-      console.error("Error:", error);
-    });
+      .then(response => response.json())
+      .then(result => {
+        if (result) {
+          console.log("Setting updated successfully");
+        } else {
+          console.error("Failed to update setting");
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
   }
 
   handleWeightChange(event) {
@@ -440,7 +481,7 @@ class workoutDropdown extends React.Component {
             onChange: this.handleChange
           },
           ...fitnessGoalOptions
-        ),
+        )
       ),
       ce(
         "div",
@@ -512,12 +553,9 @@ class ToggleSwitch extends React.Component {
         retrieveSettings: this.retrieveSettings
       });
     } else {
-      contentComponent = ce(
-        personalForm,
-        {
-          username: this.props.username,
-        }
-      );
+      contentComponent = ce(personalForm, {
+        username: this.props.username
+      });
     }
 
     return ce(

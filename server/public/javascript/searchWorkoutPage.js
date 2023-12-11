@@ -358,11 +358,10 @@ class NavBarComponent extends React.Component {
         return ce('div', {className: "navbar"},
            ce(Hamburger, {className: "hamburger-navbar"}, null),
            ce('h1', {className: "navbar-header", onClick: e => this.goToLanding(e)}, 'TIGER FIT'),
-           ce('div', {className: "navbar-login-div", onClick: e => this.goToLogin(e)}, 
-            ce('h2', {className: "navbar-header"}, 'LOGIN'),
+           ce('div', {className: "navbar-login-div"}, 
+            ce('h2', {className: "navbar-header"}),
             ce('img', { src: "https://cdn4.iconfinder.com/data/icons/man-user-human-person-business-profile-avatar/100/20-1User_13-512.png", className: "login-navbar"}, null) 
            ),
-           
         )
     }
 
