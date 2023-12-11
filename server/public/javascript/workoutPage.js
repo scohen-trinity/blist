@@ -11,7 +11,7 @@ const landingRoute = document.getElementById("landingRoute").value;
 const pullWorkoutExercisesRoute = document.getElementById("pullWorkoutExercisesRoute").value;
 const profileRoute = document.getElementById("profileRoute").value;
 const retrieveExerciseRoute = document.getElementById("retrieveExerciseRoute").value;
-const workoutSearchRoute = document.getElementById("workoutSearchRoute").value;
+workoutSearchRoute = document.getElementById("workoutSearchRoute").value;
 const creationPageRoute = document.getElementById("creationPageRoute").value;
 const searchExerciseRoute  = document.getElementById("searchExerciseRoute").value;
 const logoutRoute = document.getElementById("logoutRoute").value;
@@ -179,9 +179,7 @@ class WorkoutPage extends React.Component {
     }
 
     componentDidMount() {
-        let workoutIdInt = +workoutId;
-        console.log(typeof workoutIdInt);
-        this.workoutExercises(workoutIdInt);
+        this.workoutExercises(1);
     }
 
     workoutExercises(id) {
