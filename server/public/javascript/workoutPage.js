@@ -10,7 +10,7 @@ const landingRoute = document.getElementById("landingRoute").value;
 const pullWorkoutExercisesRoute = document.getElementById("pullWorkoutExercisesRoute").value;
 const profileRoute = document.getElementById("profileRoute").value;
 const retrieveExerciseRoute = document.getElementById("retrieveExerciseRoute").value;
-
+const workoutSearchRoute = document.getElementById("workoutSearchRoute").value;
 const creationPageRoute = document.getElementById("creationPageRoute").value;
 const searchExerciseRoute  = document.getElementById("searchExerciseRoute").value;
 const logoutRoute = document.getElementById("logoutRoute").value;
@@ -32,22 +32,25 @@ class Hamburger extends React.Component {
     goToLanding(e) {
         e.preventDefault();
         this.closeMenu();
-        console.log("Go to landing page");
         window.location.href = landingRoute;
     }
 
     goToProfile(e){
         e.preventDefault();
         this.closeMenu();
-        console.log("Go to profile page");
         window.location.href = profileRoute;
     }
 
     goToSearch(e){
         e.preventDefault();
         this.closeMenu();
-        console.log("Go to search page");
         window.location.href = searchExerciseRoute;
+    }
+
+    goToWorkouts(e){
+        e.preventDefault();
+        this.closeMenu();
+        window.location.href = workoutSearchRoute;
     }
 
     logOut(e){
@@ -96,6 +99,11 @@ class Hamburger extends React.Component {
         }, "Profile"),
         ce('a', { 
             onClick: e => this.goToSearch(e), 
+            style: { cursor: 'pointer' }, 
+            tabIndex: 0 
+        }, "Search Exercises"),
+        ce('a', { 
+            onClick: e => this.goToWorkouts(e), 
             style: { cursor: 'pointer' }, 
             tabIndex: 0 
         }, "Search Workouts"),
