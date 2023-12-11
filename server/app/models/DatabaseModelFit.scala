@@ -288,4 +288,13 @@ class DatabaseModelFit(db: Database)(implicit ec: ExecutionContext) {
             }    
         } 
     }
+
+def pullWorkoutExercises(workoutID: Int): Future[Seq[Int]] = {
+    db.run(
+        Workouts.filter(_.workoutId === workoutID).result
+    ).map { workoutExercises =>
+        workoutExercises.map(_.exerciseId)
+    }
+}
+
 }

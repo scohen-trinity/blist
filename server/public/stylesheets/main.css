@@ -326,3 +326,7 @@ button:hover {
     justify-content: center; 
     padding: 20px; 
 }
+
+.Workout-Title {
+    text-align: center;
+}

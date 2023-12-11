@@ -37,7 +37,8 @@ GET        /getUserInfo                  controllers.UserController.getUserInfo
 # workoutController Routes
 POST       /getWorkouts                  controllers.WorkoutController.getWorkouts
 GET        /obtainAllExercises           controllers.ExerciseController.obtainAllExercises
-
+GET        /workout                      controllers.Application.workoutPage
+POST       /workoutExercises             controllers.WorkoutController.workoutExercises
 
 # Prefix must match `play.assets.urlPrefix`
 GET        /assets/*file                 controllers.Assets.at(file)
