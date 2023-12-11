@@ -81,12 +81,12 @@ class Hamburger extends React.Component {
             onClick: e => this.goToLogin(e), 
             style: { cursor: 'pointer' }, 
             tabIndex: 0 
-        }, "Login"),
-        ce('a', { 
+        }, "Login")
+        /*ce('a', { 
             onClick: e => this.goToProfile(e), 
             style: { cursor: 'pointer' }, 
             tabIndex: 0 
-        }, "Profile")
+        }, "Profile")*/
         ) : null
     );
     
