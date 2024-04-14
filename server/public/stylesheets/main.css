@@ -1,3 +1,9 @@
+/* Element styling */
+
+body {
+    background-color: #293132;
+}
+
 /* Base Font Style */
 .basic-font, .navbar, .login-form, .submission-button, .navbar-header, .login-header, form {
     font-family: 'Lato', sans-serif;
@@ -5,7 +11,7 @@
 
 /* Navbar Styles */
 .navbar {
-    background-color: #0097b2;
+    background-color: #547aa5;
     color: #fff;
     padding: 5px;
     width: 100%;
