@@ -4,6 +4,27 @@ body {
     background-color: #293132;
 }
 
+/* Random Hobby Button Styling */
+.hobby-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+}
+
+.random-hobby-button {
+    border-radius: 20px;
+    padding: 10px 20px;
+    background-color: #50d8d7;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.random-hobby-button:hover {
+    background-color: #547aa5;
+}
+
 /* Base Font Style */
 .basic-font, .navbar, .login-form, .submission-button, .navbar-header, .login-header, form {
     font-family: 'Lato', sans-serif;

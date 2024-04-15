@@ -9,6 +9,7 @@ const landingRoute = document.getElementById("landingRoute").value;
 const profileRoute = document.getElementById("profileRoute").value;
 const creationPageRoute = document.getElementById("creationPageRoute").value;
 const searchExerciseRoute  = document.getElementById("searchExerciseRoute").value;
+const randomHobbyClicked = document.getElementById("randomHobbyClicked").value;
 
 class Hamburger extends React.Component {
     constructor(props) {
@@ -151,21 +152,23 @@ class PurposeSection extends React.Component {
     }
 }
 
+class RandomHobbyButton extends React.Component {
+    render() {
+        return ce('div', {className: 'hobby-button-container'}, 
+            ce('button', {className: 'random-hobby-button'}, 'Random hobby'),
+        )
+    }
+}
+
 class MainContainer extends React.Component {
     render() {
         return ce('div', null, 
-        ce(NavBarComponent, null, null), 
-        ce('div', {className: 'container'},
-            ce('div', {className: 'row equal-height'},
-                ce('div', {className: 'col-md-6'},
-                    ce(TeamSection, null, null)
-                ),
-
-                ce('div', {className: 'col-md-6'},
-                    ce(PurposeSection, null, null)
+            ce(NavBarComponent, null, null), 
+            ce('div', {className: 'container'},
+                ce('div', null, 
+                    ce(RandomHobbyButton, null, null)
                 )
             )
-        )
         )
     }
     
