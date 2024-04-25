@@ -9,7 +9,7 @@ const landingRoute = document.getElementById("landingRoute").value;
 const profileRoute = document.getElementById("profileRoute").value;
 const creationPageRoute = document.getElementById("creationPageRoute").value;
 const searchExerciseRoute  = document.getElementById("searchExerciseRoute").value;
-const randomHobbyClicked = document.getElementById("randomHobbyClicked").value;
+const randomHobbyClickedRoute = document.getElementById("randomHobbyClicked").value;
 
 class Hamburger extends React.Component {
     constructor(props) {
@@ -153,9 +153,38 @@ class PurposeSection extends React.Component {
 }
 
 class RandomHobbyButton extends React.Component {
+    getHobby() {
+        console.log("Get a random hobby");
+        fetch(randomHobbyClickedRoute, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', 'Csrf-Token': csrfToken },
+        }).then(res => res.json()).then(data => {
+            console.log(data);
+        })
+
+        // fetch(validateRoute, {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json', 'Csrf-Token': csrfToken },
+        //     body: JSON.stringify({ username, password })
+        // }).then(res => res.json()).then(data => {
+        //     if(data) {
+        //         this.setState({ loginName: "", loginPass: ""});
+        //         this.props.doLogin();
+        //     } else {
+        //         this.setState({ loginMessage: "Login Failed." });
+        //         this.setState({ loginName: "", loginPass: ""});
+        //     }
+        // })
+    }
+
     render() {
+        const hobbyProps = {
+            className: 'random-hobby-button',
+            onClick: this.getHobby
+        };
+
         return ce('div', {className: 'hobby-button-container'}, 
-            ce('button', {className: 'random-hobby-button'}, 'Random hobby'),
+            ce('button', hobbyProps, 'Random hobby'),
         )
     }
 }
@@ -173,8 +202,6 @@ class MainContainer extends React.Component {
     }
     
 }
-
-
 
 ReactDOM.render(
     ce(MainContainer, null, null),

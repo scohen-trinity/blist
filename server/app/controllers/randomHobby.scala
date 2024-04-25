@@ -17,11 +17,14 @@ import play.filters.csrf.CSRF
 
 @Singleton
 class HobbyButtonController @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, cc: ControllerComponents)(implicit ec: ExecutionContext) extends AbstractController(cc) with HasDatabaseConfigProvider[JdbcProfile] {
-    private val memInstance = new models.DatabaseModelFit(db)
+    private val blistInstance = new models.BlistModel(db)
 
     def getRandomHobby = Action.async { implicit request => 
-      println("Random button clicked")
-      Future.successful(Ok(Json.toJson(1)))
+      println("Random button clicked");
+      blistInstance.getRandomHobby().flatMap { res => 
+        Future.successful(Ok(Json.toJson(res)))  
+      }
+      // Future.successful(Ok(Json.toJson(1)))
     }
 
     // def obtainExercise = Action.async { implicit request =>
