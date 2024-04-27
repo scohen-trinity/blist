@@ -16,23 +16,18 @@ import scala.collection.mutable.ListBuffer
 class BlistModel(db: Database)(implicit ec: ExecutionContext) {
 
     // Function to retrieve a random hobby from the database
-    def getRandomHobby(): Future[Int] = {
-        val database_length_io: DBIO[Int] = Hobbies.length.result;
-        val database_length_query: Future[Int] = db.run(database_length_io);
-        val database_length: Int = Await.result(database_length_query, Duration.Inf);
-        val random_index: Int = Random.nextInt(database_length) + 1;
-        
-        val result = db.run(Hobbies.filter(res => res.hobbyId === random_index).result)
+    def getRandomHobby(): Future[(String, String)] = {
+        val database_length: Future[Int] = db.run(Hobbies.length.result)
 
-        var hobbiesValue: Tuple2[String, String] = ("", "");
+        val randomHobbyFuture: Future[HobbiesRow] = database_length.flatMap { databaseLength => 
+            val random_index = Random.nextInt(databaseLength) + 1
+            val random_hobby_query = Hobbies.filter(_.hobbyId === random_index).result.head
+            db.run(random_hobby_query)    
+        }
 
-        result.foreach { hobbies => {
-            hobbies.foreach { hobby =>
-                hobbiesValue = (hobby.hobbyName, hobby.hobbyDescription)
-        }}}
-
-        println(hobbiesValue)
-        Future.successful(1)
+        randomHobbyFuture.map { hobby =>
+            (hobby.hobbyName, hobby.hobbyDescription)    
+        }
     }
 
     //User related methods

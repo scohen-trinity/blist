@@ -153,28 +153,22 @@ class PurposeSection extends React.Component {
 }
 
 class RandomHobbyButton extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { hobbyName: "", hobbyDescription: ""};
+        this.getHobby = this.getHobby.bind(this);
+    }
+
     getHobby() {
         console.log("Get a random hobby");
         fetch(randomHobbyClickedRoute, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json', 'Csrf-Token': csrfToken },
         }).then(res => res.json()).then(data => {
-            console.log(data);
+            console.log("This is the data: ", data[0]);
+            this.setState({ hobbyName: data[0] });
+            this.setState({ hobbyDescription: data[1] });
         })
-
-        // fetch(validateRoute, {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json', 'Csrf-Token': csrfToken },
-        //     body: JSON.stringify({ username, password })
-        // }).then(res => res.json()).then(data => {
-        //     if(data) {
-        //         this.setState({ loginName: "", loginPass: ""});
-        //         this.props.doLogin();
-        //     } else {
-        //         this.setState({ loginMessage: "Login Failed." });
-        //         this.setState({ loginName: "", loginPass: ""});
-        //     }
-        // })
     }
 
     render() {
@@ -185,6 +179,10 @@ class RandomHobbyButton extends React.Component {
 
         return ce('div', {className: 'hobby-button-container'}, 
             ce('button', hobbyProps, 'Random hobby'),
+            ce('div', null, 
+                ce('h2', null, this.state.hobbyName),
+                ce('p', null, this.state.hobbyDescription)
+            )
         )
     }
 }

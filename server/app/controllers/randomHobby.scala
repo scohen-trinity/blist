@@ -24,7 +24,6 @@ class HobbyButtonController @Inject()(protected val dbConfigProvider: DatabaseCo
       blistInstance.getRandomHobby().flatMap { res => 
         Future.successful(Ok(Json.toJson(res)))  
       }
-      // Future.successful(Ok(Json.toJson(1)))
     }
 
     // def obtainExercise = Action.async { implicit request =>
