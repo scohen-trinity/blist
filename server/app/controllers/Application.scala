@@ -38,13 +38,13 @@ class Application @Inject()(cc: ControllerComponents) extends AbstractController
         Ok(views.html.exercise())
   }
   
-  def workoutPage = Action { implicit request => 
-    val workoutIdOption = request.getQueryString("id")
-    workoutIdOption match {
-      case Some(workoutId) =>
-        Ok(views.html.workoutPage(workoutId.toInt))
-      case None =>
-        BadRequest("No workout id womp womp")
-    }
-  }
+  // def workoutPage = Action { implicit request => 
+  //   val workoutIdOption = request.getQueryString("id")
+  //   workoutIdOption match {
+  //     case Some(workoutId) =>
+  //       Ok(views.html.workoutPage(workoutId.toInt()))
+  //     case None =>
+  //       BadRequest("No workout id womp womp")
+  //   }
+  // }
 }

@@ -5,8 +5,8 @@ object CodeGen extends App {
     slick.codegen.SourceCodeGenerator.run(
         "slick.jdbc.PostgresProfile",
         "org.postgresql.Driver",
-        "C:/Users/sammy/Downloads/Web Apps/TigerFit/server/app",
-        "jdbc:postgresql://localhost/tigerfit?user=scohen&password=password",
+        "jdbc:postgresql://localhost/blist?user=blist&password=password",
+        "C:/Users/sammy/Downloads/bulletin/blist/server/app",
         "models", None, None, true, false
     )
 }

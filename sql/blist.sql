@@ -1,7 +1,7 @@
 CREATE TABLE hobbies (
     hobby_id SERIAL PRIMARY KEY,
     hobby_name VARCHAR(100) UNIQUE NOT NULL,
-    hobby_description VARCHAR(1000)
+    hobby_description VARCHAR(1000) NOT NULL
 );
 
 INSERT INTO hobbies (hobby_name, hobby_description) VALUES

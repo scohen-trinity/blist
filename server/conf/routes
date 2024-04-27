@@ -9,36 +9,10 @@ GET        /create                       controllers.Application.accountCreation
 GET        /exercises                    controllers.Application.exercise
 
 # workoutController Routes
-GET        /exercise                     controllers.ExerciseController.searchExercises 
 GET        /search                       controllers.Application.searchWorkout
 
 # Account Settings Route
 GET        /profile                      controllers.Application.accountSettings
-
-# userController Routes
-
-POST       /validate                     controllers.UserController.validate
-POST       /createAccount                controllers.UserController.create
-POST       /retrieveSettings             controllers.UserController.obtainSettings
-POST       /initializeSettings           controllers.UserController.setAllSettings
-POST       /updatePassword               controllers.UserController.changePassword
-POST       /updateWeight                 controllers.UserController.changeWeight
-POST       /updateHeight                 controllers.UserController.changeHeight
-POST       /updateGoal                   controllers.UserController.changeGoal
-POST       /updateDays                   controllers.UserController.changeDays
-GET        /logout                       controllers.UserController.logout
-
-# exerciseController Routes
-
-POST       /retrieveExercise             controllers.ExerciseController.obtainExercise
-POST       /searchForExercises           controllers.ExerciseController.searchExercises
-GET        /getUserInfo                  controllers.UserController.getUserInfo
-
-# workoutController Routes
-POST       /getWorkouts                  controllers.WorkoutController.getWorkouts
-GET        /obtainAllExercises           controllers.ExerciseController.obtainAllExercises
-GET        /workout                      controllers.Application.workoutPage
-POST       /workoutExercises             controllers.WorkoutController.workoutExercises
 
 # randomWorkoutButton Routes
 GET        /randomHobbyClicked           controllers.HobbyButtonController.getRandomHobby

@@ -10,28 +10,42 @@ import java.text.SimpleDateFormat
 import scala.concurrent.Await
 import scala.concurrent.duration._
 import scala.util.Random
+import scala.collection.mutable.ListBuffer
 
 // Model for the Blist backend system
 class BlistModel(db: Database)(implicit ec: ExecutionContext) {
 
     // Function to retrieve a random hobby from the database
     def getRandomHobby(): Future[Int] = {
-        val randomInt: Int = Random.nextInt(100);
+        val database_length_io: DBIO[Int] = Hobbies.length.result;
+        val database_length_query: Future[Int] = db.run(database_length_io);
+        val database_length: Int = Await.result(database_length_query, Duration.Inf);
+        val random_index: Int = Random.nextInt(database_length) + 1;
         
-        Future.successful(randomInt)
+        val result = db.run(Hobbies.filter(res => res.hobbyId === random_index).result)
+
+        var hobbiesValue: Tuple2[String, String] = ("", "");
+
+        result.foreach { hobbies => {
+            hobbies.foreach { hobby =>
+                hobbiesValue = (hobby.hobbyName, hobby.hobbyDescription)
+        }}}
+
+        println(hobbiesValue)
+        Future.successful(1)
     }
 
     //User related methods
 
-//     def validateUser(username: String, password: String): Future[Boolean] = {
-//         db.run(Users.filter(res => res.username === username).result).map(users => {
-//             if(users.length > 0){
-//                 if(users.head.password == password) true
-//                 else false
-//             }
-//             else false
-//         })
-//     }
+    // def validateUser(username: String, password: String): Future[Boolean] = {
+    //     db.run(Users.filter(res => res.username === username).result).map(users => {
+    //         if(users.length > 0){
+    //             if(users.head.password == password) true
+    //             else false
+    //         }
+    //         else false
+    //     })
+    // }
 
 //     def createUser(username: String, password: String, confirm: String): Future[Boolean] = {
 //         db.run(Users.filter(res => res.username === username).result).flatMap(users => {
