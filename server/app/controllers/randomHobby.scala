@@ -20,7 +20,6 @@ class HobbyButtonController @Inject()(protected val dbConfigProvider: DatabaseCo
     private val blistInstance = new models.BlistModel(db)
 
     def getRandomHobby = Action.async { implicit request => 
-      println("Random button clicked");
       blistInstance.getRandomHobby().flatMap { res => 
         Future.successful(Ok(Json.toJson(res)))  
       }

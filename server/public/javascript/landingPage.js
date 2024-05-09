@@ -153,19 +153,19 @@ class PurposeSection extends React.Component {
 }
 
 class RandomHobbyButton extends React.Component {
+    // Constructor for the hobby
     constructor(props) {
         super(props);
         this.state = { hobbyName: "", hobbyDescription: ""};
         this.getHobby = this.getHobby.bind(this);
     }
 
+    // Function to get a random hobby from the database and display it on the landing page
     getHobby() {
-        console.log("Get a random hobby");
         fetch(randomHobbyClickedRoute, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json', 'Csrf-Token': csrfToken },
         }).then(res => res.json()).then(data => {
-            console.log("This is the data: ", data[0]);
             this.setState({ hobbyName: data[0] });
             this.setState({ hobbyDescription: data[1] });
         })
@@ -177,21 +177,21 @@ class RandomHobbyButton extends React.Component {
             onClick: this.getHobby
         };
 
-        return ce('div', {className: 'hobby-button-container'}, 
+        return ce('div', { className: 'hobby-button-container' }, 
             ce('button', hobbyProps, 'Random hobby'),
-            ce('div', null, 
+            ce('div', { className: 'hobby-profile' }, 
                 ce('h2', null, this.state.hobbyName),
                 ce('p', null, this.state.hobbyDescription)
-            )
+            ),
         )
     }
 }
 
 class MainContainer extends React.Component {
     render() {
-        return ce('div', null, 
+        return ce('div', { className: 'main-container' }, 
             ce(NavBarComponent, null, null), 
-            ce('div', {className: 'container'},
+            ce('div', { className: 'container' },
                 ce('div', null, 
                     ce(RandomHobbyButton, null, null)
                 )
