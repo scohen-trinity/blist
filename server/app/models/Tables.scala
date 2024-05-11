@@ -49,8 +49,8 @@ trait Tables {
 
   /** Entity class storing rows of table Users
    *  @param userId Database column user_id SqlType(serial), AutoInc, PrimaryKey
-   *  @param username Database column username SqlType(varchar), Length(20,true)
-   *  @param password Database column password SqlType(varchar), Length(20,true) */
+   *  @param username Database column username SqlType(varchar), Length(200,true)
+   *  @param password Database column password SqlType(varchar), Length(200,true) */
   case class UsersRow(userId: Int, username: String, password: String)
   /** GetResult implicit for fetching UsersRow objects using plain SQL queries */
   implicit def GetResultUsersRow(implicit e0: GR[Int], e1: GR[String]): GR[UsersRow] = GR{
@@ -65,10 +65,10 @@ trait Tables {
 
     /** Database column user_id SqlType(serial), AutoInc, PrimaryKey */
     val userId: Rep[Int] = column[Int]("user_id", O.AutoInc, O.PrimaryKey)
-    /** Database column username SqlType(varchar), Length(20,true) */
-    val username: Rep[String] = column[String]("username", O.Length(20,varying=true))
-    /** Database column password SqlType(varchar), Length(20,true) */
-    val password: Rep[String] = column[String]("password", O.Length(20,varying=true))
+    /** Database column username SqlType(varchar), Length(200,true) */
+    val username: Rep[String] = column[String]("username", O.Length(200,varying=true))
+    /** Database column password SqlType(varchar), Length(200,true) */
+    val password: Rep[String] = column[String]("password", O.Length(200,varying=true))
 
     /** Uniqueness Index over (username) (database name users_username_key) */
     val index1 = index("users_username_key", username, unique=true)

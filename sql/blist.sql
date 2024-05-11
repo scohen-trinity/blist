@@ -10,6 +10,6 @@ INSERT INTO hobbies (hobby_name, hobby_description) VALUES
 
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
-    username VARCHAR(20) NOT NULL UNIQUE, 
-    password VARCHAR(20) NOT NULL
+    username VARCHAR(200) NOT NULL UNIQUE, 
+    password VARCHAR(200) NOT NULL
 );

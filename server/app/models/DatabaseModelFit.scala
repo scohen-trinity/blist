@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat
 import scala.concurrent.Await
 import scala.concurrent.duration._
 import scala.util.Random
+import org.mindrot.jbcrypt.BCrypt
 
 class DatabaseModelFit(db: Database)(implicit ec: ExecutionContext) {
 
@@ -28,7 +29,7 @@ class DatabaseModelFit(db: Database)(implicit ec: ExecutionContext) {
     def createUser(username: String, password: String, confirm: String): Future[Boolean] = {
         db.run(Users.filter(res => res.username === username).result).flatMap(users => {
             if(users.length == 0){
-                db.run(Users += UsersRow(1, username, password)).map {res =>
+                db.run(Users += UsersRow(-1, username, BCrypt.hashpw(password, BCrypt.gensalt()))).map {res =>
                     if(res > 0) true
                     else false
                 }
