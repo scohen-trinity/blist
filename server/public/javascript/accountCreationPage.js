@@ -9,17 +9,6 @@ const validateRoute = document.getElementById("validateRoute").value;
 const creationPageRoute = document.getElementById("creationPageRoute").value;
 const creationActionRoute = document.getElementById("creationActionRoute").value;
 
-const retrieveSettingsRoute = document.getElementById("retrieveSettingsRoute").value;
-const initializeSettingsRoute = document.getElementById("initializeSettingsRoute").value;
-const updatePasswordRoute = document.getElementById("updatePasswordRoute").value;
-const updateWeightRoute = document.getElementById("updateWeightRoute").value;
-const updateHeightRoute = document.getElementById("updateHeightRoute").value;
-const updateGoalRoute = document.getElementById("updateGoalRoute").value;
-const updateDaysRoute = document.getElementById("updateDaysRoute").value;
-
-const retrieveExerciseRoute = document.getElementById("retrieveExerciseRoute").value;
-const searchExercisesRoute = document.getElementById("searchExercisesRoute").value;
-
 class MainAccountCreationComponent extends React.Component {
     constructor(props){
         super(props);

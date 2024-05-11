@@ -8,6 +8,10 @@ GET        /login                        controllers.Application.login
 GET        /create                       controllers.Application.accountCreation
 GET        /exercises                    controllers.Application.exercise
 
+# Login Routes
+POST       /validate                     controllers.UserController.validate
+POST       /create                       controllers.UserController.create
+
 # workoutController Routes
 GET        /search                       controllers.Application.searchWorkout
 

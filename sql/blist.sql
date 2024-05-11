@@ -7,3 +7,9 @@ CREATE TABLE hobbies (
 INSERT INTO hobbies (hobby_name, hobby_description) VALUES
     ('Climbing', 'A sport where you go climb rocks'),
     ('Magic The Gathering', 'The best trading card game')
+
+CREATE TABLE users (
+    user_id SERIAL PRIMARY KEY,
+    username VARCHAR(20) NOT NULL UNIQUE, 
+    password VARCHAR(20) NOT NULL
+);
