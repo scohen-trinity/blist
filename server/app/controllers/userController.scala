@@ -30,13 +30,19 @@ class UserController @Inject()(protected val dbConfigProvider: DatabaseConfigPro
         request.body.asJson.map {ud =>
             Json.fromJson[UserData](ud) match {
                 case JsSuccess(ld, path) => {
-                    memInstance.validateUser(ld.username, ld.password).flatMap{status => 
-                        if(status) {
-                            val session = request.session + ("username" -> ld.username)
-                            Future.successful(Ok(Json.toJson(true)).withSession(session))
-                        } else {
-                            Future.successful(Ok(Json.toJson(false)))
+                    memInstance.validateUser(ld.username, ld.password).flatMap{ status => 
+                        status match {
+                            case Some(userid) =>
+                                Future.successful(Ok(Json.toJson(userid)).withSession("username" -> ld.username, "userid" -> userid.toString, "csrfToken" -> play.filters.csrf.CSRF.getToken.get.value))
+                            case None =>
+                                Future.successful(Ok(Json.toJson(false)))
                         }
+                        // if(status) {
+                        //     val session = request.session + ("username" -> ld.username)
+                        //     Future.successful(Ok(Json.toJson(true)).withSession(session))
+                        // } else {
+                        //     Future.successful(Ok(Json.toJson(false)))
+                        // }
                     }
                 }
                 case e @ JsError(_) => Future.successful(Ok(Json.toJson(false)))

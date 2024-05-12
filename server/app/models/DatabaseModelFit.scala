@@ -16,13 +16,18 @@ class DatabaseModelFit(db: Database)(implicit ec: ExecutionContext) {
 
     //User related methods
 
-    def validateUser(username: String, password: String): Future[Boolean] = {
-        db.run(Users.filter(res => res.username === username).result).map(users => {
-            if(users.length > 0){
-                if(users.head.password == password) true
-                else false
-            }
-            else false
+    def validateUser(username: String, password: String): Future[Option[Int]] = {
+        // db.run(Users.filter(res => res.username === username).result).map(users => {
+        //     if(users.length > 0){
+        //         if(BCrypt.checkpw(users.head.password, password)) true
+        //         else false
+        //     }
+        //     else false
+        // })
+
+        val matches = db.run(Users.filter(userRow => userRow.username === username).result)
+        matches.map(userRows => userRows.headOption.flatMap{
+            userRow => if(BCrypt.checkpw(password, userRow.password)) Some(userRow.userId) else None
         })
     }
 
