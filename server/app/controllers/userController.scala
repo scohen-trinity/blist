@@ -37,12 +37,6 @@ class UserController @Inject()(protected val dbConfigProvider: DatabaseConfigPro
                             case None =>
                                 Future.successful(Ok(Json.toJson(false)))
                         }
-                        // if(status) {
-                        //     val session = request.session + ("username" -> ld.username)
-                        //     Future.successful(Ok(Json.toJson(true)).withSession(session))
-                        // } else {
-                        //     Future.successful(Ok(Json.toJson(false)))
-                        // }
                     }
                 }
                 case e @ JsError(_) => Future.successful(Ok(Json.toJson(false)))
@@ -74,91 +68,11 @@ class UserController @Inject()(protected val dbConfigProvider: DatabaseConfigPro
     //     }   
     // }
 
-    // def createAssignment = Action.async { implicit request =>
-    //     request.body.asJson.map {username =>
-    //         Json.fromJson[String](username) match {
-    //             case JsSuccess(user, path) => {
-    //                 memInstance.createAssignment(user.username)
-    //             }
-    //         }
-    //     }
-    // }
-
-    // def setAllSettings = Action.async { implicit request =>
-    //     request.body.asJson.map {st =>
-    //         Json.fromJson[Settings](st) match {
-    //             case JsSuccess(settings, path) => {
-    //                 memInstance.initializeSettings(settings.username, settings.weight, settings.height, settings.goal, settings.days).flatMap{res =>
-    //                     if(res) Future.successful(Ok(Json.toJson(true)))
-    //                     else Future.successful(Ok(Json.toJson(false)))
-    //                 }
-    //             }
-    //             case e @ JsError(_) => Future.successful(Ok(Json.toJson(false)))
-    //         }
-    //     }.getOrElse(Future.successful(Ok(Json.toJson(false))))
-    // }
-
     // def changePassword = Action.async { implicit request =>
     //     request.body.asJson.map {up =>
     //         Json.fromJson[PasswordChange](up) match {
     //             case JsSuccess(pData, path) => {
     //                 memInstance.updatePassword(pData.username, pData.oldPassword, pData.newPassword).flatMap{res => 
-    //                     if(res) Future.successful(Ok(Json.toJson(true)))
-    //                     else Future.successful(Ok(Json.toJson(false)))
-    //                 }
-    //             }
-    //             case e @ JsError(_) => Future.successful(Ok(Json.toJson(false)))
-    //         }
-    //     }.getOrElse(Future.successful(Ok(Json.toJson(false))))
-    // }
-
-    // def changeWeight = Action.async { implicit request =>
-    //     request.body.asJson.map {uw =>
-    //         Json.fromJson[SingleSettingChange](uw) match {
-    //             case JsSuccess(wData, path) => {
-    //                 memInstance.updateWeight(wData.username, wData.newSetting).flatMap{res =>
-    //                     if(res) Future.successful(Ok(Json.toJson(true)))
-    //                     else Future.successful(Ok(Json.toJson(false)))
-    //                 }
-    //             }
-    //             case e @ JsError(_) => Future.successful(Ok(Json.toJson(false)))
-    //         }
-    //     }.getOrElse(Future.successful(Ok(Json.toJson(false))))
-    // }
-
-    // def changeHeight = Action.async { implicit request =>
-    //     request.body.asJson.map {uh =>
-    //         Json.fromJson[SingleSettingChange](uh) match {
-    //             case JsSuccess(hData, path) => {
-    //                 memInstance.updateHeight(hData.username, hData.newSetting).flatMap{res =>
-    //                     if(res) Future.successful(Ok(Json.toJson(true)))
-    //                     else Future.successful(Ok(Json.toJson(false)))                        
-    //                 }
-    //             }
-    //             case e @ JsError(_) => Future.successful(Ok(Json.toJson(false)))
-    //         }
-    //     }.getOrElse(Future.successful(Ok(Json.toJson(false))))
-    // }
-
-    // def changeGoal = Action.async { implicit request =>
-    //     request.body.asJson.map {ug =>
-    //         Json.fromJson[SingleSettingChange](ug) match {
-    //             case JsSuccess(gData, path) => {
-    //                 memInstance.updateGoal(gData.username, gData.newSetting).flatMap{res =>
-    //                     if(res) Future.successful(Ok(Json.toJson(true)))
-    //                     else Future.successful(Ok(Json.toJson(false)))
-    //                 }
-    //             }
-    //             case e @ JsError(_) => Future.successful(Ok(Json.toJson(false)))
-    //         }
-    //     }.getOrElse(Future.successful(Ok(Json.toJson(false))))
-    // }
-
-    // def changeDays = Action.async { implicit request =>
-    //     request.body.asJson.map {ud =>
-    //         Json.fromJson[SingleSettingChange](ud) match {
-    //             case JsSuccess(dData, path) => {
-    //                 memInstance.updateDays(dData.username, dData.newSetting).flatMap{res =>
     //                     if(res) Future.successful(Ok(Json.toJson(true)))
     //                     else Future.successful(Ok(Json.toJson(false)))
     //                 }

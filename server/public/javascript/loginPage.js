@@ -9,6 +9,7 @@ const loginRoute          = document.getElementById("loginRoute").value;
 const landingRoute        = document.getElementById("landingRoute").value;
 const validateRoute       = document.getElementById("validateRoute").value;
 const creationPageRoute   = document.getElementById("creationPageRoute").value;
+const homeRoute           = document.getElementById("homeRoute").value;
 
 // Hamburger Component
 class Hamburger extends React.Component {
@@ -106,7 +107,7 @@ class MainLoginComponent extends React.Component {
 
     render() {
         if(this.state.loggedIn) {
-            window.location.href = searchRoute;
+            window.location.href = homeRoute;
             return null;
         } else {
             return ce('div', null, 

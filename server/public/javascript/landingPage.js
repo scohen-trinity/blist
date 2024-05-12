@@ -8,7 +8,7 @@ const loginRoute = document.getElementById("loginRoute").value;
 const landingRoute = document.getElementById("landingRoute").value;
 const profileRoute = document.getElementById("profileRoute").value;
 const creationPageRoute = document.getElementById("creationPageRoute").value;
-const searchExerciseRoute  = document.getElementById("searchExerciseRoute").value;
+// const searchExerciseRoute  = document.getElementById("searchExerciseRoute").value;
 const randomHobbyClickedRoute = document.getElementById("randomHobbyClicked").value;
 
 class Hamburger extends React.Component {
