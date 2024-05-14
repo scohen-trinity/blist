@@ -4,12 +4,6 @@ const ce = React.createElement;
 
 // The code below is required for nav bar and hamburger menu
 const csrfToken = document.getElementById("csrfToken").value;
-const loginRoute = document.getElementById("loginRoute").value;
-const landingRoute = document.getElementById("landingRoute").value;
-const profileRoute = document.getElementById("profileRoute").value;
-const creationPageRoute = document.getElementById("creationPageRoute").value;
-// const searchExerciseRoute  = document.getElementById("searchExerciseRoute").value;
-const randomHobbyClickedRoute = document.getElementById("randomHobbyClicked").value;
 
 class Hamburger extends React.Component {
     constructor(props) {
@@ -91,8 +85,7 @@ class Hamburger extends React.Component {
 
 }
 
-
-class NavBarComponent extends React.Component {
+class NavBar extends React.Component {
     constructor(props) {
         super(props);
         this.goToLogin = this.goToLogin.bind(this);
@@ -127,62 +120,12 @@ class NavBarComponent extends React.Component {
         window.location.href = creationPageRoute;
     }
 }
-// The code above is required for the NavBar and Hamburger menu
 
-class TeamSection extends React.Component {
+class BucketList extends React.Component {
     render() {
-        return ce('div', {className: 'section team'},
-            ce('h2', {className: 'text-center'}, 'Our Team'),
-            ce('ul', {className: 'team-list'},
-                ce('li', null, 'Olivia Bangs'),
-                ce('li', null, 'Samuel Cohen'),
-                ce('li', null, 'Seth Owirodu'),
-                ce('li', null, 'Samuel Pappas')
-            )
-        );
-    }
-}
-
-class PurposeSection extends React.Component {
-    render() {
-        return ce('div', {className: 'section purpose'},
-            ce('h2', {className: 'text-center'}, 'Our Purpose'),
-            ce('p', {className: 'text-center'}, 'Our application makes visiting a gym and lifting weights significantly less intimidating by assembling a programmatic structure for each workout and having exercise descriptions and links to videos about that exercise attached for easy reference.')
-        );
-    }
-}
-
-class RandomHobbyButton extends React.Component {
-    // Constructor for the hobby
-    constructor(props) {
-        super(props);
-        this.state = { hobbyName: "", hobbyDescription: ""};
-        this.getHobby = this.getHobby.bind(this);
-    }
-
-    // Function to get a random hobby from the database and display it on the landing page
-    getHobby() {
-        fetch(randomHobbyClickedRoute, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json', 'Csrf-Token': csrfToken },
-        }).then(res => res.json()).then(data => {
-            this.setState({ hobbyName: data[0] });
-            this.setState({ hobbyDescription: data[1] });
-        })
-    }
-
-    render() {
-        const hobbyProps = {
-            className: 'random-hobby-button',
-            onClick: this.getHobby
-        };
-
-        return ce('div', { className: 'hobby-button-container' }, 
-            ce('button', hobbyProps, 'Random hobby'),
-            ce('div', { className: 'hobby-profile' }, 
-                ce('h2', null, this.state.hobbyName),
-                ce('p', null, this.state.hobbyDescription)
-            ),
+        return ce('div', { className: 'bucket-list' }, 
+            ce('h5', null, 'Your Bucket List'),
+            ce('ul', null, null),
         )
     }
 }
@@ -190,17 +133,13 @@ class RandomHobbyButton extends React.Component {
 class MainContainer extends React.Component {
     render() {
         return ce('div', { className: 'main-container' }, 
-            ce(NavBarComponent, null, null), 
-            ce('div', { className: 'container' },
-                ce('div', null, 
-                    ce(RandomHobbyButton, null, null)
-                )
-            )
+            ce(NavBar, null, null),
+            ce(BucketList, null, null)
         )
     }
 }
 
 ReactDOM.render(
     ce(MainContainer, null, null),
-    document.getElementById('landing-page')
+    document.getElementById('home-page')
 );

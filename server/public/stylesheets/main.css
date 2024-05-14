@@ -10,6 +10,8 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Random Hobby Button Styling */
