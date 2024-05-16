@@ -14,10 +14,12 @@
     <!-- Routes -->
     <input type="hidden" id="csrfToken" value="@helper.CSRF.getToken.value">
     <input type="hidden" id="loginRoute" value="@routes.Application.login">
+    <input type="hidden" id="logout" value="@routes.UserController.logout">
     <input type="hidden" id="landingRoute" value="@routes.Application.landing">
     <input type="hidden" id="profileRoute" value="@routes.Application.accountSettings">
     <input type="hidden" id="creationPageRoute" value="@routes.Application.accountCreation">
     <input type="hidden" id="randomHobbyClicked" value="@routes.HobbyButtonController.getRandomHobby">
+    <input type="hidden" id="getListItems" value="@routes.UserController.getListItems">
 
     <div id="home-page"></div>   
     <script src="@routes.Assets.versioned("javascript/home.js")"></script>

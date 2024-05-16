@@ -15,8 +15,12 @@ POST       /create                       controllers.UserController.create
 # Account Settings Route
 GET        /profile                      controllers.Application.accountSettings
 
-# randomWorkoutButton Routes
+# Landing Page Routes
 GET        /randomHobbyClicked           controllers.HobbyButtonController.getRandomHobby
+
+# User Home Page Routes
+GET        /getListItems                 controllers.UserController.getListItems
+GET        /logout                       controllers.UserController.logout
 
 # Prefix must match `play.assets.urlPrefix`
 GET        /assets/*file                 controllers.Assets.at(file)

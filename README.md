@@ -1,6 +1,1 @@
-# play-scalajs-slinky
-
-This is my starter project for things that involve Play using Scala.js and
-the Slinky React binding. I'm using this as the starter for student code in
-Web Apps Spring 2021.
-
+This is the github repository for blist, a website used for helping people explore new hobbies and interests and organize them so that users can find ways to practice and learn about these hobbies.

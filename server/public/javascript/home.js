@@ -4,6 +4,8 @@ const ce = React.createElement;
 
 // The code below is required for nav bar and hamburger menu
 const csrfToken = document.getElementById("csrfToken").value;
+const getListItems = document.getElementById("getListItems").value;
+const logoutRoute = document.getElementById("logout").value;
 
 class Hamburger extends React.Component {
     constructor(props) {
@@ -37,6 +39,12 @@ class Hamburger extends React.Component {
         this.closeMenu();
         console.log("Go to log in page");
         window.location.href = loginRoute;
+    }
+
+    logOut(e){
+        e.preventDefault();
+        this.closeMenu();
+        window.location.href = logoutRoute;
     }
 
     toggleMenu() {
@@ -73,10 +81,10 @@ class Hamburger extends React.Component {
             tabIndex: 0 
         }, "Home"),
         ce('a', { 
-            onClick: e => this.goToLogin(e), 
+            onClick: e => this.logOut(e), 
             style: { cursor: 'pointer' }, 
             tabIndex: 0 
-        }, "Login")
+        }, "Logout")
 
         ) : null
     );
@@ -122,11 +130,24 @@ class NavBar extends React.Component {
 }
 
 class BucketList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { listItems: [] }
+    }
+
+    componentDidMount () {
+        this.loadListItems();
+    }
+
     render() {
         return ce('div', { className: 'bucket-list' }, 
             ce('h5', null, 'Your Bucket List'),
             ce('ul', null, null),
         )
+    }
+
+    loadListItems() {
+        fetch(getListItems).then(res => res.json()).then(listItems => this.setState({ listItems }));
     }
 }
 

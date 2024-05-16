@@ -57,6 +57,11 @@ class UserController @Inject()(protected val dbConfigProvider: DatabaseConfigPro
             }
         }.getOrElse(Future.successful(Ok(Json.toJson(false))))
     }
+
+    def getListItems = Action.async { implicit request => 
+        println("fetch list items"); 
+        Future.successful(Ok(Json.toJson(true)));   
+    }
     
     // def getUserInfo = Action.async { implicit request =>
     //     request.session.get("username") match {
